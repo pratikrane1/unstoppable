@@ -308,6 +308,7 @@ Widget detailCard(){
                           ),
                         ),
                         SizedBox(width: 20,)
+
                       ],
                     ),
                     Text(
