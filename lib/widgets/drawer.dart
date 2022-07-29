@@ -1,18 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unstoppable/Screens/Leads.dart';
 import 'package:unstoppable/Screens/change_password.dart';
+import 'package:unstoppable/Screens/login/sign_in.dart';
 import 'package:unstoppable/Screens/manageAllBuyingRequirement.dart';
 import 'package:unstoppable/Screens/reward.dart';
 import 'package:unstoppable/Screens/unstoppableOrders.dart';
+import 'package:unstoppable/Utils/application.dart';
 import 'package:unstoppable/constant/font_size.dart';
 
+import '../Blocs/login/login_bloc.dart';
+import '../Blocs/login/login_event.dart';
+import '../Blocs/login/login_state.dart';
 import '../Screens/bottom_navbar.dart';
 import '../Screens/businessNetworking.dart';
 import '../Screens/business_networking_contact.dart';
 import '../Screens/payment_history.dart';
 import '../config/image.dart';
 import '../constant/theme_colors.dart';
+import 'app_button.dart';
 
 Widget DrawerWidget(BuildContext context) {
   String dropdownValue = 'My Acc';
@@ -92,6 +100,7 @@ Widget DrawerWidget(BuildContext context) {
             _MyTools(context),
             _Settings(context),
             _ShareUrl(context),
+            _LogOutButton(context)
           ],
         ),
       ),
@@ -132,6 +141,53 @@ Widget _Rewards(BuildContext context) {
     ),
   );
 }
+
+
+_RemoverUser() async {
+  SharedPreferences userData = await SharedPreferences.getInstance();
+  await userData.clear();
+}
+
+Widget _LogOutButton(BuildContext context) {
+  LoginBloc? _loginBloc;
+  return  Container(color: Colors.white,
+          child:Padding(
+              padding: EdgeInsets.all(20.0),
+              child:
+
+              //updated on 14/01/2022
+              AppButton(
+                onPressed: (){
+                  Application.preferences!.remove('user');
+                  // _RemoverUser();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignInPage()),
+                        (Route<dynamic> route) => false,
+                  );
+                },
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
+                text: 'Logout',
+                // loading: profile is LogoutLoading,
+                // disableTouchWhenLoading: true,
+              )
+          )
+      );
+    // )
+
+  //   InkWell(
+  //
+  //   onTap: () {
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => SignInPage()));
+  //   },
+  //   child: AppButton(
+  //     text: "Log Out",
+  //   ),
+  // );
+}
+
+
 
 Widget _BussinessOpp(BuildContext context) {
   return Card(

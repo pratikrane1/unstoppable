@@ -1,28 +1,35 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:unstoppable/Screens/login/sign_in.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unstoppable/Screens/splash_screen.dart';
-import 'Screens/bottom_navbar.dart';
-// import 'package:unstoppable/Screens/home_screen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'Utils/application.dart';
+import 'Utils/routes.dart';
+import 'app.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Unstoppable',
-      theme: ThemeData(
-        fontFamily: 'SofiaPro',
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-    );
-  }
+  // SystemChrome.setPreferredOrientations(
+  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  // await Firebase.initializeApp();
+  Application.preferences = await SharedPreferences.getInstance();
+
+  Bloc.observer = BlocObserver();
+  final route = Routes();
+
+
+  // runZonedGuarded((){
+  //   runApp(
+  //     App());
+  // },
+  //     FirebaseCrashlytics.instance.recordError
+  // );
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   statusBarColor: Color(0xffDF5F00),
+  // ));
+  runApp(App());
 }
 
