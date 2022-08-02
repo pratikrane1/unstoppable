@@ -6,8 +6,9 @@ abstract class ProductEvent {}
 
 class OnLoadingProductList extends ProductEvent {
   String userid;
+  String? offset;
   // String prodid;
-  OnLoadingProductList({required this.userid, });
+  OnLoadingProductList({required this.userid,required this.offset });
 }
 
 

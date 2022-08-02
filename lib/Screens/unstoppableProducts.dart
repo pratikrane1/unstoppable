@@ -27,53 +27,14 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
 
   ProductBloc? _productBloc;
   List<ProductModel> productList=[];
+String? offset = "0";
 
-  // Initial Selected Value
-  String dropdownvalue = 'Item 1';
-
-  // List of items in our dropdown menu
-  var items = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    //MyAccountPage(),
-    Text(
-      'Index 1: Products',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Network',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Buying Req',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 4: Enquires',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   void initState() {
     // TODO: implement initState
     super.initState();
     _productBloc = BlocProvider.of<ProductBloc>(context);
-    _productBloc!.add(OnLoadingProductList(userid: Application.vendorLogin!.userId.toString()));
+    _productBloc!.add(OnLoadingProductList(userid: Application.vendorLogin!.userId.toString(), offset: offset.toString()));
 
   }
 

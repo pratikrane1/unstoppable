@@ -7,6 +7,7 @@ import 'package:unstoppable/Blocs/login/login_bloc.dart';
 import 'package:unstoppable/Blocs/theme/theme_bloc.dart';
 import 'package:unstoppable/Repository/UserRepository.dart';
 
+import 'Blocs/customerEnquiries/customerEnquiries_bloc.dart';
 import 'Blocs/products/product_bloc.dart';
 
 class AppBloc {
@@ -17,6 +18,7 @@ class AppBloc {
   static final loginBloc = LoginBloc(userRepository: userRepository);
   static final homeBloc = HomeBloc(dashboardRepo: userRepository);
   static final productBloc = ProductBloc(productRepo: userRepository);
+  static final customerEnquiriesBloc = CustomerEnquiriesBloc(customerEnquiriesModelRepo: userRepository);
 
 
 
@@ -42,7 +44,9 @@ class AppBloc {
     BlocProvider<ProductBloc>(
       create: (context) => productBloc,
     ),
-
+    BlocProvider<CustomerEnquiriesBloc>(
+      create: (context) => customerEnquiriesBloc,
+    ),
 
 
 
@@ -58,6 +62,7 @@ class AppBloc {
     loginBloc.close();
     homeBloc.close();
     productBloc.close();
+    customerEnquiriesBloc.close();
   }
 
   ///Singleton factory

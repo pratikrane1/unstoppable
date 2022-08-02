@@ -36,7 +36,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       ///Fetch API via repository
       final ProductRepo response = await productRepo!
           .fetchProduct(
-          userId: event.userid
+          userId: event.userid,
+               offset:
+          event.offset
       );
 
       final Iterable refactorProduct = response.data ?? [];

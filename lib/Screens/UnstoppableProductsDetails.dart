@@ -76,12 +76,12 @@ class _UnstoppableProductsDetailsState
                         ?
                     ListView(
                       children: [
-                        categoryName(context, productDetail),
-                        subcategoryName(context, productDetail),
-                        subsubcategoryName(context,productDetail),
-                        productName(context,productDetail),
-                        price(context,productDetail),
-                        Descriptions(context,productDetail),
+                        categoryName(context, productDetail!),
+                        subcategoryName(context, productDetail!),
+                        subsubcategoryName(context, productDetail!),
+                        productName(context, productDetail!),
+                        price(context, productDetail!),
+                        Descriptions(context, productDetail!),
                         deleteUpdateIcon()
                       ],
                     )
@@ -132,7 +132,7 @@ Widget deleteUpdateIcon() {
   );
 }
 
-Widget Descriptions(BuildContext context,productDetail) {
+Widget Descriptions(BuildContext context,ProductDetail productDetail) {
   return Padding(
     padding: const EdgeInsets.only(
       left: 8.0,
@@ -163,7 +163,7 @@ Widget Descriptions(BuildContext context,productDetail) {
   );
 }
 
-Widget categoryName(BuildContext context, productDetail) {
+Widget categoryName(BuildContext context,ProductDetail productDetail) {
   return Padding(
     padding: const EdgeInsets.only(
       left: 8.0,
@@ -209,7 +209,7 @@ Widget categoryName(BuildContext context, productDetail) {
   );
 }
 
-Widget subcategoryName(BuildContext context, productDetail) {
+Widget subcategoryName(BuildContext context, ProductDetail productDetail) {
   return Padding(
     padding: const EdgeInsets.only(
       left: 8.0,
@@ -236,7 +236,8 @@ Widget subcategoryName(BuildContext context, productDetail) {
                 width: 7,
               ),
               Text(
-                "Laptops, Pc, Mainframes & Computers",
+                //"Laptops, Pc, Mainframes & Computers",
+                productDetail.subCategoryName.toString(),
                 style: TextStyle(color: Colors.black54, fontSize: 12),
               ),
             ],
@@ -247,7 +248,7 @@ Widget subcategoryName(BuildContext context, productDetail) {
   );
 }
 
-Widget subsubcategoryName(BuildContext context, productDetail) {
+Widget subsubcategoryName(BuildContext context, ProductDetail productDetail) {
   return Padding(
     padding: const EdgeInsets.only(
       left: 8.0,
@@ -274,7 +275,8 @@ Widget subsubcategoryName(BuildContext context, productDetail) {
                 width: 7,
               ),
               Text(
-                "Computer Systems",
+               // "Computer Systems",
+                productDetail.ssCategoryName.toString(),
                 style: TextStyle(color: Colors.black54, fontSize: 12),
               ),
             ],
@@ -299,7 +301,7 @@ Widget subsubcategoryName(BuildContext context, productDetail) {
 //   );
 // }
 
-Widget productName(BuildContext context, productDetail) {
+Widget productName(BuildContext context, ProductDetail productDetail) {
   return Padding(
     padding: const EdgeInsets.only(
       left: 8.0,
@@ -326,7 +328,8 @@ Widget productName(BuildContext context, productDetail) {
                 width: 7,
               ),
               Text(
-                "Product 1",
+                //"Product 1",
+                productDetail.productName.toString(),
                 style: TextStyle(color: Colors.black54, fontSize: 12),
               ),
             ],
@@ -337,7 +340,7 @@ Widget productName(BuildContext context, productDetail) {
   );
 }
 
-Widget price(BuildContext context, productDetail) {
+Widget price(BuildContext context, ProductDetail productDetail) {
   return Padding(
     padding: const EdgeInsets.only(
       left: 8.0,
@@ -364,7 +367,7 @@ Widget price(BuildContext context, productDetail) {
                 width: 7,
               ),
               Text(
-                "333",
+                productDetail.price.toString(),
                 style: TextStyle(color: Colors.black54, fontSize: 12),
               ),
             ],
