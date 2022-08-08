@@ -53,9 +53,16 @@ class UserRepository {
     final params = {"userid":userId};
     return await Api.getDashBoardCount(params);
   }
+
   Future<dynamic> fetchProduct({String? userId,String? offset}) async {
     final params = {"user_id":userId,
       "offset":offset};
+    return await Api.getProduct(params);
+  }
+
+  Future<dynamic> fetchSubCategory({String? catId}) async {
+    final params = {"cat_id":catId,
+      };
     return await Api.getProduct(params);
   }
 
@@ -68,6 +75,8 @@ class UserRepository {
     final params = {"user_id":userId};
     return await Api.getCustomerEnquiry(params);
   }
+
+
 
 }
 

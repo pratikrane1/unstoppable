@@ -28,7 +28,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Stream<ProductState> mapEventToState(event) async* {
 
 
-    ///Event for login
+
     if (event is OnLoadingProductList) {
       ///Notify loading to UI
       yield ProductLoading();
@@ -38,15 +38,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           .fetchProduct(
           userId: event.userid,
                offset:
-          event.offset
+          event.offset.toString()
       );
 
       final Iterable refactorProduct = response.data ?? [];
       final listproduct = refactorProduct.map((item) {
         return ProductModel.fromJson(item);
       }).toList();
+      if(refactorProduct.length>0){
+        yield ProductListSuccess(productList: listproduct);
+      }else{
+        yield ProductListLoadFail();
 
-      yield ProductListSuccess(productList: listproduct);
+      }
+
     }
 
 /////////////

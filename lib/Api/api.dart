@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:unstoppable/Models/category_model.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 
 import 'dart:convert';
@@ -20,7 +21,9 @@ class Api {
   static const String Product ="get_products";
   static const String Product_Detail ="get_product_details";
   static const String Customer_Enquiries ="get_customer_enquiry";
-
+  static const String Category = HOST_URL+"get_category";
+  static const String SubCategory = HOST_URL+"get_sub_category";
+  static const String SubSubCategory = HOST_URL+"get_sub_sub_category";
   ///Login api
   static Future<dynamic> login(params) async {
     final response = await http.post(
@@ -57,6 +60,8 @@ class Api {
     }
   }
 
+
+
   static Future<dynamic> getProductDetail(params) async {
     final response = await http.post(
       Uri.parse(HOST_URL+Product_Detail),
@@ -71,7 +76,7 @@ class Api {
 
   static Future<dynamic> getCustomerEnquiry(params) async {
     final response = await http.post(
-      Uri.parse(HOST_URL+Customer_Enquiries),
+      Uri.parse(HOST_URL + Customer_Enquiries),
       body: params,
     );
     if (response.statusCode == 200) {
@@ -80,16 +85,5 @@ class Api {
       return CustomerEnquiriesModelRepo.fromJson(responseJson);
     }
   }
-  // //get prod list api
-  // static Future<dynamic> getProducerList(params) async {
-  //   // final response = await http.get(Uri.parse(GET_PRODUCER_LIST));
-  //   final response = await http.post(Uri.parse(GET_PRODUCER_LIST),
-  //     body: params);
-  //   if (response.statusCode == 200) {
-  //     final responseJson = json.decode(response.body);
-  //     return ProducerListResp.fromJson(responseJson);
-  //   }
-  // }
-
 
 }

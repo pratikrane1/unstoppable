@@ -37,7 +37,8 @@ dependencies:
   shared_preferences: 2.0.1
   cupertino_icons: ^1.0.2
   persistent_bottom_nav_bar: ^4.0.2
-  image_picker: ^0.8.4+4
+  image_picker: 0.8.2
+  image_cropper: 1.4.1
   cached_network_image: ^3.2.0
   dotted_border: ^1.0.7
   connectivity: ^3.0.6
@@ -45,6 +46,7 @@ dependencies:
   easy_localization: ^3.0.0
   firebase_auth: ^3.6.0
   shimmer: 2.0.0
+
 
  #  firebase_core: ^1.0.1
 #  firebase_core: ^1.10.0
