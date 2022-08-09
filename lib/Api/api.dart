@@ -6,8 +6,11 @@ import 'package:unstoppable/Models/product_detail_model.dart';
 import 'dart:convert';
 import 'package:unstoppable/Models/vendor_login.dart';
 
+import '../Models/company_profile_model.dart';
 import '../Models/customerEnquiries_model.dart';
 import '../Models/home_model.dart';
+import '../Models/leads_model.dart';
+import '../Models/productImage_model.dart';
 import '../Models/product_model.dart';
 
 
@@ -19,11 +22,18 @@ class Api {
   static const String VENDOR_LOGIN="app_login";
   static const String Vendor_Dashboard_Count ="get_dashboard_data";
   static const String Product ="get_products";
+  static const String ProductImage ="get_product_images";
   static const String Product_Detail ="get_product_details";
   static const String Customer_Enquiries ="get_customer_enquiry";
   static const String Category = HOST_URL+"get_category";
   static const String SubCategory = HOST_URL+"get_sub_category";
   static const String SubSubCategory = HOST_URL+"get_sub_sub_category";
+  static const String addProduct = HOST_URL+"save_product";
+  static const String uploadImage = HOST_URL+"upload_product_images";
+  static const String removeImage = HOST_URL+"remove_product_images";
+  static const String Leads ="get_leads";
+  static const String COMPANY_PROFILE ="get_company_profile";
+
   ///Login api
   static Future<dynamic> login(params) async {
     final response = await http.post(
@@ -60,7 +70,41 @@ class Api {
     }
   }
 
+  static Future<dynamic> getProductImage(params) async {
+    final response = await http.post(
+      Uri.parse(HOST_URL+ProductImage),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return ProductImageRepo.fromJson(responseJson);
+    }
+  }
 
+  static Future<dynamic> getLeads(params) async {
+    final response = await http.post(
+      Uri.parse(HOST_URL+Leads),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return LeadsRepo.fromJson(responseJson);
+    }
+  }
+
+  static Future<dynamic> getCompanyProfile(params) async {
+    final response = await http.post(
+      Uri.parse(HOST_URL+COMPANY_PROFILE),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return CompanyProfileRepo.fromJson(responseJson);
+    }
+  }
 
   static Future<dynamic> getProductDetail(params) async {
     final response = await http.post(

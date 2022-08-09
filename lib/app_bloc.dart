@@ -8,7 +8,9 @@ import 'package:unstoppable/Blocs/theme/theme_bloc.dart';
 import 'package:unstoppable/Repository/UserRepository.dart';
 
 import 'Blocs/addProductForm/addProductForm_bloc.dart';
+import 'Blocs/companyProfile/company_profile_block.dart';
 import 'Blocs/customerEnquiries/customerEnquiries_bloc.dart';
+import 'Blocs/leads/leads_block.dart';
 import 'Blocs/products/product_bloc.dart';
 
 class AppBloc {
@@ -20,7 +22,9 @@ class AppBloc {
   static final homeBloc = HomeBloc(dashboardRepo: userRepository);
   static final productBloc = ProductBloc(productRepo: userRepository);
   static final customerEnquiriesBloc = CustomerEnquiriesBloc(customerEnquiriesModelRepo: userRepository);
-  static final addProductFormBloc = AddProductFormBloc(addProductRepo: userRepository);
+  static final productImageBloc = AddProductFormBloc(productImageRepo: userRepository);
+  static final leadBloc = LeadsBloc(leadsRepo: userRepository);
+  static final companyProfileBloc = CompanyProfileBloc(companyProfileRepo: userRepository);
 
 
 
@@ -51,10 +55,14 @@ class AppBloc {
     ),
 
     BlocProvider<AddProductFormBloc>(
-      create: (context) => addProductFormBloc,
+      create: (context) => productImageBloc,
     ),
-
-
+    BlocProvider<LeadsBloc>(
+      create: (context) => leadBloc,
+    ),
+    BlocProvider<CompanyProfileBloc>(
+      create: (context) => companyProfileBloc,
+    ),
 
   ];
 
@@ -66,8 +74,10 @@ class AppBloc {
     loginBloc.close();
     homeBloc.close();
     productBloc.close();
+    leadBloc.close();
     customerEnquiriesBloc.close();
-    addProductFormBloc.close();
+    productImageBloc.close();
+    companyProfileBloc.close();
   }
 
   ///Singleton factory

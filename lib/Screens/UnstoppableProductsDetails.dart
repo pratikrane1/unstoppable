@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unstoppable/Blocs/products/bloc.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
+import 'package:unstoppable/Screens/product_Images.dart';
 import '../Utils/application.dart';
+import '../config/image.dart';
 import '../widgets/seeIcon.dart';
 
 class UnstoppableProductsDetails extends StatefulWidget {
@@ -36,10 +38,15 @@ class _UnstoppableProductsDetailsState
           bottomOpacity: 0.0,
           elevation: 0.0,
           backgroundColor: Colors.deepOrange[500],
-          leading: Icon(
-            CupertinoIcons.chevron_left,
-            color: Colors.white,
-            size: 18,
+          leading: InkWell(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Icon(
+              CupertinoIcons.chevron_left,
+              color: Colors.white,
+              size: 18,
+            ),
           ),
           title: Text(
             "Products Details",
@@ -82,7 +89,7 @@ class _UnstoppableProductsDetailsState
                         productName(context, productDetail!),
                         price(context, productDetail!),
                         Descriptions(context, productDetail!),
-                        deleteUpdateIcon()
+                        deleteUpdateIcon(context,productDetail!)
                       ],
                     )
                         :
@@ -114,18 +121,109 @@ class _UnstoppableProductsDetailsState
 //
 //   );
 // }
-Widget deleteUpdateIcon() {
+Widget deleteUpdateIcon(BuildContext context,ProductDetail productDetail) {
   return Padding(
     padding: const EdgeInsets.only(top: 18.0),
     child: Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          deleteIcon(),
+          // For Delete Button
+          InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductImages(productId: productDetail.productId)));
+            },
+            child: Container(
+              width: 40,
+              height: 25,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+                //color: Color(0xffc32c37),
+                color: Colors.indigo,
+                // border: Border.all(color: Colors.black, width: 1)
+              ),
+              child: Container(
+                width: 30,
+                height: 30,
+                alignment: Alignment.center,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Icon(
+                        Icons.picture_in_picture,
+                        color: Colors.white,
+                        size: 21,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
           SizedBox(
             width: 15,
           ),
-          editIcon(),
+
+          // For Delete Icon
+          Container(
+            width: 40,
+            height: 25,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius:  BorderRadius.circular(5.0),
+              //color: Color(0xffc32c37),
+              color: Colors.indigo,
+              // border: Border.all(color: Colors.black, width: 1)
+            ),
+            child: Container(
+              width: 30,
+              height: 30,
+              alignment: Alignment.center,
+              child: Stack(
+                children: [
+                  Center(
+                    child: Icon(
+                      CupertinoIcons.delete,
+                      color: Colors.white,
+                      size: 21,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+      // For Edit Icon
+      Container(
+        width: 40,
+        height: 25,
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius:  BorderRadius.circular(5.0),
+          //color: Color(0xffc32c37),
+          color: Colors.indigo,
+          // border: Border.all(color: Colors.black, width: 1)
+        ),
+        child: Container(
+          width: 30,
+          height: 30,
+          alignment: Alignment.center,
+          child: Stack(
+            children: [
+              Center(
+                child: Icon(
+                  CupertinoIcons.eyedropper,
+                  color: Colors.white,
+                  size: 21,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
         ],
       ),
     ),

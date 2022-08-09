@@ -15,6 +15,7 @@ class ThemeColors {
   // static const Color baseThemeColor = Color(0xffEE1D48);
   static const Color baseThemeColor = Color(0xffff6b17);
   static const Color drawerTextColor = Color(0xff00008c);
+  static const Color buttonColor = Color(0xff00008c);
   static const Color cardColor = Color(0xfffcf8f8);
 
 }

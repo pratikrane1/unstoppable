@@ -9,8 +9,9 @@ import '../Models/customerEnquiries_model.dart';
 import '../widgets/seeIcon.dart';
 
 class CustomerEnquiriesDetails  extends StatefulWidget{
-   String? userId='1';
-   CustomerEnquiriesDetails({Key? key, this.userId}) : super(key: key);
+   //String? userId='1';
+   CustomerEnquiriesModel customerEnquiriesdata;
+   CustomerEnquiriesDetails({Key? key, required this.customerEnquiriesdata}) : super(key: key);
   @override
   State<CustomerEnquiriesDetails> createState() => _CustomerEnquiriesDetailsState();
 }
@@ -25,8 +26,8 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
 
     _customerEnquiriesBloc = BlocProvider.of<CustomerEnquiriesBloc>(context);
   //  _customerEnquiriesBloc!.add(OnLoadingCustomerEnquiriesList(userid: Application.vendorLogin!.userId.toString()));
-    _customerEnquiriesBloc!.add(OnLoadingCustomerEnquiriesList(
-        userid: widget.userId.toString()));
+  //   _customerEnquiriesBloc!.add(OnLoadingCustomerEnquiriesList(
+  //       userid: widget.userId.toString()));
 
   }
 
@@ -40,7 +41,11 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         backgroundColor: Colors.deepOrange[500],
-        leading: Icon(CupertinoIcons.chevron_left,color: Colors.white,size: 18,),
+        leading: InkWell(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Icon(CupertinoIcons.chevron_left,color: Colors.white,size: 18,)),
         //leading: Center(child: Text("<",style: TextStyle(color: Colors.white,fontSize: 30),)),
         title: Text("Customer Enquiries Details",style: TextStyle(fontSize: 15),),
 
@@ -71,14 +76,157 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
                   ),
                   child: ListView(
                     children: [
-                      productName(context,customerEnquiriesModel!),
-                      customerName(context,customerEnquiriesModel!),
-                      Email(context,customerEnquiriesModel!),
-                      mobileNo(context,customerEnquiriesModel!),
-                      Date(context,customerEnquiriesModel!),
-                      Messages(context,customerEnquiriesModel!),
+                      // For Product Name
+                  Padding(
+                  padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 8.0,),
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Product Name",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize:15),),
+                            Row(
+                              children: [
+                                Icon(Icons.account_tree,color: Colors.black54,size: 15,),
+                                SizedBox(width: 7,),
+                                Text(widget.customerEnquiriesdata.prodName.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                              ],
+                            ),
+                          ],
+                        ),
+                        nameIcon(),
+                      ],
+                    ),
+                  ),
+                ),
+                     // For Customer name
+                  Padding(
+                    padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 8.0,),
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Customer Name",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize:15),),
+                          Row(
+                            children: [
+                              Icon(Icons.account_circle,color: Colors.black54,size: 15,),
+                              SizedBox(width: 7,),
+                              Text(widget.customerEnquiriesdata.name.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                      // For Email
+                  Padding(
+                    padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 13.0,),
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Email",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize:15),),
+                          Row(
+                            children: [
+                              Icon(Icons.mail,color: Colors.black54,size: 15,),
+                              SizedBox(width: 7,),
+                              Text(widget.customerEnquiriesdata.email.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                      // For Mobile
+                  Padding(
+                    padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 13.0,),
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Mobile No.",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize:15),),
+                          Row(
+                            children: [
+                              Icon(Icons.phone_android,color: Colors.black54,size: 15,),
+                              SizedBox(width: 7,),
+                              Text(widget.customerEnquiriesdata.mobileNo.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                      // For Date
+                  Padding(
+                    padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 13.0,),
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Date",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize:15),),
+                          Row(
+                            children: [
+                              Icon(Icons.account_balance_wallet_sharp,color: Colors.black54,size: 15,),
+                              SizedBox(width: 7,),
+                              Text(widget.customerEnquiriesdata.addedDate.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                     // For Message
+                  Padding(
+                    padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 10.0,),
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Messages",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize:14),),
+                          SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Container(
+                                  height: 150,
+                                  child:ListView(
+                                      children: [
+                                        Text(widget.customerEnquiriesdata.message.toString())
+                                      ]
+                                  )
+                              )
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
                       SizedBox(height: 4,),
-                      delete(),
+                Container(
+                  width: 45,
+                  height: 45,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      //color: Color(0xffc32c37),
+                      color: Colors.blue,
+                      border: Border.all(color: Colors.black, width: 1)),
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    alignment: Alignment.center,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child:
+                          Icon(Icons.delete,color: Colors.white,),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                     ],
                   ),
                 ),
@@ -155,7 +303,7 @@ Widget productName(BuildContext context,CustomerEnquiriesModel customerEnquiries
                 children: [
                   Icon(Icons.account_tree,color: Colors.black54,size: 15,),
                   SizedBox(width: 7,),
-                  //Text(customerEnquiriesModel.prodName.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                 // Text(widget.customerEnquiriesdata.,style: TextStyle(color: Colors.black54,fontSize:12),),
                 ],
               ),
             ],

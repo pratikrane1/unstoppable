@@ -13,7 +13,8 @@ class HomeLoading extends HomeState {}
 
 
 class HomeListSuccess extends HomeState {
-  var totalProd;
+  var totalProd, totalLeads, totalEnquiry, monthlyTarget, achievements, cancelLeads ;
+
   HomeListSuccess({this.totalProd});
 }
 

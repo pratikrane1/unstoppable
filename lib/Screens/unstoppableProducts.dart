@@ -790,10 +790,10 @@ Widget unstoppableProductCard(BuildContext context, ProductModel productData) {
                 leading: CachedNetworkImage(
                   filterQuality: FilterQuality.medium,
                   // imageUrl: Api.PHOTO_URL + widget.users.avatar,
-                  imageUrl: "https://picsum.photos/250?image=9",
-                  // imageUrl: model.cart[index].productImg == null
-                  //     ? "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-                  //     : model.cart[index].productImg,
+                  // imageUrl: "https://picsum.photos/250?image=9",
+                  imageUrl: productData.productImage == null
+                      ? "https://picsum.photos/250?image=9"
+                      : productData.productImage.toString(),
                   placeholder: (context, url) {
                     return Shimmer.fromColors(
                       baseColor: Theme.of(context).hoverColor,

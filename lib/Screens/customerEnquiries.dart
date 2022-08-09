@@ -321,7 +321,9 @@ Widget customerEnquiriesCard(BuildContext context,CustomerEnquiriesModel custome
   return InkWell(
 
     onTap: (){
-     Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerEnquiriesDetails(userId:customerEnquiriesData.userId)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CustomerEnquiriesDetails(customerEnquiriesdata: customerEnquiriesData)));
+
+      // Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerEnquiriesDetails(userId:customerEnquiriesData.userId)));
     },
     child: Padding(
       padding: const EdgeInsets.all(8.0),

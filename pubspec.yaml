@@ -46,6 +46,9 @@ dependencies:
   easy_localization: ^3.0.0
   firebase_auth: ^3.6.0
   shimmer: 2.0.0
+  fluttertoast: ^8.0.9
+  mime: ^1.0.2
+  http_parser: ^4.0.1
 
 
  #  firebase_core: ^1.0.1

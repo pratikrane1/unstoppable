@@ -5,10 +5,13 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:unstoppable/Blocs/addProductForm/addProductForm_event.dart';
 import 'package:unstoppable/Models/subCategory_model.dart';
 import 'package:unstoppable/NetworkFunction/fetchSubCategory.dart';
 import 'package:unstoppable/Screens/image_file.dart';
+import 'package:unstoppable/Screens/unstoppableProducts.dart';
 import 'package:unstoppable/constant/font_size.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,7 +32,7 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
-  AddProductFormBloc? addProductFormCategoryListBloc;
+  AddProductFormBloc? addProductFormBloc;
   List<CategoryModel> addProductFormCategoryList = [];
   CategoryModel? categoryModelselected;
   SubSubCategoryModel? subsubcategoryModelselected;
@@ -37,12 +40,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
   String? _selectedLocation;
   String? selectedValue;
   final _textProductNameController = TextEditingController();
-
+  final _textDescriController = TextEditingController();
   final _textPriceController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   File? _image;
   ImageFile? imageFile;
   final picker = ImagePicker();
+  bool flagLoading=false;
 
 //For Display uploaded image
   Widget _buildAvatar() {
@@ -155,13 +159,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // addProductFormCategoryListBloc = BlocProvider.of<AddProductFormBloc>(context);
+    addProductFormBloc = BlocProvider.of<AddProductFormBloc>(context);
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-
     return Container(
       margin: EdgeInsets.only(top:5.0,right: 8,left: 8,bottom: 5),
       child: Column(
@@ -363,7 +366,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600),
                                 isExpanded: true,
-                                hint: Text('Select Sub Category',
+                                hint: Text('Select Sub sub Category',
                                     style: TextStyle(
                                         color: Color(0xFF3F4141))),
                                 value: subsubcategoryModelselected == null
@@ -422,10 +425,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   hintText: "Product Name",
                 ),
                 validator: (value){
-                  // if(value==null || value.isEmpty){
-                  //   return 'Please enter Product Name';
-                  // }
-                  // return null;
+                  if(value==null || value.isEmpty){
+                    return 'Please enter Product Name';
+                  }
+                  return null;
                 },
                 onChanged: (value) {
                   setState(() {
@@ -443,7 +446,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 obscureText: false,
                 //initialValue: widget.userdata['name'],
                 textAlign: TextAlign.start,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 style: TextStyle(
                   fontSize: 18,
                   height: 0.8,
@@ -469,10 +472,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   hintText: "Price",
                 ),
                 validator: (value){
-                  // if(value==null || value.isEmpty){
-                  //   return 'Please enter Price';
-                  // }
-                  // return null;
+                  if(value==null || value.isEmpty){
+                    return 'Please enter Price';
+                  }
+                  return null;
                 },
                 onChanged: (value) {
                   setState(() {
@@ -485,14 +488,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ),
       ),
 
-      // for Owner Number
+      // for description
       Padding(
         padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
         child: Container(
           child: TextFormField(
+            controller: _textDescriController,
             obscureText: false,
             textAlign: TextAlign.start,
-            keyboardType: TextInputType.phone,
+            keyboardType: TextInputType.text,
             maxLines: 3,
             style: TextStyle(
               fontSize: 18,
@@ -516,20 +520,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide:
                   BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-              hintText: "Owner Number",
+              hintText: "Description",
             ),
             validator: (value){
-              // Pattern pattern =
-              //     r'(^(?:[+0]9)?[0-9]{10,12}$)';
-              // RegExp regex =
-              // new RegExp(pattern.toString());
-              //
-              // if(value==null || value.isEmpty){
-              //   return 'Please enter Mobile Number';
-              // }else if(!regex.hasMatch(value)){
-              //   return 'Please enter valid Mobile Number';
-              // }
-              // return null;
+
+              if(value==null || value.isEmpty){
+                return 'Please enter description';
+              }
+              return null;
             },
             onChanged: (text) {
               setState(() {
@@ -541,58 +539,58 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
 
       // For Pincode
-      Padding(
-        padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
-        child: Container(
-          child: TextFormField(
-            obscureText: false,
-            textAlign: TextAlign.start,
-            keyboardType: TextInputType.text,
-            style: TextStyle(
-              fontSize: 18,
-              height: 0.8,
-            ),
-            decoration: const InputDecoration(
-              contentPadding:
-              EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-              hintStyle: TextStyle(fontSize: 15),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                borderSide:
-                BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                borderSide:
-                BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor),
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  borderSide:
-                  BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-              hintText: "Pin Code",
-            ),
-            validator: (value){
-              // Pattern pattern =
-              //     r'(^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$)';
-              // RegExp regex =
-              // new RegExp(pattern.toString());
-              //
-              // if(value==null || value.isEmpty){
-              //   return 'Please enter Pincode';
-              // }else if(!regex.hasMatch(value)){
-              //   return 'Please enter valid Pincode';
-              // }
-              // return null;
-            },
-            onChanged: (text) {
-              setState(() {
-                if ( _formKey.currentState!.validate()) {}
-              });
-            },
-          ),
-        ),
-      ),
+      // Padding(
+      //   padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
+      //   child: Container(
+      //     child: TextFormField(
+      //       obscureText: false,
+      //       textAlign: TextAlign.start,
+      //       keyboardType: TextInputType.text,
+      //       style: TextStyle(
+      //         fontSize: 18,
+      //         height: 0.8,
+      //       ),
+      //       decoration: const InputDecoration(
+      //         contentPadding:
+      //         EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+      //         hintStyle: TextStyle(fontSize: 15),
+      //         enabledBorder: OutlineInputBorder(
+      //           borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      //           borderSide:
+      //           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor),
+      //         ),
+      //         focusedBorder: OutlineInputBorder(
+      //           borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      //           borderSide:
+      //           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor),
+      //         ),
+      //         border: OutlineInputBorder(
+      //             borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      //             borderSide:
+      //             BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
+      //         hintText: "Pin Code",
+      //       ),
+      //       validator: (value){
+      //         Pattern pattern =
+      //             r'(^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$)';
+      //         RegExp regex =
+      //         new RegExp(pattern.toString());
+      //
+      //         if(value==null || value.isEmpty){
+      //           return 'Please enter Pincode';
+      //         }else if(!regex.hasMatch(value)){
+      //           return 'Please enter valid Pincode';
+      //         }
+      //         return null;
+      //       },
+      //       onChanged: (text) {
+      //         setState(() {
+      //           if ( _formKey.currentState!.validate()) {}
+      //         });
+      //       },
+      //     ),
+      //   ),
+      // ),
 
       // For Upload image
         Padding(
@@ -640,31 +638,75 @@ class _AddProductScreenState extends State<AddProductScreen> {
        //  _buildAvatar(),
 
         // For Update button
-        Padding(
-          padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
-          child: Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(0),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 40,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: ThemeColors.drawerTextColor,
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    'Update',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
+        BlocBuilder<AddProductFormBloc,AddProductFormState>(builder: (context,addProd){
+          return BlocListener<AddProductFormBloc,AddProductFormState>(listener: (context,state){
+            if(state is AddProductSuccess){
+              Fluttertoast.showToast(msg: state.message.toString());
+              flagLoading=false;
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>UnstoppableProducts()));
+            }
+            if(state is AddProductLoading){
+              flagLoading=true;
+
+            }
+            if(state is AddProductFail){
+              flagLoading=false;
+
+              Fluttertoast.showToast(msg: state.message.toString());
+            }
+          },
+          child:
+          Padding(
+            padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
+            child: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 40,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: ThemeColors.drawerTextColor,
+                    ),
+                    onPressed: () {
+                      if(_image==null){
+                        Fluttertoast.showToast(msg: "Please select image");
+                      } else if(categoryModelselected==null){
+                        Fluttertoast.showToast(msg: "Please select category");
+                      }else if(subcategoryModelselected==null){
+                        Fluttertoast.showToast(msg: "Please select sub category");
+                      }else if(subsubcategoryModelselected==null){
+                        Fluttertoast.showToast(msg: "Please select sub sub category");
+                      }else if(_formKey.currentState!.validate())
+                      {
+                        addProductFormBloc!.add(AddProductForm(
+                            catId: categoryModelselected!.catId.toString(),
+                            subCatId: subcategoryModelselected!.subcatId.toString(),
+                            sscatId: subsubcategoryModelselected!.sscatId.toString(),
+                            prodName: _textProductNameController.text,
+                            desc: _textDescriController.text,
+                            image: imageFile!,
+                            price: _textPriceController.text)
+                        );
+                      }
+
+
+                    },
+                    child: Text(
+                      'Update',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ),
+          )
+          );
+        })
+
                     ]),
     ))),
 
