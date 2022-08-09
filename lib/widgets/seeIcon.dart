@@ -208,7 +208,7 @@ Widget nameIcon(){
   );
 }
 
-Widget imageIcon(){
+Widget imageBox(){
   return Container(
     width: 55,
     height: 55,
