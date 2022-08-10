@@ -37,9 +37,9 @@ class _LeadsDetailsState extends State<LeadsDetails> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement(
+            Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Leads()));
-            // Navigator.of(context).pop();
+            //Navigator.of(context).pop();
           },
           child: Icon(Icons.arrow_back_ios),
         ),
@@ -123,7 +123,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                   ),
                                 ],
                               ),
-                              nameIcon(),
+                              // nameIcon(),
                             ],
                           ),
                         ),
@@ -286,46 +286,46 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                 ),
                               ),
                               Type(),
+                              //date
                               Padding(
                                 padding: const EdgeInsets.only(
                                   left: 8.0,
                                   right: 8.0,
                                   top: 13.0,
                                 ),
-                                child: Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Contact",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.calendar_today_rounded,
-                                            color: Colors.black54,
-                                            size: 15,
-                                          ),
-                                          SizedBox(
-                                            width: 7,
-                                          ),
-                                          Text(
-                                            widget.leadData.customerContact.toString(),
-                                            style: TextStyle(
-                                                color: Colors.black54,
-                                                fontSize: 12),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Date",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.calendar_today_rounded,
+                                          color: Colors.black54,
+                                          size: 15,
+                                        ),
+                                        SizedBox(
+                                          width: 7,
+                                        ),
+                                        Text(
+                                          widget.leadData.dateTime.toString(),
+                                          style: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 12),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
+
                               Padding(
                                 padding: const EdgeInsets.only(
                                   left: 8.0,
@@ -452,6 +452,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                     ),
                                   ),
                                 ),
+                               //contact
                                 Padding(
                                   padding: const EdgeInsets.only(
                                     left: 8.0,
@@ -461,10 +462,10 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                   child: Container(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "Date",
+                                          "Contact",
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -481,7 +482,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                               width: 7,
                                             ),
                                             Text(
-                                              widget.leadData.dateTime.toString(),
+                                              widget.leadData.customerContact.toString(),
                                               style: TextStyle(
                                                   color: Colors.black54,
                                                   fontSize: 12),
@@ -536,8 +537,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                       ))),
                               child: ListTile(
                                 onTap: () {
-                                  // Navigator.pushReplacement(context,
-                                  //     MaterialPageRoute(builder: (context) => Leads()));
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) => Leads()));
                                 },
                                 title: const Text(
                                   'Not Interested',

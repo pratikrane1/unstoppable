@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:unstoppable/Models/businessNetworking_model.dart';
 import 'package:unstoppable/Models/category_model.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 
@@ -29,10 +30,13 @@ class Api {
   static const String SubCategory = HOST_URL+"get_sub_category";
   static const String SubSubCategory = HOST_URL+"get_sub_sub_category";
   static const String addProduct = HOST_URL+"save_product";
+  static const String delProduct = HOST_URL+"delete_product";
+  static const String updateProduct = HOST_URL+"update_product";
   static const String uploadImage = HOST_URL+"upload_product_images";
   static const String removeImage = HOST_URL+"remove_product_images";
   static const String Leads ="get_leads";
   static const String COMPANY_PROFILE ="get_company_profile";
+  static const String BUSI_NET_LIST =HOST_URL+"get_business_networking_leads";
 
   ///Login api
   static Future<dynamic> login(params) async {
@@ -127,6 +131,18 @@ class Api {
       final responseJson = json.decode(response.body);
       print(responseJson);
       return CustomerEnquiriesModelRepo.fromJson(responseJson);
+    }
+  }
+
+  static Future<dynamic> getBusinessNetworkingList(params) async {
+    final response = await http.post(
+      Uri.parse(BUSI_NET_LIST),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return BusinessNetworkingRepo.fromJson(responseJson);
     }
   }
 

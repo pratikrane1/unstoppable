@@ -44,7 +44,6 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     _productBloc = BlocProvider.of<ProductBloc>(context);
     _productBloc!.add(OnLoadingProductList(
         userid: Application.vendorLogin!.userId.toString(),
@@ -309,7 +308,7 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
                 topRight: Radius.circular(35.0))),
         context: context,
         builder: (BuildContext context) {
-          return SingleChildScrollView(child: AddProductScreen());
+          return SingleChildScrollView(child: AddProductScreen(productDetail:new ProductDetail(),));
         });
   }
 
@@ -767,11 +766,14 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
 Widget unstoppableProductCard(BuildContext context, ProductModel productData) {
   return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => UnstoppableProductsDetails(
-                    productId: productData.productId)));
+        if(productData.status!="0"){ //0 for disable and 1=enable
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => UnstoppableProductsDetails(
+                      productId: productData.productId)));
+        }
+
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

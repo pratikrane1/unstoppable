@@ -1,12 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/products/bloc.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
+import 'package:unstoppable/Screens/add_product.dart';
 import 'package:unstoppable/Screens/product_Images.dart';
+import 'package:unstoppable/Screens/unstoppableProducts.dart';
 import '../Utils/application.dart';
 import '../config/image.dart';
 import '../widgets/seeIcon.dart';
+import 'package:flutter_html/flutter_html.dart';
+
+
 
 class UnstoppableProductsDetails extends StatefulWidget {
   var productId;
@@ -60,6 +66,11 @@ class _UnstoppableProductsDetailsState
           if(state is ProductDetailLoading){
 
           }
+          if(state is DeleteProductSuccess){
+            Fluttertoast.showToast(msg: "Product deleted successfully");
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>UnstoppableProducts()));
+             Navigator.pop(context);
+          }
           return Container(
             decoration: new BoxDecoration(
               //borderRadius: new BorderRadius.circular(16.0),
@@ -89,7 +100,121 @@ class _UnstoppableProductsDetailsState
                         productName(context, productDetail!),
                         price(context, productDetail!),
                         Descriptions(context, productDetail!),
-                        deleteUpdateIcon(context,productDetail!)
+                        // deleteUpdateIcon(context,productDetail!)
+                    Padding(
+                      padding: EdgeInsets.only(top: 18.0),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // For Images Button
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductImages(productId: productDetail!.productId)));
+                              },
+                              child: Container(
+                                width: 40,
+                                height: 25,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  //color: Color(0xffc32c37),
+                                  color: Colors.indigo,
+                                  // border: Border.all(color: Colors.black, width: 1)
+                                ),
+                                child: Container(
+                                  width: 30,
+                                  height: 30,
+                                  alignment: Alignment.center,
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: Icon(
+                                          Icons.picture_in_picture,
+                                          color: Colors.white,
+                                          size: 21,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+
+                            // For Delete Icon
+                            InkWell(
+                                onTap: (){
+                                _productBloc!.add(DeleteProduct(productid: productDetail!.productId.toString()));
+                                },
+                                child:Container(
+                                  width: 40,
+                                  height: 25,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius:  BorderRadius.circular(5.0),
+                                    //color: Color(0xffc32c37),
+                                    color: Colors.indigo,
+                                    // border: Border.all(color: Colors.black, width: 1)
+                                  ),
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    alignment: Alignment.center,
+                                    child: Stack(
+                                      children: [
+                                        Center(
+                                          child: Icon(
+                                            CupertinoIcons.delete,
+                                            color: Colors.white,
+                                            size: 21,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            // For Edit Icon
+                            InkWell(
+                                onTap: (){
+                                  EditProduct(context,productDetail!);
+                                },
+                                child:Container(
+                                  width: 40,
+                                  height: 25,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius:  BorderRadius.circular(5.0),
+                                    //color: Color(0xffc32c37),
+                                    color: Colors.indigo,
+                                    // border: Border.all(color: Colors.black, width: 1)
+                                  ),
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    alignment: Alignment.center,
+                                    child: Stack(
+                                      children: [
+                                        Center(
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: Colors.white,
+                                            size: 21,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
+                    )
                       ],
                     )
                         :
@@ -121,14 +246,30 @@ class _UnstoppableProductsDetailsState
 //
 //   );
 // }
+
+Future EditProduct(BuildContext context, ProductDetail productDetail) {
+  return showModalBottomSheet(
+      isScrollControlled: true,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(35.0),
+              topRight: Radius.circular(35.0))),
+      context: context,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(child: AddProductScreen(productDetail:productDetail));
+      });
+}
+
 Widget deleteUpdateIcon(BuildContext context,ProductDetail productDetail) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 18.0),
+  return
+    Padding(
+    padding: EdgeInsets.only(top: 18.0),
     child: Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // For Delete Button
+          // For Images Button
           InkWell(
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductImages(productId: productDetail.productId)));
@@ -166,7 +307,11 @@ Widget deleteUpdateIcon(BuildContext context,ProductDetail productDetail) {
           ),
 
           // For Delete Icon
-          Container(
+          InkWell(
+            onTap: (){
+
+            },
+              child:Container(
             width: 40,
             height: 25,
             decoration: BoxDecoration(
@@ -192,12 +337,16 @@ Widget deleteUpdateIcon(BuildContext context,ProductDetail productDetail) {
                 ],
               ),
             ),
-          ),
+          )),
           SizedBox(
             width: 15,
           ),
       // For Edit Icon
-      Container(
+      InkWell(
+        onTap: (){
+          EditProduct(context,productDetail);
+          },
+          child:Container(
         width: 40,
         height: 25,
         decoration: BoxDecoration(
@@ -215,7 +364,7 @@ Widget deleteUpdateIcon(BuildContext context,ProductDetail productDetail) {
             children: [
               Center(
                 child: Icon(
-                  CupertinoIcons.eyedropper,
+                  Icons.edit,
                   color: Colors.white,
                   size: 21,
                 ),
@@ -223,7 +372,7 @@ Widget deleteUpdateIcon(BuildContext context,ProductDetail productDetail) {
             ],
           ),
         ),
-      ),
+      )),
         ],
       ),
     ),
@@ -252,7 +401,9 @@ Widget Descriptions(BuildContext context,ProductDetail productDetail) {
                   height: 150,
                   child: ListView(
                     children: [
-                      Text(productDetail.description.toString())
+                      // Text(productDetail.description.toString())
+                      Html(data
+                  :productDetail.description.toString())
                     ],
                   ))),
         ],

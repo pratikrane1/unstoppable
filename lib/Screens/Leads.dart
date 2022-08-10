@@ -258,7 +258,7 @@ class _LeadsState extends State<Leads> {
           return
             SingleChildScrollView(
               child: Container(
-                height: 700,
+                height: 500,
                 decoration: new BoxDecoration(
                   //borderRadius: new BorderRadius.circular(16.0),
                   color: Colors.black12,
