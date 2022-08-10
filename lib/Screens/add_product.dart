@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:unstoppable/Blocs/addProductForm/addProductForm_event.dart';
+import 'package:unstoppable/Models/product_detail_model.dart';
 import 'package:unstoppable/Models/subCategory_model.dart';
 import 'package:unstoppable/NetworkFunction/fetchSubCategory.dart';
 import 'package:unstoppable/Screens/image_file.dart';
@@ -26,6 +27,8 @@ import 'image_upload.dart';
 
 class AddProductScreen extends StatefulWidget {
   int? status;
+  ProductDetail productDetail;
+  AddProductScreen({Key? key,required this.productDetail}):super(key:key);
 
   @override
   State<AddProductScreen> createState() => _AddProductScreenState();
@@ -160,6 +163,52 @@ class _AddProductScreenState extends State<AddProductScreen> {
     // TODO: implement initState
     super.initState();
     addProductFormBloc = BlocProvider.of<AddProductFormBloc>(context);
+
+    //for update product
+    if(widget.productDetail.productId!=null){
+      getCategoryData();
+      getSubCategoryData();
+      setData();
+    }
+  }
+
+  void getCategoryData()
+  {
+    CategoryModel categoryModel=CategoryModel();
+    categoryModel.catName=widget.productDetail.categoryName;
+    categoryModelselected=categoryModel;
+
+  }
+
+  void getSubCategoryData()
+  {
+    SubCategoryModel subCategoryModel=SubCategoryModel();
+    subCategoryModel.subCatName=widget.productDetail.subCategoryName;
+    subcategoryModelselected=subCategoryModel;
+
+
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _textProductNameController.clear();
+    _textPriceController.clear();
+    _textDescriController.clear();
+  }
+  void setData(){
+    setState((){
+      // //category model
+      // CategoryModel categoryModel=CategoryModel();
+      // categoryModel.catName=widget.productDetail.categoryName;
+      // categoryModelselected=categoryModel;
+
+
+      _textProductNameController.text=widget.productDetail.productName.toString();
+      _textPriceController.text=widget.productDetail.price.toString();
+      _textDescriController.text=widget.productDetail.description.toString();
+
+    });
   }
 
   @override
@@ -253,6 +302,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                         .catName)
                                     .first as CategoryModel,
                                 onChanged: (CategoryModel? category) {
+                                  subcategoryModelselected=null;
                                   setState(() {
                                     categoryModelselected = category;
                                   });
@@ -315,6 +365,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                         .subCatName)
                                     .first as SubCategoryModel,
                                 onChanged: (SubCategoryModel? subCategory) {
+                                  subsubcategoryModelselected=null;
                                   setState(() {
                                     subcategoryModelselected = subCategory;
                                   });
@@ -378,6 +429,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                         .ssCatName)
                                     .first as SubSubCategoryModel,
                                 onChanged: (SubSubCategoryModel? subsubCategory) {
+
                                   setState(() {
                                     subsubcategoryModelselected = subsubCategory;
                                   });
@@ -491,49 +543,53 @@ class _AddProductScreenState extends State<AddProductScreen> {
       // for description
       Padding(
         padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
-        child: Container(
-          child: TextFormField(
-            controller: _textDescriController,
-            obscureText: false,
-            textAlign: TextAlign.start,
-            keyboardType: TextInputType.text,
-            maxLines: 3,
-            style: TextStyle(
-              fontSize: 18,
-              height: 0.8,
-            ),
-            decoration: const InputDecoration(
-              contentPadding:
-              EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-              hintStyle: TextStyle(fontSize: 15),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide:
-                BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            height: 100,
+            child: TextFormField(
+              controller: _textDescriController,
+              obscureText: false,
+              textAlign: TextAlign.start,
+              keyboardType: TextInputType.text,
+              maxLines: 10,
+              style: TextStyle(
+                fontSize: 14,
+                // height: 0.8,
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide:
-                BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor),
-              ),
-              border: OutlineInputBorder(
+              decoration: const InputDecoration(
+                contentPadding:
+                EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+                hintStyle: TextStyle(fontSize: 15),
+                enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   borderSide:
-                  BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-              hintText: "Description",
-            ),
-            validator: (value){
+                  BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderSide:
+                  BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor),
+                ),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide:
+                    BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
+                hintText: "Description",
+              ),
+              validator: (value){
 
-              if(value==null || value.isEmpty){
-                return 'Please enter description';
-              }
-              return null;
-            },
-            onChanged: (text) {
-              setState(() {
-                if ( _formKey.currentState!.validate()) {}
-              });
-            },
+                if(value==null || value.isEmpty){
+                  return 'Please enter description';
+                }
+                return null;
+              },
+              onChanged: (text) {
+                setState(() {
+                  if ( _formKey.currentState!.validate()) {}
+                });
+              },
+            ),
           ),
         ),
       ),
@@ -608,7 +664,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             strokeWidth: 1,
                             dashPattern: [10, 6],
                             child: Container(
-                              height: _image==null?120:150,
+                              height: _image==null?100:110,
                               width: MediaQuery.of(context).size.width * 0.9,
                               child: _image==null?
                               Column(
@@ -984,8 +1040,8 @@ Widget _productNameText() {
         textAlign: TextAlign.start,
         keyboardType: TextInputType.text,
         style: TextStyle(
-          fontSize: 18,
-          height: 0.8,
+          fontSize: 14,
+          // height: 0.8,
         ),
         decoration: const InputDecoration(
           contentPadding:
@@ -1073,13 +1129,13 @@ Widget _ProductName(BuildContext context) {
           textAlign: TextAlign.start,
           keyboardType: TextInputType.text,
           style: TextStyle(
-            fontSize: 18,
-            height: 0.8,
+            fontSize: 14,
+            // height: 0.8,
           ),
           decoration: const InputDecoration(
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-            hintStyle: TextStyle(fontSize: 15),
+            // contentPadding:
+            //     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            hintStyle: TextStyle(fontSize: 145),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(30.0)),
               borderSide:
@@ -1121,13 +1177,13 @@ Widget _Price(BuildContext context) {
           textAlign: TextAlign.start,
           keyboardType: TextInputType.text,
           style: TextStyle(
-            fontSize: 18,
-            height: 0.8,
+            fontSize: 14,
+            // height: 0.8,
           ),
           decoration: const InputDecoration(
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-            hintStyle: TextStyle(fontSize: 15),
+            // contentPadding:
+            //     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            hintStyle: TextStyle(fontSize: 14),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(30.0)),
               borderSide:

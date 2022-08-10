@@ -90,5 +90,11 @@ class UserRepository {
     return await Api.getCompanyProfile(params);
   }
 
+  Future<dynamic> fetchBusinessNetworking({String? userId,String? offset}) async {
+    final params = {"user_id":userId,
+      "offset":offset};
+    return await Api.getBusinessNetworkingList(params);
+  }
+
 }
 

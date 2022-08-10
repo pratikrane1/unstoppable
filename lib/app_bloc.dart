@@ -2,6 +2,7 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unstoppable/Blocs/authentication/authentication_bloc.dart';
+import 'package:unstoppable/Blocs/businessOpportunity/bloc.dart';
 import 'package:unstoppable/Blocs/home/home_bloc.dart';
 import 'package:unstoppable/Blocs/login/login_bloc.dart';
 import 'package:unstoppable/Blocs/theme/theme_bloc.dart';
@@ -25,6 +26,7 @@ class AppBloc {
   static final productImageBloc = AddProductFormBloc(productImageRepo: userRepository);
   static final leadBloc = LeadsBloc(leadsRepo: userRepository);
   static final companyProfileBloc = CompanyProfileBloc(companyProfileRepo: userRepository);
+  static final businessOpportunityBloc = BusinessOpprtunityBloc(businessOpportunityRepo: userRepository);
 
 
 
@@ -64,6 +66,11 @@ class AppBloc {
       create: (context) => companyProfileBloc,
     ),
 
+    BlocProvider<BusinessOpprtunityBloc>(
+      create: (context) => businessOpportunityBloc,
+    ),
+
+
   ];
 
   static void dispose() {
@@ -78,6 +85,7 @@ class AppBloc {
     customerEnquiriesBloc.close();
     productImageBloc.close();
     companyProfileBloc.close();
+    businessOpportunityBloc.close();
   }
 
   ///Singleton factory

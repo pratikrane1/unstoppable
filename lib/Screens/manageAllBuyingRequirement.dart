@@ -24,14 +24,16 @@ class _ManageAllBuyingRequirementState extends State<ManageAllBuyingRequirement>
     return Scaffold(
       appBar:
       AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget(context)));
-            // Navigator.of(context).pop();
-          },
-          child: Icon(Icons.arrow_back_ios),
-        ),
+        leading: InkWell(
+          onTap: (){
+    Navigator.pop(context);
+    },
+      child: Icon(
+        CupertinoIcons.chevron_left,
+        color: Colors.white,
+        size: 18,
+      ),
+    ),
         backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
         centerTitle: false,
@@ -40,7 +42,8 @@ class _ManageAllBuyingRequirementState extends State<ManageAllBuyingRequirement>
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Manage All Buying Requirement"),
+                Text("Manage All Buying Requirement",style: TextStyle(fontSize: 16)
+                  ),
                 // myAppBarIcon(),
               ],
             ),
@@ -84,9 +87,69 @@ class _ManageAllBuyingRequirementState extends State<ManageAllBuyingRequirement>
               child: Column(
                 children: [
                   //Searchbar(),
-                  searchDot(),
+                  ListTile(
+                  title:Padding(
+              padding: const EdgeInsets.only(top: 8.0,left: 8.0,right: 0.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color(0xFFFFFFFF),
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 8.0),
+                  /* -- Text and Icon -- */
+                  hintText: "Search Here...",
+                  hintStyle: const TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFFB3B1B1),
+                  ), // TextStyle
+
+                  // Icon
+                  /* -- Border Styling -- */
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(45.0),
+                    borderSide: const BorderSide(
+                      width: 1.0,
+                      color: Color(0xFFFF0000),
+                    ), // BorderSide
+                  ), // OutlineInputBorder
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(45.0),
+                    borderSide: const BorderSide(
+                      width: 1.0,
+                      color: Colors.grey,
+                    ), // BorderSide
+                  ), // OutlineInputBorder
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(45.0),
+                    borderSide: const BorderSide(
+                      width: 2.0,
+                      color: Colors.grey,
+                    ), // BorderSide
+                  ), // OutlineInputBorder
+                ), // InputDecoration
+              ),
+            ), // Expanded ,
+              trailing:Icon(Icons.more_vert) ,
+            ),
                   SizedBox(height: 5,),
-                  info(),
+
+            // For CardDisplay
+            SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Container(
+                    height: 500,
+                    child:ListView(
+                      children: [
+                        infoManage(),
+                        infoManage(),
+                        infoManage(),
+                        infoManage(),
+                        infoManage(),
+                        infoManage(),
+                      ],
+                    )
+                )
+            ),
                   pagenationdetail(),
                 ],
               ),
@@ -113,12 +176,95 @@ Widget info(){
           height: 500,
           child:ListView(
             children: [
-              infoManage(),
-              infoManage(),
-              infoManage(),
-              infoManage(),
-              infoManage(),
-              infoManage(),
+          Padding(
+          padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration:  BoxDecoration(
+            borderRadius:  BorderRadius.circular(10.0),
+            border: Border.all(width: 2, color: Colors.blue),
+            // color: Colors.black12,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                leading: nameIcon(),
+                title: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Table",
+                        overflow: TextOverflow.clip,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                          //color: Theme.of(context).accentColor
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Require tables for office use",
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black54,
+                                fontSize: 12.0,
+                              ),
+                            ),
+                            SizedBox(width: 20,)
+                          ],
+                        ),
+                        Text(
+                          "2022-04-01",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10.0,
+                              color: Colors.black54),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+
+                //dense: true,
+                trailing:Container(
+                  width: 40,
+                  height: 25,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius:  BorderRadius.circular(5.0),
+                    //color: Color(0xffc32c37),
+                    color: Colors.indigo,
+                    // border: Border.all(color: Colors.black, width: 1)
+                  ),
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    alignment: Alignment.center,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Icon(
+                            Icons.remove_red_eye_rounded,
+                            color: Colors.white,
+                            size: 21,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ),
+          ),
+        ),
+      ),
             ],
           )
       )

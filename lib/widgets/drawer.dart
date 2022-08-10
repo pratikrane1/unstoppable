@@ -247,10 +247,20 @@ Widget _BussinessOpp(BuildContext context) {
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => BusinessNetworking()));
+          },
+          title: const Text(
+            'Business Networking',
+            style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+          ),
+        ),
+        ListTile(
+          onTap: () {
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
           },
           title: const Text(
-            'Buss Networking Contacts',
+            'Your BNC',
             style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
           ),
         ),
