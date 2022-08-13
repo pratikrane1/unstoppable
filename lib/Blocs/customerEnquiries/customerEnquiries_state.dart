@@ -14,7 +14,7 @@ class InitialCustomerEnquiriesListState extends CustomerEnquiriesState {}
 
 class CustomerEnquiriesLoading extends CustomerEnquiriesState {}
 
-
+class DeleteCustomerEnquiriesLoading extends CustomerEnquiriesState {}
 
 class CustomerEnquiriesListSuccess extends CustomerEnquiriesState {
  List<CustomerEnquiriesModel>? CustomerEnquiriesList;
@@ -22,6 +22,10 @@ class CustomerEnquiriesListSuccess extends CustomerEnquiriesState {
 }
 
 class CustomerEnquiriesListLoadFail extends CustomerEnquiriesState {}
+
+class DeleteCustomerEnquiriesSuccess extends CustomerEnquiriesState {
+ DeleteCustomerEnquiriesSuccess();
+}
 
 // abstract class ProductDetailState {}
 

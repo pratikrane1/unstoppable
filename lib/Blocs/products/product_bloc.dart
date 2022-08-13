@@ -19,6 +19,12 @@ import '../../Utils/application.dart';
 import 'product_event.dart';
 import 'product_state.dart';
 
+//for multipart
+import 'package:http_parser/http_parser.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:mime/mime.dart';
+
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductBloc({this.productRepo}) : super(InitialProductListState());
@@ -95,35 +101,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     }
 
-    // For Product Update
-    if (event is UpdateProduct) {
-      yield UpdateProductLoading();
-      Map<String, String> params;
-      params = {
-        'cat_id': event.catid,
-        'subcat_id':event.subcatid,
-        'sscat_id':event.sscatid,
-        'prod_name':event.prodname,
-        'price':event.price,
-        'description':event.description,
-        'product_id':event.productid,
-      };
 
-      var response = await http.post(
-          Uri.parse(Api.updateProduct),
-          body: params
-      );
-
-      try {
-        final resp = json.decode(response.body);
-        if (resp['result'] == 'Success') {
-          yield UpdateProductSuccess();
-        }
-      } catch (e) {
-        print(e);
-        rethrow;
-      }
-    }
   }
 }
 

@@ -26,6 +26,11 @@ class CustomerEnquiries  extends StatefulWidget{
 class _CustomerEnquiriesState extends State<CustomerEnquiries> {
   CustomerEnquiriesBloc? _customerEnquiriesBloc;
   List<CustomerEnquiriesModel> customerEnquiriesList=[];
+  List<CustomerEnquiriesModel> searchResult=[];
+  bool flagNoDataAvailable=false;
+  final TextEditingController _searchcontroller = TextEditingController();
+  bool _isSearching=false;
+
 
   void initState() {
     // TODO: implement initState
@@ -33,6 +38,42 @@ class _CustomerEnquiriesState extends State<CustomerEnquiries> {
     _customerEnquiriesBloc = BlocProvider.of<CustomerEnquiriesBloc>(context);
     _customerEnquiriesBloc!.add(OnLoadingCustomerEnquiriesList(userid: Application.vendorLogin!.userId.toString()));
 
+  }
+
+  void _handleSearchStart() {
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+  void searchOperation(String searchText) {
+    searchResult.clear();
+    if (_isSearching != null) {
+      for (int i = 0; i < customerEnquiriesList.length; i++) {
+        CustomerEnquiriesModel customerEnquiriesModel = new CustomerEnquiriesModel();
+        customerEnquiriesModel.name = customerEnquiriesList[i].name.toString();
+        customerEnquiriesModel.productName = customerEnquiriesList[i].productName.toString();
+        customerEnquiriesModel.categoryName = customerEnquiriesList[i].categoryName.toString();
+        customerEnquiriesModel.productId = customerEnquiriesList[i].productId.toString();
+        customerEnquiriesModel.subCategoryName = customerEnquiriesList[i].subCategoryName.toString();
+        customerEnquiriesModel.ssCategoryName = customerEnquiriesList[i].ssCategoryName.toString();
+        customerEnquiriesModel.email = customerEnquiriesList[i].email.toString();
+        customerEnquiriesModel.mobileNo = customerEnquiriesList[i].mobileNo.toString();
+
+        if (customerEnquiriesModel.productName.toString().toLowerCase().contains(searchText.toLowerCase()) ||
+            customerEnquiriesModel.categoryName.toString().toLowerCase().contains(searchText.toLowerCase()) ||
+            customerEnquiriesModel.email.toString().toLowerCase().contains(searchText.toLowerCase()) ||
+            customerEnquiriesModel.mobileNo.toString().toLowerCase().contains(searchText.toLowerCase()) ) {
+          flagNoDataAvailable=false;
+          searchResult.add(customerEnquiriesModel);
+        }
+      }
+      setState(() {
+        if(searchResult.length==0){
+          flagNoDataAvailable=true;
+        }
+      });
+    }
   }
 
   Widget buildCustomerEnquiriesList(List<CustomerEnquiriesModel> customerEnquiriesList) {
@@ -231,27 +272,86 @@ class _CustomerEnquiriesState extends State<CustomerEnquiries> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListTile(
-                          title:Searchbar() ,
-                          trailing:Icon(Icons.more_vert)  ,
+                          title:Padding(
+                            padding: const EdgeInsets.only(top: 8.0,left: 8.0,right: 0.0),
+                            child: TextField(
+                              controller: _searchcontroller,
+                              onChanged: (value) {
+                                // this.phoneNo=value;
+                                print(value);
+                                searchOperation(value);
+                              },
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: const Color(0xFFFFFFFF),
+                                isDense: true,
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 8.0),
+                                /* -- Text and Icon -- */
+                                hintText: "Search Here...",
+                                hintStyle: const TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFFB3B1B1),
+                                ), // TextStyle
+                                prefixIcon:  IconButton(
+                                  icon: Icon(
+                                    Icons.search,
+                                    size: 25.0,
+                                  ),
+                                  onPressed: () {
+                                    _handleSearchStart();
+                                  },
+                                ),
+                                // Icon
+                                /* -- Border Styling -- */
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(45.0),
+                                  borderSide: const BorderSide(
+                                    width: 1.0,
+                                    color: Color(0xFFFF0000),
+                                  ), // BorderSide
+                                ), // OutlineInputBorder
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(45.0),
+                                  borderSide: const BorderSide(
+                                    width: 1.0,
+                                    color: Colors.grey,
+                                  ), // BorderSide
+                                ), // OutlineInputBorder
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(45.0),
+                                  borderSide: const BorderSide(
+                                    width: 2.0,
+                                    color: Colors.grey,
+                                  ), // BorderSide
+                                ), // OutlineInputBorder
+                              ), // InputDecoration
+                            ),
+                          ),
+                          // trailing:Icon(Icons.more_vert)  ,
                         ),
                         // info(),
                         //for product ListView
                         Expanded(child:Container(
                             margin: EdgeInsets.only(bottom: 70.0),
                             height: MediaQuery.of(context).size.height,
-                            child:buildCustomerEnquiriesList(customerEnquiriesList))),
-                    ],),
+                            child:searchResult.length != 0 ||
+                                _searchcontroller.text.isNotEmpty
+                                ?
+                            buildCustomerEnquiriesList(searchResult)
+                                :
+              buildCustomerEnquiriesList(customerEnquiriesList)),
+                        )],),
 
                    // SizedBox(height: 5,),
                     //info(),
                     //for product ListView
 
 
-                    Positioned(
-                        bottom: 5.0,
-                        right: 5.0,
-                        left: 5.0,
-                        child: pagenationdetail(context)),
+                    // Positioned(
+                    //     bottom: 5.0,
+                    //     right: 5.0,
+                    //     left: 5.0,
+                    //     child: pagenationdetail(context)),
                   ],
                 ),
               ),
@@ -263,57 +363,6 @@ class _CustomerEnquiriesState extends State<CustomerEnquiries> {
 
     );
   }
-}
-
-
-
-
-
-
-
-Widget Searchbar()
-{
-  return Padding(
-    padding: const EdgeInsets.only(top: 8.0,left: 8.0,right: 0.0),
-    child: TextField(
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: const Color(0xFFFFFFFF),
-        isDense: true,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 8.0),
-        /* -- Text and Icon -- */
-        hintText: "Search Here...",
-        hintStyle: const TextStyle(
-          fontSize: 18,
-          color: Color(0xFFB3B1B1),
-        ), // TextStyle
-
-        // Icon
-        /* -- Border Styling -- */
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(45.0),
-          borderSide: const BorderSide(
-            width: 1.0,
-            color: Color(0xFFFF0000),
-          ), // BorderSide
-        ), // OutlineInputBorder
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(45.0),
-          borderSide: const BorderSide(
-            width: 1.0,
-            color: Colors.grey,
-          ), // BorderSide
-        ), // OutlineInputBorder
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(45.0),
-          borderSide: const BorderSide(
-            width: 2.0,
-            color: Colors.grey,
-          ), // BorderSide
-        ), // OutlineInputBorder
-      ), // InputDecoration
-    ),
-  ); // Expanded
 }
 
 
@@ -342,11 +391,11 @@ Widget customerEnquiriesCard(BuildContext context,CustomerEnquiriesModel custome
             leading: CachedNetworkImage(
               filterQuality: FilterQuality.medium,
               // imageUrl: Api.PHOTO_URL + widget.users.avatar,
-              imageUrl:
-              "https://picsum.photos/250?image=9",
-              // imageUrl: model.cart[index].productImg == null
-              //     ? "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-              //     : model.cart[index].productImg,
+              // imageUrl:
+              // "https://picsum.photos/250?image=9",
+              imageUrl: customerEnquiriesData.productImage == ""
+                  ? "https://picsum.photos/250?image=9"
+                  : customerEnquiriesData.productImage.toString(),
               placeholder: (context, url) {
                 return Shimmer.fromColors(
                   baseColor: Theme
@@ -407,7 +456,7 @@ Widget customerEnquiriesCard(BuildContext context,CustomerEnquiriesModel custome
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      customerEnquiriesData.prodName.toString(),
+                      customerEnquiriesData.productName.toString(),
                     //  "Desktop Computer",
                       overflow: TextOverflow.clip,
                       style: TextStyle(

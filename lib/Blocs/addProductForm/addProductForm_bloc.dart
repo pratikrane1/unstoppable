@@ -42,6 +42,7 @@ class AddProductFormBloc extends Bloc<AddProductFormEvent, AddProductFormState> 
       request.fields['user_id'] = Application.vendorLogin!.userId.toString();
 
       List<MultipartFile> imageUpload = <MultipartFile>[];
+
       final multipartFile = await http.MultipartFile.fromPath(
         'prodimg', event.image.imagePath.toString(),
         // contentType: MediaType(mimeTypeData[0], mimeTypeData[1])
@@ -75,11 +76,9 @@ class AddProductFormBloc extends Bloc<AddProductFormEvent, AddProductFormState> 
       final listproductimage = refactorProductImage.map((item) {
         return ProductImageModel.fromJson(item);
       }).toList();
-      if(refactorProductImage.length>0)
-      {
+      if (refactorProductImage.length > 0) {
         yield ProductImageListSuccess(productImageList: listproductimage);
-
-      }else{
+      } else {
         yield ProductImageListLoadFail();
       }
     }
@@ -92,6 +91,7 @@ class AddProductFormBloc extends Bloc<AddProductFormEvent, AddProductFormState> 
       request.fields['product_id'] = event.productId;
 
       List<MultipartFile> imageUpload = <MultipartFile>[];
+
       final multipartFile = await http.MultipartFile.fromPath(
         'prodimg', event.prodimg.imagePath.toString(),
         // contentType: MediaType(mimeTypeData[0], mimeTypeData[1])
@@ -130,9 +130,46 @@ class AddProductFormBloc extends Bloc<AddProductFormEvent, AddProductFormState> 
         rethrow;
       }
     }
+
+
+    // For Product Update
+    if (event is UpdateProduct) {
+      yield UpdateProductLoading();
+
+      MultipartRequest request = new MultipartRequest(
+          'POST', Uri.parse(Api.updateProduct));
+      request.fields['cat_id'] = event.catid;
+      request.fields['subcat_id'] = event.subcatid;
+      request.fields['sscat_id'] = event.sscatid;
+      request.fields['prod_name'] = event.prodname;
+      request.fields['price'] = event.price;
+      request.fields['description'] = event.description;
+      request.fields['user_id'] = Application.vendorLogin!.userId.toString();
+
+      List<MultipartFile> imageUpload = <MultipartFile>[];
+      if(event.imgFlag=="0"){//0 cropped file,1=existing image
+        final multipartFile = await http.MultipartFile.fromPath(
+          'prodimg', event.image.imagePath.toString(),
+          // contentType: MediaType(mimeTypeData[0], mimeTypeData[1])
+        );
+        imageUpload.add(multipartFile);
+        request.files.addAll(imageUpload);
+
+      }else{
+        request.fields['prodimg'] = "";
+
+      }
+
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      var responseData = json.decode(response.body);
+      if (responseData['result'] == 'Success') {
+        yield UpdateProductSuccess(message: responseData['msg']);
+      } else {
+        yield UpdateProductFail(message: responseData['msg']);
+      }
+    }
   }
-
-
-
 
 }

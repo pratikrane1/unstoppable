@@ -180,7 +180,8 @@ class _SignInPageState extends State<SignInPage> {
                                   onChanged: (value){
                                     setState(() {
                                       if ( _formKey.currentState!.validate()) {}
-                                    });
+                                    }
+                                    );
                                   },
                                 ),
                               ),

@@ -40,8 +40,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ///Case API fail but not have token
 
       String totalProduct = response.totalProduct.toString();
+      int totalEnquiry = response.totalEnquiry!.toInt();
+      int totalLeads = response.totalLeads!.toInt();
+      int cancelLeads = response.cancelLeads!.toInt();
+      int monthlyTarget = response.monthlyTarget!.toInt();
+      int achievement = response.achievement!.toInt();
 
-      yield HomeListSuccess(totalProd: totalProduct);
+      yield HomeListSuccess(totalProd: totalProduct,totalEnquiry: totalEnquiry,totalLeads: totalLeads,achievements: achievement,cancelLeads: cancelLeads,monthlyTarget: monthlyTarget);
     }
   }
 }

@@ -242,7 +242,7 @@ Widget imageBox(){
 Widget addIcon(BuildContext context){
   return InkWell(
     onTap: (){
-      AddProduct(context);
+      //AddProduct(context);
     },
     child: Container(
       width: 35,

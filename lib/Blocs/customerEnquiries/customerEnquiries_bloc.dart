@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:unstoppable/Api/api.dart';
 import 'package:unstoppable/Blocs/authentication/authentication_event.dart';
 import 'package:unstoppable/Blocs/login/login_event.dart';
 import 'package:unstoppable/Blocs/login/login_state.dart';
@@ -53,28 +54,32 @@ class CustomerEnquiriesBloc extends Bloc<CustomerEnquiriesEvent, CustomerEnquiri
       yield CustomerEnquiriesListSuccess(
           CustomerEnquiriesList: listCustomerEnquiries);
     }
+
+
+    //Delete Customer Enquiries
+    if (event is DeleteCustomerEnquiries) {
+      yield DeleteCustomerEnquiriesLoading();
+      Map<String, String> params;
+      params = {
+        'enq_id': event.enqid
+      };
+
+      var response = await http.post(
+          Uri.parse(Api.delEnquiry),
+          body: params
+      );
+
+      try {
+        final resp = json.decode(response.body);
+        if (resp['result'] == 'Success') {
+          yield DeleteCustomerEnquiriesSuccess();
+        }
+      } catch (e) {
+        print(e);
+        rethrow;
+      }
+    }
   }
+
 }
-/////////////
-//     if (event is OnLoadingProductDetail) {
-//       ///Notify loading to UI
-//       yield ProductDetailLoading();
-//
-//       ///Fetch API via repository
-//       final ProductDetailRepo result = await productRepo!
-//           .fetchProductDetail(
-//           productId: event.prodId
-//       );
-//
-//       ///Case API fail but not have token
-//       if (result.result == "Success") {
-//
-//         ProductDetail productDetail = new ProductDetail();
-//         productDetail = result.data;
-//
-//         yield ProductDetailSuccess(data: productDetail);
-//       }
-//     }
-//   }
-//
- //}
+

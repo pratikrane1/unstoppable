@@ -14,6 +14,28 @@ class AddProductForm extends AddProductFormEvent{
   required this.desc,required this.image,required this.price
   });
 }
+class UpdateProduct extends AddProductFormEvent{
+  String catid;
+  String subcatid;
+  String sscatid;
+  String prodname;
+  String price;
+  String description;
+  String productid;
+  ImageFile image;
+  String imgFlag;
+
+  UpdateProduct({
+    required this.catid,
+    required this.subcatid,
+    required this.sscatid,
+    required this.prodname,
+    required this.price,
+    required this.description,
+    required this.productid,
+    required this.image,
+  required this.imgFlag});
+}
 
 class UploadProductImage extends AddProductFormEvent{
   String productId;

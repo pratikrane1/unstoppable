@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/companyProfile/comapny_profile_state.dart';
 import 'package:unstoppable/Blocs/companyProfile/company_profile_event.dart';
 import 'package:unstoppable/Models/company_profile_model.dart';
@@ -57,69 +58,69 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
     // final _nameController = TextEditingController(text: companyData![0].name.toString());
   }
 
-  void setData(List<CompanyProfileModel> companydataList){
-    if(companydataList.length>0){
-      _nameController.text = companyData![0].name.toString();
-      _managingDirector.text = companyData![0].managingDirector.toString();
-      _ceo.text = companyData![0].ceo.toString();
-      _companyName.text = companyData![0].companyName.toString();
-      _operatorDesignation.text = companyData![0].operatorDesignation.toString();
-      _operatorName.text = companyData![0].operatorName.toString();
-      _businessAddress.text = companyData![0].businessAddress.toString();
-      _country.text = companyData![0].country.toString();
-      _state.text = companyData![0].state.toString();
-      _city.text = companyData![0].city.toString();
-      _zipCode.text = companyData![0].zipCode.toString();
-      _gstin.text = companyData![0].gstin.toString();
-      _companyWebsite.text = companyData![0].website.toString();
-      _mobileNumber.text = companyData![0].mobileNo.toString();
-      _alternateNumber.text = companyData![0].altMobileNo.toString();
-      _primaryEmail.text = companyData![0].email.toString();
-      _alternateEmail.text = companyData![0].altEmail.toString();
-      _landlineNumber.text = companyData![0].landlineNo.toString();
-      _yearOfEstablishment.text = companyData![0].estYear.toString();
-      _businessType.text = companyData![0].businessTyp.toString();
-      _OwnershipType.text = companyData![0].ownershipTyp.toString();
-      _numberOfEmployees.text = companyData![0].totEmployee.toString();
-      _annualTurnover.text = companyData![0].annualTurnover.toString();
-      _panNo.text = companyData![0].panNo.toString();
-      _tanNo.text = companyData![0].tanNo.toString();
-      _cinNo.text = companyData![0].cinNo.toString();
-      _dfgt.text = companyData![0].dfgt.toString();
-
-
-    }else{
-      _nameController.text = "";
-      _managingDirector.text = "";
-      _ceo.text = "";
-      _companyName.text = "";
-      _operatorDesignation.text = "";
-      _operatorName.text = "";
-      _businessAddress.text = "";
-      _country.text = "";
-      _state.text = "";
-      _city.text = "";
-      _zipCode.text = "";
-      _gstin.text = "";
-      _companyWebsite.text = "";
-      _mobileNumber.text = "";
-      _alternateNumber.text = "";
-      _primaryEmail.text = "";
-      _alternateEmail.text = "";
-      _landlineNumber.text = "";
-      _yearOfEstablishment.text = "";
-      _businessType.text = "";
-      _OwnershipType.text = "";
-      _numberOfEmployees.text = "";
-      _annualTurnover.text = "";
-      _panNo.text = "";
-      _tanNo.text = "";
-      _cinNo.text = "";
-      _dfgt.text = "";
-
-    }
-
-  }
+  // void setData(List<CompanyProfileModel> companydataList){
+  //   if(companydataList.length>0){
+  //     // _nameController.text = companyData![0].name.toString();
+  //     _managingDirector.text = companyData![0].managingDirector.toString();
+  //     _ceo.text = companyData![0].ceo.toString();
+  //     _companyName.text = companyData![0].companyName.toString();
+  //     _operatorDesignation.text = companyData![0].operatorDesignation.toString();
+  //     _operatorName.text = companyData![0].operatorName.toString();
+  //     _businessAddress.text = companyData![0].businessAddress.toString();
+  //     _country.text = companyData![0].country.toString();
+  //     _state.text = companyData![0].state.toString();
+  //     _city.text = companyData![0].city.toString();
+  //     _zipCode.text = companyData![0].zipCode.toString();
+  //     _gstin.text = companyData![0].gstin.toString();
+  //     // _companyWebsite.text = companyData![0].website.toString();
+  //     _mobileNumber.text = companyData![0].mobileNo.toString();
+  //     // _alternateNumber.text = companyData![0].altMobileNo.toString();
+  //     _primaryEmail.text = companyData![0].email.toString();
+  //     // _alternateEmail.text = companyData![0].altEmail.toString();
+  //     // _landlineNumber.text = companyData![0].landlineNo.toString();
+  //     _yearOfEstablishment.text = companyData![0].estYear.toString();
+  //     _businessType.text = companyData![0].businessTyp.toString();
+  //     _OwnershipType.text = companyData![0].ownershipTyp.toString();
+  //     _numberOfEmployees.text = companyData![0].totEmployee.toString();
+  //     _annualTurnover.text = companyData![0].annualTurnover.toString();
+  //     _panNo.text = companyData![0].panNo.toString();
+  //     _tanNo.text = companyData![0].tanNo.toString();
+  //     _cinNo.text = companyData![0].cinNo.toString();
+  //     _dfgt.text = companyData![0].dfgt.toString();
+  //
+  //
+  //   }else{
+  //     // _nameController.text = "";
+  //     _managingDirector.text = "";
+  //     _ceo.text = "";
+  //     _companyName.text = "";
+  //     _operatorDesignation.text = "";
+  //     _operatorName.text = "";
+  //     _businessAddress.text = "";
+  //     _country.text = "";
+  //     _state.text = "";
+  //     _city.text = "";
+  //     _zipCode.text = "";
+  //     _gstin.text = "";
+  //     // _companyWebsite.text = "";
+  //     _mobileNumber.text = "";
+  //     // _alternateNumber.text = "";
+  //     _primaryEmail.text = "";
+  //     // _alternateEmail.text = "";
+  //     // _landlineNumber.text = "";
+  //     _yearOfEstablishment.text = "";
+  //     _businessType.text = "";
+  //     _OwnershipType.text = "";
+  //     _numberOfEmployees.text = "";
+  //     _annualTurnover.text = "";
+  //     _panNo.text = "";
+  //     _tanNo.text = "";
+  //     _cinNo.text = "";
+  //     _dfgt.text = "";
+  //
+  //   }
+  //
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -138,14 +139,14 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
           title: Text('Company Profile'),
         ),
         body:BlocBuilder<CompanyProfileBloc, CompanyProfileState>(builder: (context, state) {
-          if (state is CompanyProfileListSuccess) {
+          if (state is CompanyProfileSuccess) {
             companyData = state.companyProfileData;
-            setData(companyData!);
+            // setData(companyData!);
           }
 
           if(state is CompanyProfileListLoadFail){
             companyData=[];
-            setData(companyData!);
+            // setData(companyData!);
           }
 
           return
@@ -160,7 +161,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                           scrollDirection: Axis.vertical,
                           child:
                           Container(
-                              height: 600,
+                              height: MediaQuery.of(context).size.height * 0.7,
                               child:  companyData!=null
                                   ?
                               ListView(
@@ -195,7 +196,8 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
+                                                      hintText: companyData![0].name.toString(),
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -212,13 +214,27 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+
                                                     ),
                                                     validator: (value) {
                                                       // profile.name = value!.trim();
+                                                      // Pattern pattern =
+                                                      //     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                                      // RegExp regex =
+                                                      // new RegExp(pattern.toString());
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter name';
+                                                      }
+                                                      // else if(!regex.hasMatch(value)){
+                                                      //   return 'Please enter valid name';
+                                                      // }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
                                                       // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -243,7 +259,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -260,13 +276,25 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].managingDirector.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      // Pattern pattern =
+                                                      //     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                                      // RegExp regex =
+                                                      // new RegExp(pattern.toString());
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Managing Director';
+                                                      }
+                                                      // else if(!regex.hasMatch(value)){
+                                                      //   return 'Please enter valid email';
+                                                      // }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -291,7 +319,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -308,13 +336,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].ceo.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter ceo';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -341,7 +374,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -358,13 +391,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].companyName.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Company Name';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -397,7 +435,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration:  InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -415,13 +453,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].operatorDesignation.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter Operator Designation';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -448,7 +491,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration:  InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -466,13 +509,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].operatorName.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter Operator Name';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -501,7 +549,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -518,13 +566,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].businessAddress.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Business Address';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -557,7 +610,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration:  InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -575,13 +628,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].country.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter Country';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -606,7 +664,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration:  InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -624,13 +682,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].city.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter City';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -657,7 +720,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration:  InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -675,13 +738,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].state.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter State';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -706,7 +774,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration:  InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -724,13 +792,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].zipCode.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter Zip Code';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -758,7 +831,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -775,13 +848,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].gstin.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter GSTIN';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -806,7 +884,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -823,13 +901,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].website.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Company Website';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -854,7 +937,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -871,13 +954,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].mobileNo.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Mobile Number';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -902,7 +990,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -919,13 +1007,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].altMobileNo.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Alternate Number';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -950,7 +1043,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -967,13 +1060,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].email.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Primary Email';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -998,7 +1096,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -1015,13 +1113,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].altEmail.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Alternate Email';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -1046,7 +1149,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -1063,13 +1166,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].landlineNo.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Landline Number';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -1094,7 +1202,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -1111,13 +1219,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].estYear.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Year of establishment';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -1150,7 +1263,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration:  InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -1168,13 +1281,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].businessTyp.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter Business Type';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -1199,7 +1317,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration: InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -1217,13 +1335,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].totEmployee.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter Number of employee';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -1250,7 +1373,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration:  InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -1268,13 +1391,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].ownershipTyp.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter Ownership Type';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -1299,7 +1427,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                             fontSize: 18,
                                                             height: 1.5,
                                                           ),
-                                                          decoration: const InputDecoration(
+                                                          decoration:  InputDecoration(
                                                             contentPadding:
                                                             EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                             hintStyle: TextStyle(fontSize: 15),
@@ -1317,13 +1445,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: "",
+                                                            hintText: companyData![0].annualTurnover.toString(),
                                                           ),
                                                           validator: (value) {
-                                                            // profile.address = value!.trim();
+                                                            if(value==null || value.isEmpty){
+                                                              return 'Please enter Annual Turnover';
+                                                            }
+                                                            return null;
                                                           },
                                                           onChanged: (value) {
-                                                            // profile.address = value;
+                                                            setState(() {
+                                                              if ( _formKey.currentState!.validate()) {}
+                                                            });
                                                           },
                                                         ),
                                                       ),
@@ -1351,7 +1484,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -1368,13 +1501,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].panNo.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Pan no';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -1399,7 +1537,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -1416,13 +1554,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].tanNo.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter Tan no';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -1447,7 +1590,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration:  InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -1464,13 +1607,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].cinNo.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter CIN no';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -1495,7 +1643,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
-                                                    decoration: const InputDecoration(
+                                                    decoration: InputDecoration(
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -1512,13 +1660,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: "",
+                                                      hintText: companyData![0].dfgt.toString(),
                                                     ),
                                                     validator: (value) {
-                                                      // profile.name = value!.trim();
+                                                      if(value==null || value.isEmpty){
+                                                        return 'Please enter DFGT/IE code';
+                                                      }
+                                                      return null;
                                                     },
                                                     onChanged: (value) {
-                                                      // profile.name = value;
+                                                      setState(() {
+                                                        if ( _formKey.currentState!.validate()) {}
+                                                      });
                                                     },
                                                   ),
                                                 ],
@@ -1534,7 +1687,65 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
 
                       ),
                       SizedBox(height: 10,),
-                      _SaveButton(context),
+                      Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 40,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: ThemeColors.drawerTextColor,
+                              ),
+                              onPressed: () {
+                                if(_formKey.currentState!.validate()){
+                                  Fluttertoast.showToast(msg: "Save Successfully");
+                                  _companyProbileBloc!.add(UpdateCompanyProfile(
+                                      userid: "874",
+                                      name: _nameController.text,
+                                      managingdirector: _managingDirector.text,
+                                      ceo: _ceo.text,
+                                      companyname: _companyName.text,
+                                      operatordesignation: _operatorDesignation.text,
+                                      operatorname: _operatorName.text,
+                                      businessaddress: _businessAddress.text,
+                                      country: _country.text,
+                                      state: _state.text,
+                                      city: _city.text,
+                                      zipcode: _zipCode.text,
+                                      gstin: _gstin.text,
+                                      website: _companyWebsite.text,
+                                      mobileno: _mobileNumber.text,
+                                      altmobile: _alternateNumber.text,
+                                      email: _primaryEmail.text,
+                                      altemail: _alternateEmail.text,
+                                      landline: _landlineNumber.text,
+                                      estyear: _yearOfEstablishment.text,
+                                      businesstype: _businessType.text,
+                                      ownershiptype: _OwnershipType.text,
+                                      totemp: _numberOfEmployees.text,
+                                      anualturnover: _annualTurnover.text,
+                                      panno: _panNo.text,
+                                      tanno: _tanNo.text,
+                                      cinno: _cinNo.text,
+                                      dfgt: _dfgt.text
+
+                                  ));
+                                }else {
+                                  Fluttertoast.showToast(msg: "Please fill the data");
+                                }
+                              },
+                              child: Text(
+                                'Save',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -1549,27 +1760,3 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
   }
 }
 
-Widget _SaveButton(BuildContext context) {
-  return Center(
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: 40,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: ThemeColors.drawerTextColor,
-          ),
-          onPressed: () {},
-          child: Text(
-            'Save',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}

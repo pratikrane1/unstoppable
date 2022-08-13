@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:unstoppable/Models/businessNetworking_model.dart';
 import 'package:unstoppable/Models/category_model.dart';
+import 'package:unstoppable/Models/productIamBuying_model.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 
 import 'dart:convert';
@@ -23,6 +24,8 @@ class Api {
   static const String VENDOR_LOGIN="app_login";
   static const String Vendor_Dashboard_Count ="get_dashboard_data";
   static const String Product ="get_products";
+  static const String ProductBuying ="get_product_buying";
+  static const String AddProductBuying =HOST_URL+"save_product_buying";
   static const String ProductImage ="get_product_images";
   static const String Product_Detail ="get_product_details";
   static const String Customer_Enquiries ="get_customer_enquiry";
@@ -31,12 +34,15 @@ class Api {
   static const String SubSubCategory = HOST_URL+"get_sub_sub_category";
   static const String addProduct = HOST_URL+"save_product";
   static const String delProduct = HOST_URL+"delete_product";
+  static const String delEnquiry = HOST_URL+"delete_customer_enquiry";
   static const String updateProduct = HOST_URL+"update_product";
   static const String uploadImage = HOST_URL+"upload_product_images";
   static const String removeImage = HOST_URL+"remove_product_images";
   static const String Leads ="get_leads";
   static const String COMPANY_PROFILE ="get_company_profile";
+  static const String updateCompanyProfile =HOST_URL+"update_company_profile";
   static const String BUSI_NET_LIST =HOST_URL+"get_business_networking_leads";
+  static const String CHANGE_PASS=HOST_URL+"update_password";
 
   ///Login api
   static Future<dynamic> login(params) async {
@@ -71,6 +77,18 @@ class Api {
       final responseJson = json.decode(response.body);
       print(responseJson);
       return ProductRepo.fromJson(responseJson);
+    }
+  }
+
+  static Future<dynamic> getProductBuying(params) async {
+    final response = await http.post(
+      Uri.parse(HOST_URL+ProductBuying),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return ProductBuyingRepo.fromJson(responseJson);
     }
   }
 

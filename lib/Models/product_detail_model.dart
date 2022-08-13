@@ -29,6 +29,9 @@ class ProductDetail {
   String? description;
   String? status;
   String? statusName;
+  String? catId;
+  String? subCatId;
+  String? productImg;
 
   ProductDetail(
       {
@@ -40,7 +43,10 @@ class ProductDetail {
         this.price,
         this.description,
         this.status,
-        this.statusName});
+        this.statusName,
+      this.catId,
+      this.subCatId,
+      this.productImg});
 
   ProductDetail.fromJson(Map<String, dynamic> json) {
     productId = json['product_id'];
@@ -52,6 +58,9 @@ class ProductDetail {
     description = json['description'];
     status = json['status'];
     statusName = json['status_name'];
+    catId=json['cat_id'];
+    subCatId=json['subcat_id'];
+    productImg=json['product_image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +74,9 @@ class ProductDetail {
     data['description'] = this.description;
     data['status'] = this.status;
     data['status_name'] = this.statusName;
+    data['cat_id']=this.catId;
+    data['subcat_id']=this.subCatId;
+    data['product_image']=this.productImg;
     return data;
   }
 }

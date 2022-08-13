@@ -50,7 +50,7 @@ class UserRepository {
   }
 
   Future<dynamic> fetchDashboardCount({String? userId}) async {
-    final params = {"userid":userId};
+    final params = {"user_id":userId};
     return await Api.getDashBoardCount(params);
   }
 
@@ -59,6 +59,12 @@ class UserRepository {
       "offset":offset};
     return await Api.getProduct(params);
   }
+  Future<dynamic> fetchProductBuying({String? userId,String? offset}) async {
+    final params = {"user_id":userId,
+      "offset":offset};
+    return await Api.getProductBuying(params);
+  }
+
   Future<dynamic> fetchProductImage({String? productId,String? offset}) async {
     final params = {"product_id":productId,
       "offset":offset};

@@ -13,9 +13,13 @@ class HomeLoading extends HomeState {}
 
 
 class HomeListSuccess extends HomeState {
-  var totalProd, totalLeads, totalEnquiry, monthlyTarget, achievements, cancelLeads ;
-
-  HomeListSuccess({this.totalProd});
+  var totalProd;
+  var totalEnquiry;
+  var totalLeads;
+  var cancelLeads;
+  var monthlyTarget;
+  var achievements;
+  HomeListSuccess({this.totalProd,this.achievements,this.cancelLeads,this.monthlyTarget,this.totalEnquiry,this.totalLeads,});
 }
 
 class HomeListLoadFail extends HomeState {}

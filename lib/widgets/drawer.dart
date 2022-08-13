@@ -17,7 +17,10 @@ import '../Blocs/login/login_state.dart';
 import '../Screens/bottom_navbar.dart';
 import '../Screens/businessNetworking.dart';
 import '../Screens/business_networking_contact.dart';
+import '../Screens/business_networking_lead.dart';
+import '../Screens/company_profile.dart';
 import '../Screens/payment_history.dart';
+import '../Screens/product_I_am_buying.dart';
 import '../config/image.dart';
 import '../constant/theme_colors.dart';
 import 'app_button.dart';
@@ -257,7 +260,7 @@ Widget _BussinessOpp(BuildContext context) {
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
+                MaterialPageRoute(builder: (context) => BusinessNetworkingLead()));
           },
           title: const Text(
             'Your BNC',
@@ -328,7 +331,11 @@ Widget _MyTools(BuildContext context) {
             width: 0.1,
           ))),
           child: ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => ProductIamBuying()));
+
+            },
             title: const Text(
               'Product I am Buying',
               style:
@@ -394,6 +401,16 @@ Widget _Settings(BuildContext context) {
           },
           title: const Text(
             'Payment History',
+            style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+          ),
+        ),
+        ListTile(
+          onTap: () {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => CompanyProfileEditPage()));
+          },
+          title: const Text(
+            'Company Profile',
             style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
           ),
         ),

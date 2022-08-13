@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:unstoppable/Screens/customerEnquiries.dart';
 import 'package:unstoppable/Utils/application.dart';
 import '../Blocs/customerEnquiries/customerEnquiries_bloc.dart';
 import '../Blocs/customerEnquiries/customerEnquiries_event.dart';
@@ -25,9 +27,7 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
     super.initState();
 
     _customerEnquiriesBloc = BlocProvider.of<CustomerEnquiriesBloc>(context);
-  //  _customerEnquiriesBloc!.add(OnLoadingCustomerEnquiriesList(userid: Application.vendorLogin!.userId.toString()));
-  //   _customerEnquiriesBloc!.add(OnLoadingCustomerEnquiriesList(
-  //       userid: widget.userId.toString()));
+
 
   }
 
@@ -51,8 +51,9 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
 
       ),
       body:BlocBuilder<CustomerEnquiriesBloc,CustomerEnquiriesState>(builder:(context,state) {
-      if (state is CustomerEnquiriesListSuccess) {
-        customerEnquiriesList = state.CustomerEnquiriesList!;
+      if (state is DeleteCustomerEnquiriesSuccess) {
+        Fluttertoast.showToast(msg: "Customer Inquiry deleted successfully");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CustomerEnquiries()));
       }
       return SafeArea(
         child: Container(
@@ -91,12 +92,12 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
                               children: [
                                 Icon(Icons.account_tree,color: Colors.black54,size: 15,),
                                 SizedBox(width: 7,),
-                                Text(widget.customerEnquiriesdata.prodName.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                                Text(widget.customerEnquiriesdata.productName.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
                               ],
                             ),
                           ],
                         ),
-                        nameIcon(),
+                        // nameIcon(),
                       ],
                     ),
                   ),
@@ -172,7 +173,8 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
                             children: [
                               Icon(Icons.account_balance_wallet_sharp,color: Colors.black54,size: 15,),
                               SizedBox(width: 7,),
-                              Text(widget.customerEnquiriesdata.addedDate.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                              Text(widget.customerEnquiriesdata.enquiryDate.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                              Text(widget.customerEnquiriesdata.enquiryDate.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
                             ],
                           ),
                         ],
@@ -205,7 +207,11 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
                   ),
 
                       SizedBox(height: 4,),
-                Container(
+                InkWell(
+                  onTap: (){
+                    _customerEnquiriesBloc!.add(DeleteCustomerEnquiries(enqid:widget.customerEnquiriesdata.enqId.toString()));
+                  },
+                    child:Container(
                   width: 45,
                   height: 45,
                   decoration: BoxDecoration(
@@ -226,7 +232,7 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
                       ],
                     ),
                   ),
-                ),
+                )),
                     ],
                   ),
                 ),

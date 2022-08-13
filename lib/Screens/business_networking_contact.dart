@@ -17,13 +17,13 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget(context)));
-          },
-          child: Icon(Icons.arrow_back_ios),
-        ),
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Navigator.pushReplacement(context,
+        //         MaterialPageRoute(builder: (context) => DrawerWidget(context)));
+        //   },
+        //   child: Icon(Icons.arrow_back_ios),
+        // ),
         backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
         centerTitle: true,

@@ -1,103 +1,81 @@
 class CustomerEnquiriesModelRepo {
-  String? result;
-  dynamic data;
+String result;
+dynamic data;
 
-  CustomerEnquiriesModelRepo({this.result, this.data});
-  factory CustomerEnquiriesModelRepo.fromJson(Map<dynamic, dynamic> json) {
-    try {
-      return CustomerEnquiriesModelRepo(
-        result: json['result'],
-        data: json['data'],
-      );
-    } catch (error) {
-      return CustomerEnquiriesModelRepo(
-        result: "",
-        data: null,
-      );
-    }
+CustomerEnquiriesModelRepo({required this.result, this.data});
+
+factory CustomerEnquiriesModelRepo.fromJson(Map<dynamic, dynamic> json) {
+  try {
+    return CustomerEnquiriesModelRepo(
+      result: json['result'],
+      data: json['data'],
+    );
+  } catch (error) {
+    return CustomerEnquiriesModelRepo(
+      result: "",
+      data: null,
+    );
   }
-
-  // CustomerEnquiriesModelRepo.fromJson(Map<String, dynamic> json) {
-  //   result = json['result'];
-  //   if (json['data'] != null) {
-  //     data = new List<Data>();
-  //     json['data'].forEach((v) {
-  //       data.add(new Data.fromJson(v));
-  //     });
-  //   }
-  // }
-  //
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = new Map<String, dynamic>();
-  //   data['result'] = this.result;
-  //   if (this.data != null) {
-  //     data['data'] = this.data.map((v) => v.toJson()).toList();
-  //   }
-  //   return data;
-  // }
+}
 }
 
 class CustomerEnquiriesModel {
-  String? enqId;
-  String? prodId;
-  String? buyerId;
-  String? message;
+  String? productId;
+  String? categoryName;
+  String? subCategoryName;
+  String? ssCategoryName;
+  String? productName;
+  String? productImage;
   String? status;
-  String? addedDate;
-  String? updatedDate;
+  String? statusName;
+  String? enqId;
+  String? message;
   String? isRead;
-  String? prodName;
-  String? userId;
+  String? buyerId;
   String? name;
   String? email;
   String? mobileNo;
+  String? enquiryDate;
 
-  CustomerEnquiriesModel(
-      {this.enqId,
-        this.prodId,
-        this.buyerId,
-        this.message,
-        this.status,
-        this.addedDate,
-        this.updatedDate,
-        this.isRead,
-        this.prodName,
-        this.userId,
-        this.name,
-        this.email,
-        this.mobileNo});
+  CustomerEnquiriesModel({this.productId, this.categoryName, this.subCategoryName, this.ssCategoryName, this.productName, this.productImage, this.status, this.statusName, this.enqId, this.message, this.isRead, this.buyerId, this.name, this.email, this.mobileNo, this.enquiryDate});
 
   CustomerEnquiriesModel.fromJson(Map<String, dynamic> json) {
-    enqId = json['enq_id'];
-    prodId = json['prod_id'];
-    buyerId = json['buyer_id'];
-    message = json['message'];
+    productId = json['product_id'];
+    categoryName = json['category_name'];
+    subCategoryName = json['sub_category_name'];
+    ssCategoryName = json['ss_category_name'];
+    productName = json['product_name'];
+    productImage = json['product_image'];
     status = json['status'];
-    addedDate = json['added_date'];
-    updatedDate = json['updated_date'];
+    statusName = json['status_name'];
+    enqId = json['enq_id'];
+    message = json['message'];
     isRead = json['is_read'];
-    prodName = json['prod_name'];
-    userId = json['user_id'];
+    buyerId = json['buyer_id'];
     name = json['name'];
     email = json['email'];
     mobileNo = json['mobile_no'];
+    enquiryDate = json['enquiry_date'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['enq_id'] = this.enqId;
-    data['prod_id'] = this.prodId;
-    data['buyer_id'] = this.buyerId;
-    data['message'] = this.message;
+    data['product_id'] = this.productId;
+    data['category_name'] = this.categoryName;
+    data['sub_category_name'] = this.subCategoryName;
+    data['ss_category_name'] = this.ssCategoryName;
+    data['product_name'] = this.productName;
+    data['product_image'] = this.productImage;
     data['status'] = this.status;
-    data['added_date'] = this.addedDate;
-    data['updated_date'] = this.updatedDate;
+    data['status_name'] = this.statusName;
+    data['enq_id'] = this.enqId;
+    data['message'] = this.message;
     data['is_read'] = this.isRead;
-    data['prod_name'] = this.prodName;
-    data['user_id'] = this.userId;
+    data['buyer_id'] = this.buyerId;
     data['name'] = this.name;
     data['email'] = this.email;
     data['mobile_no'] = this.mobileNo;
+    data['enquiry_date'] = this.enquiryDate;
     return data;
   }
 }

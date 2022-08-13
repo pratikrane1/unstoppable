@@ -56,6 +56,15 @@ class ProductImageListSuccess extends AddProductFormState {
 
 
 class ProductImageListLoadFail extends AddProductFormState {}
+class UpdateProductLoading extends AddProductFormState {}
 
+class UpdateProductSuccess extends AddProductFormState {
+ String? message;
+ UpdateProductSuccess({this.message});
+}
 
+class UpdateProductFail extends AddProductFormState {
+ String? message;
+ UpdateProductFail({this.message});
+}
 

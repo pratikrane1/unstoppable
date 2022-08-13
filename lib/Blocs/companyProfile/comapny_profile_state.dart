@@ -15,12 +15,20 @@ class InitialCompanyProfileListState extends CompanyProfileState {}
 
 class CompanyProfileListLoading extends CompanyProfileState {}
 
+class UpdateCompanyProfileLoading extends CompanyProfileState {}
 
 
-class CompanyProfileListSuccess extends CompanyProfileState {
+class CompanyProfileSuccess extends CompanyProfileState {
   // List<CompanyProfileModel>? companyProfileData;
   List<CompanyProfileModel>? companyProfileData;
-  CompanyProfileListSuccess({this.companyProfileData});
+  CompanyProfileSuccess({this.companyProfileData});
 }
+
+class UpdateCompanyProfileSuccess extends CompanyProfileState {
+  UpdateCompanyProfileSuccess();
+}
+
+
+
 
 class CompanyProfileListLoadFail extends CompanyProfileState {}

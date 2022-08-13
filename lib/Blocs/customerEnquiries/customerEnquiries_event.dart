@@ -10,7 +10,12 @@ class OnLoadingCustomerEnquiriesList extends CustomerEnquiriesEvent {
   OnLoadingCustomerEnquiriesList({required this.userid, });
 }
 
+class DeleteCustomerEnquiries extends CustomerEnquiriesEvent{
+  String enqid;
 
+
+  DeleteCustomerEnquiries({required this.enqid});
+}
 // class OnLoadingProductDetail extends ProductEvent {
 //   String prodId;
 //   OnLoadingProductDetail({required this.prodId});

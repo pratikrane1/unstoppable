@@ -1,23 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unstoppable/Blocs/home/bloc.dart';
-import 'package:unstoppable/Screens/add_product.dart';
-import 'package:unstoppable/Screens/company_profile.dart';
-import 'package:unstoppable/Screens/login/sign_in.dart';
-import 'package:unstoppable/Screens/payment_history.dart';
-import 'package:unstoppable/Screens/profile.dart';
 import 'package:unstoppable/Screens/search_page.dart';
 import 'package:unstoppable/Utils/application.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
-import 'package:unstoppable/widgets/app_bar.dart';
 import 'package:unstoppable/widgets/drawer.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../Blocs/login/login_bloc.dart';
+
 import '../widgets/bell_icon.dart';
-import 'bottom_navbar.dart';
-import 'buying_details.dart';
-import 'change_password.dart';
+
 
 class DashBoard extends StatefulWidget {
   const DashBoard({Key? key}) : super(key: key);
@@ -110,13 +100,6 @@ class _DashBoardState extends State<DashBoard> {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     signOut();
-      //   },
-      //   child: Icon(Icons.logout_rounded),
-      //   backgroundColor: Colors.green,
-      // ),
       drawer: DrawerWidget(context),
       body: Scaffold(
           body: BlocBuilder<HomeBloc,HomeState>(builder:(context,dashboard){
@@ -172,9 +155,7 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            // Navigator.pushReplacement(context,
-                            //     MaterialPageRoute(builder: (context) => DataPagerWithListView()));
-                            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> EditProfilePage()));
+
                           },
                           child: Container(
                             height: 60,
