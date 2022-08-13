@@ -1,6 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unstoppable/Models/vendor_login.dart';
 
+import '../Models/home_model.dart';
+import '../Models/product_model.dart';
+
 class Application {
   static bool debug = false;
   static String version = '2.0.3';
@@ -11,6 +14,8 @@ class Application {
 
 
   static VendorLogin? vendorLogin;
+  static DashBoardCountResp? dashBoardCountResp;
+  static ProductModel? productModel;
 
   static String? token;
 

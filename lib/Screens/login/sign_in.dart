@@ -131,7 +131,7 @@ class _SignInPageState extends State<SignInPage> {
                                     RegExp regex =
                                     new RegExp(pattern.toString());
 
-                                    if(value!.isEmpty){
+                                    if(value==null || value.isEmpty){
                                       return 'Please enter email';
                                     }else if(!regex.hasMatch(value)){
                                       return 'Please enter valid email';
@@ -172,18 +172,16 @@ class _SignInPageState extends State<SignInPage> {
                                     hintText: 'Enter your password here',
                                   ),
                                   validator: (value){
-                                    if(value!.isEmpty){
+                                    if(value==null || value.isEmpty){
                                       return 'Please enter password';
-                                    }else if(UtilValidator.validate(data: _textPasswordController.text,
-                                        type: ValidateType.password)){
-                                      return 'Please enter 7 digit password';
                                     }
                                     return null;
                                   },
                                   onChanged: (value){
                                     setState(() {
                                       if ( _formKey.currentState!.validate()) {}
-                                    });
+                                    }
+                                    );
                                   },
                                 ),
                               ),

@@ -208,7 +208,7 @@ Widget nameIcon(){
   );
 }
 
-Widget imageIcon(){
+Widget imageBox(){
   return Container(
     width: 55,
     height: 55,
@@ -242,7 +242,7 @@ Widget imageIcon(){
 Widget addIcon(BuildContext context){
   return InkWell(
     onTap: (){
-      AddProduct(context);
+      //AddProduct(context);
     },
     child: Container(
       width: 35,

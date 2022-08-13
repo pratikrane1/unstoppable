@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unstoppable/Screens/buying_req.dart';
 import 'package:unstoppable/Screens/dashboard.dart';
 import 'package:unstoppable/Screens/unstoppableProducts.dart';
+import 'package:unstoppable/widgets/drawer.dart';
 
 import 'businessNetworking.dart';
 import 'buyingRequirmentSubmit.dart';
@@ -38,6 +39,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       // appBar: AppBar(
       //   title: const Text('BottomNavigationBar Sample'),
       // ),
+      // drawer: DrawerWidget(context),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

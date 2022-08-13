@@ -49,7 +49,58 @@ class UserRepository {
     return await UtilPreferences.remove(Preferences.user);
   }
 
+  Future<dynamic> fetchDashboardCount({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getDashBoardCount(params);
+  }
 
+  Future<dynamic> fetchProduct({String? userId,String? offset}) async {
+    final params = {"user_id":userId,
+      "offset":offset};
+    return await Api.getProduct(params);
+  }
+  Future<dynamic> fetchProductBuying({String? userId,String? offset}) async {
+    final params = {"user_id":userId,
+      "offset":offset};
+    return await Api.getProductBuying(params);
+  }
+
+  Future<dynamic> fetchProductImage({String? productId,String? offset}) async {
+    final params = {"product_id":productId,
+      "offset":offset};
+    return await Api.getProductImage(params);
+  }
+
+  Future<dynamic> fetchSubCategory({String? catId}) async {
+    final params = {"cat_id":catId,
+      };
+    return await Api.getProduct(params);
+  }
+
+  Future<dynamic> fetchProductDetail({String? productId}) async {
+    final params = {"product_id":productId};
+    return await Api.getProductDetail(params);
+  }
+
+  Future<dynamic> fetchCustomerEnquiries({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getCustomerEnquiry(params);
+  }
+
+  Future<dynamic> fetchLeads({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getLeads(params);
+  }
+  Future<dynamic> fetchCompanyProfile({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getCompanyProfile(params);
+  }
+
+  Future<dynamic> fetchBusinessNetworking({String? userId,String? offset}) async {
+    final params = {"user_id":userId,
+      "offset":offset};
+    return await Api.getBusinessNetworkingList(params);
+  }
 
 }
 

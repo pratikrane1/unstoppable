@@ -2,9 +2,19 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unstoppable/Blocs/authentication/authentication_bloc.dart';
+import 'package:unstoppable/Blocs/businessOpportunity/bloc.dart';
+import 'package:unstoppable/Blocs/home/home_bloc.dart';
 import 'package:unstoppable/Blocs/login/login_bloc.dart';
+import 'package:unstoppable/Blocs/settings/settings_bloc.dart';
 import 'package:unstoppable/Blocs/theme/theme_bloc.dart';
 import 'package:unstoppable/Repository/UserRepository.dart';
+
+import 'Blocs/addProductForm/addProductForm_bloc.dart';
+import 'Blocs/companyProfile/company_profile_block.dart';
+import 'Blocs/customerEnquiries/customerEnquiries_bloc.dart';
+import 'Blocs/leads/leads_block.dart';
+import 'Blocs/myTools/myTools_bloc.dart';
+import 'Blocs/products/product_bloc.dart';
 
 class AppBloc {
   static final userRepository = UserRepository();
@@ -12,6 +22,15 @@ class AppBloc {
 
   static final authBloc = AuthBloc(userRepository: userRepository);
   static final loginBloc = LoginBloc(userRepository: userRepository);
+  static final homeBloc = HomeBloc(dashboardRepo: userRepository);
+  static final productBloc = ProductBloc(productRepo: userRepository);
+  static final customerEnquiriesBloc = CustomerEnquiriesBloc(customerEnquiriesModelRepo: userRepository);
+  static final productImageBloc = AddProductFormBloc(productImageRepo: userRepository);
+  static final leadBloc = LeadsBloc(leadsRepo: userRepository);
+  static final companyProfileBloc = CompanyProfileBloc(companyProfileRepo: userRepository);
+  static final businessOpportunityBloc = BusinessOpprtunityBloc(businessOpportunityRepo: userRepository);
+  static final mytoolsBloc = MytoolsBloc(productBuyingRepo: userRepository);
+  static final settingsBloc = SettingsBloc(settingsRepo: userRepository);
 
 
 
@@ -31,11 +50,35 @@ class AppBloc {
     BlocProvider<LoginBloc>(
       create: (context) => loginBloc,
     ),
+    BlocProvider<HomeBloc>(
+      create: (context) => homeBloc,
+    ),
+    BlocProvider<ProductBloc>(
+      create: (context) => productBloc,
+    ),
+    BlocProvider<CustomerEnquiriesBloc>(
+      create: (context) => customerEnquiriesBloc,
+    ),
 
+    BlocProvider<AddProductFormBloc>(
+      create: (context) => productImageBloc,
+    ),
+    BlocProvider<LeadsBloc>(
+      create: (context) => leadBloc,
+    ),
+    BlocProvider<CompanyProfileBloc>(
+      create: (context) => companyProfileBloc,
+    ),
 
-
-
-
+    BlocProvider<BusinessOpprtunityBloc>(
+      create: (context) => businessOpportunityBloc,
+    ),
+    BlocProvider<MytoolsBloc>(
+      create: (context) => mytoolsBloc,
+    ),
+    BlocProvider<SettingsBloc>(
+      create: (context) => settingsBloc,
+    ),
 
   ];
 
@@ -45,6 +88,15 @@ class AppBloc {
     // themeBloc.close();
     authBloc.close();
     loginBloc.close();
+    homeBloc.close();
+    productBloc.close();
+    leadBloc.close();
+    customerEnquiriesBloc.close();
+    productImageBloc.close();
+    companyProfileBloc.close();
+    businessOpportunityBloc.close();
+    mytoolsBloc.close();
+    settingsBloc.close();
   }
 
   ///Singleton factory

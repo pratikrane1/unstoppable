@@ -17,17 +17,17 @@ class AppButton extends StatelessWidget {
     this.shape,
   }) : super(key: key);
 
-  Widget _buildLoading() {
-    if (loading!) {
-      return Container();
-    }
-    return Container(
-      margin: EdgeInsets.only(left: 10, right: 10),
-      width: 14,
-      height: 14,
-      child: CircularProgressIndicator(strokeWidth: 2),
-    );
-  }
+  // Widget _buildLoading() {
+  //   if (loading!) {
+  //     return Container();
+  //   }
+  //   return Container(
+  //     margin: EdgeInsets.only(left: 10, right: 10),
+  //     width: 14,
+  //     height: 14,
+  //     child: CircularProgressIndicator(strokeWidth: 2),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class AppButton extends StatelessWidget {
                 .button!
                 .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
           ),
-          _buildLoading()
+          // _buildLoading()
         ],
       ),
     )
