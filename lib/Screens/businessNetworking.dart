@@ -324,7 +324,7 @@ class _BusinessNetworkingState extends State<BusinessNetworking> {
         ),
       ),
 
-      drawer: DrawerWidget(context),
+      drawer: DrawerWidget(),
       body:BlocBuilder<BusinessOpprtunityBloc,BusinessOpportunityState>(builder: (context,state){
         return BlocListener<BusinessOpprtunityBloc,BusinessOpportunityState>(listener: (context,state){
           if(state is BusinessNetworkingListSuccess){

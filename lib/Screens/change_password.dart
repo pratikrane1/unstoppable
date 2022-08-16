@@ -51,7 +51,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
         leading: GestureDetector(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget(context)));
+                MaterialPageRoute(builder: (context) => DrawerWidget()));
           },
           child: Icon(Icons.arrow_back_ios),
         ),
@@ -254,7 +254,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                                 Fluttertoast.showToast(
                                     msg: state.message.toString());
                                 Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>
-                                DrawerWidget(context)));
+                                DrawerWidget()));
                               }
                               if (state is ChangePassFail) {
                                 Fluttertoast.showToast(

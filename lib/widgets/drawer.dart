@@ -11,105 +11,154 @@ import 'package:unstoppable/Screens/unstoppableOrders.dart';
 import 'package:unstoppable/Utils/application.dart';
 import 'package:unstoppable/constant/font_size.dart';
 
+import '../Blocs/companyProfile/comapny_profile_state.dart';
+import '../Blocs/companyProfile/company_profile_block.dart';
+import '../Blocs/companyProfile/company_profile_event.dart';
 import '../Blocs/login/login_bloc.dart';
 import '../Blocs/login/login_event.dart';
 import '../Blocs/login/login_state.dart';
+import '../Models/company_profile_model.dart';
 import '../Screens/bottom_navbar.dart';
 import '../Screens/businessNetworking.dart';
 import '../Screens/business_networking_contact.dart';
 import '../Screens/business_networking_lead.dart';
 import '../Screens/company_profile.dart';
+import '../Screens/company_profile_update.dart';
 import '../Screens/payment_history.dart';
 import '../Screens/product_I_am_buying.dart';
 import '../config/image.dart';
 import '../constant/theme_colors.dart';
 import 'app_button.dart';
 
-Widget DrawerWidget(BuildContext context) {
-  String dropdownValue = 'My Acc';
-  dropDownList:
-  ["Abc", "DEF", "GHI", "JKL", "MNO", "PQR"];
+class DrawerWidget extends StatefulWidget {
 
-  return Drawer(
-    width: MediaQuery.of(context).size.width,
-    child: Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => BottomNavigation()));
-            // Navigator.of(context).pop();
-          },
-          child: Icon(Icons.arrow_back_ios),
-        ),
-        backgroundColor: ThemeColors.baseThemeColor,
-        elevation: 0.0,
-        centerTitle: true,
-        title: Text('Profile'),
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.bg),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            // SizedBox(
-            //   height: 50,
-            // ),
-            // Container(
-            //   height: 50,
-            //   width: MediaQuery.of(context).size.width,
-            //   color: ThemeColors.baseThemeColor,
-            //   child: Row(
-            //     children: [
-            //       SizedBox(width: 20,),
-            //       InkWell(
-            //         onTap: (){
-            //           // Navigator.popAndPushNamed(context, MaterialPageRoute(builder: (context) => BottomNavigation()))
-            //           Navigator.of(context).pop();
-            //         },
-            //         child: Icon(Icons.arrow_back_ios,color: ThemeColors.whiteTextColor,),
-            //
-            //       ),
-            //       SizedBox(
-            //         width: 20,
-            //       ),
-            //       Text("More", style: TextStyle(fontSize: FontSize.large, color: ThemeColors.whiteTextColor),)
-            //     ],
-            //   ),
-            // ),
-            SizedBox(
-              height: 20,
-            ),
-            CircleAvatar(
-              radius: 70,
-              backgroundColor: Colors.orange,
-              child: Text(
-                "A",
-                style: TextStyle(fontSize: 40),
-              ),
-            ),
+  DrawerWidget({Key? key}):super(key:key);
 
-            SizedBox(
-              height: 20,
-            ),
-            _Rewards(context),
-            _BussinessOpp(context),
-            _MyTools(context),
-            _Settings(context),
-            _ShareUrl(context),
-            _LogOutButton(context)
-          ],
-        ),
-      ),
-    ),
-  );
+  @override
+  State<DrawerWidget> createState() => _DrawerWidgetState();
 }
+class _DrawerWidgetState extends State<DrawerWidget>{
+
+
+  CompanyProfileBloc? _companyProbileBloc;
+  List<CompanyProfileModel>? companyData;
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _companyProbileBloc = BlocProvider.of<CompanyProfileBloc>(context);
+    _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: Application.vendorLogin!.userId.toString()));
+    // _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: "874"));
+    // final _nameController = TextEditingController(text: companyData![0].name.toString());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Drawer(
+      width: MediaQuery.of(context).size.width,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => BottomNavigation()));
+              // Navigator.of(context).pop();
+            },
+            child: Icon(Icons.arrow_back_ios),
+          ),
+          backgroundColor: ThemeColors.baseThemeColor,
+          elevation: 0.0,
+          centerTitle: true,
+          title: Text('Profile'),
+        ),
+        body:
+        BlocBuilder<CompanyProfileBloc, CompanyProfileState>(builder: (context, state) {
+          if (state is CompanyProfileSuccess) {
+            companyData = state.companyProfileData;
+            // setData(companyData!);
+          }
+
+          if(state is CompanyProfileListLoadFail){
+            companyData=[];
+            // setData(companyData!);
+          }
+
+          return companyData!=null
+            ?
+            Container(
+              // decoration: const BoxDecoration(
+              //   image: DecorationImage(
+              //     image: AssetImage(Images.bg),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
+              child:
+              ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: [
+                  // SizedBox(
+                  //   height: 50,
+                  // ),
+                  // Container(
+                  //   height: 50,
+                  //   width: MediaQuery.of(context).size.width,
+                  //   color: ThemeColors.baseThemeColor,
+                  //   child: Row(
+                  //     children: [
+                  //       SizedBox(width: 20,),
+                  //       InkWell(
+                  //         onTap: (){
+                  //           // Navigator.popAndPushNamed(context, MaterialPageRoute(builder: (context) => BottomNavigation()))
+                  //           Navigator.of(context).pop();
+                  //         },
+                  //         child: Icon(Icons.arrow_back_ios,color: ThemeColors.whiteTextColor,),
+                  //
+                  //       ),
+                  //       SizedBox(
+                  //         width: 20,
+                  //       ),
+                  //       Text("More", style: TextStyle(fontSize: FontSize.large, color: ThemeColors.whiteTextColor),)
+                  //     ],
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CircleAvatar(
+                    radius: 70,
+                    backgroundColor: Colors.orange,
+                    child: Text(
+                      "A",
+                      style: TextStyle(fontSize: 40),
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _Rewards(context),
+                  _BussinessOpp(context),
+                  _MyTools(context),
+                  _Settings(context, companyData![0]),
+                  _ShareUrl(context),
+                  _LogOutButton(context)
+                ],
+              ),
+            )
+              :
+              Center(child: CircularProgressIndicator());
+        }
+        )
+
+      ),
+    );
+  }
+}
+
 
 Widget _Rewards(BuildContext context) {
   return InkWell(
@@ -357,7 +406,7 @@ Widget _MyTools(BuildContext context) {
   );
 }
 
-Widget _Settings(BuildContext context) {
+Widget _Settings(BuildContext context, CompanyProfileModel companyData) {
   return Card(
     elevation: 1,
     margin: EdgeInsets.all(10),
@@ -407,7 +456,9 @@ Widget _Settings(BuildContext context) {
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => CompanyProfileEditPage()));
+                MaterialPageRoute(builder: (context) => CompanyProfileEditPage(companyData: companyData,)));
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => CompanyProfileUpdate()));
           },
           title: const Text(
             'Company Profile',

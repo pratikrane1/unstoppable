@@ -246,7 +246,7 @@ class _CustomerEnquiriesState extends State<CustomerEnquiries> {
           ],
         ),
       ),
-      drawer: DrawerWidget(context),
+      drawer: DrawerWidget(),
       body:BlocBuilder<CustomerEnquiriesBloc,CustomerEnquiriesState>(builder:(context,state) {
         if (state is CustomerEnquiriesListSuccess) {
           customerEnquiriesList = state.CustomerEnquiriesList!;

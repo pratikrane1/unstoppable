@@ -53,7 +53,7 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
       //   ),
       // ),
       //
-      drawer: DrawerWidget(context),
+      drawer: DrawerWidget(),
 
      body:Container(
         decoration: new BoxDecoration(

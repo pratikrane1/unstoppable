@@ -222,7 +222,7 @@ class _LeadsState extends State<Leads> {
           leading: GestureDetector(
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DrawerWidget(context)));
+                  MaterialPageRoute(builder: (context) => DrawerWidget()));
               // Navigator.of(context).pop();
             },
             child: Icon(Icons.arrow_back_ios),

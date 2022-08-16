@@ -340,7 +340,7 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
             ],
           ),
         ),
-        drawer: DrawerWidget(context),
+        drawer: DrawerWidget(),
         body: BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
           if (state is ProductListSuccess) {
             productList = state.productList!;

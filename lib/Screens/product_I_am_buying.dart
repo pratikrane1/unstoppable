@@ -311,7 +311,7 @@ class _ProductIamBuyingState extends State<ProductIamBuying> {
             ],
           ),
         ),
-        drawer: DrawerWidget(context),
+        drawer: DrawerWidget(),
         body: BlocBuilder<MytoolsBloc, MytoolsState>(builder: (context, state) {
           if (state is ProductIamBuyingListSuccess) {
             productbuyingList = state.productBuyingList!;

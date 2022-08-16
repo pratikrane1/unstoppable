@@ -18,7 +18,7 @@ class _RewardsState extends State<Rewards>{
         leading: GestureDetector(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget(context)));
+                MaterialPageRoute(builder: (context) => DrawerWidget()));
           },
           child: Icon(Icons.arrow_back_ios),
         ),

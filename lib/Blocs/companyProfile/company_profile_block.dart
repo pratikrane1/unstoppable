@@ -33,17 +33,17 @@ class CompanyProfileBloc extends Bloc<CompanyProfileEvent, CompanyProfileState> 
         // userId: "874",
       );
 
-      // final Iterable refactorProduct = response.data ?? [];
-      // final companyProfileData = refactorProduct.map((item) {
-      //   return CompanyProfileModel.fromJson(item);
-      // }).toList();
-      // if(refactorProduct.length>0){
-      //   yield CompanyProfileSuccess(companyProfileData: companyProfileData);
-      //
-      // }else{
-      //   yield CompanyProfileListLoadFail();
-      //
-      // }
+      final Iterable refactorProduct = response.data ?? [];
+      final companyProfileData = refactorProduct.map((item) {
+        return CompanyProfileModel.fromJson(item);
+      }).toList();
+      if(refactorProduct.length>0){
+        yield CompanyProfileSuccess(companyProfileData: companyProfileData);
+
+      }else{
+        yield CompanyProfileListLoadFail();
+
+      }
 
 
     }

@@ -12,6 +12,8 @@ import '../constant/theme_colors.dart';
 import 'bottom_navbar.dart';
 
 class CompanyProfileEditPage extends StatefulWidget {
+  CompanyProfileModel? companyData;
+  CompanyProfileEditPage({Key? key,required this.companyData}):super(key: key);
   @override
   State<CompanyProfileEditPage> createState() => _CompanyProfileEditPageState();
 }
@@ -46,6 +48,9 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
   final _cinNo = TextEditingController();
   final _dfgt = TextEditingController();
 
+  final _focusFirstName = FocusNode();
+
+
   CompanyProfileBloc? _companyProbileBloc;
   List<CompanyProfileModel>? companyData;
 
@@ -54,13 +59,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
   void initState() {
     super.initState();
     _companyProbileBloc = BlocProvider.of<CompanyProfileBloc>(context);
-    _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: "874"));
+    _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: Application.vendorLogin!.userId.toString()));
+    // _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: "874"));
     // final _nameController = TextEditingController(text: companyData![0].name.toString());
+    if(widget.companyData!=null){
+      setData();
+    }
+
   }
 
   // void setData(List<CompanyProfileModel> companydataList){
   //   if(companydataList.length>0){
-  //     // _nameController.text = companyData![0].name.toString();
+  //     _nameController.text = companyData![0].name.toString();
   //     _managingDirector.text = companyData![0].managingDirector.toString();
   //     _ceo.text = companyData![0].ceo.toString();
   //     _companyName.text = companyData![0].companyName.toString();
@@ -72,12 +82,12 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
   //     _city.text = companyData![0].city.toString();
   //     _zipCode.text = companyData![0].zipCode.toString();
   //     _gstin.text = companyData![0].gstin.toString();
-  //     // _companyWebsite.text = companyData![0].website.toString();
+  //     _companyWebsite.text = companyData![0].website.toString();
   //     _mobileNumber.text = companyData![0].mobileNo.toString();
-  //     // _alternateNumber.text = companyData![0].altMobileNo.toString();
+  //     _alternateNumber.text = companyData![0].altMobileNo.toString();
   //     _primaryEmail.text = companyData![0].email.toString();
-  //     // _alternateEmail.text = companyData![0].altEmail.toString();
-  //     // _landlineNumber.text = companyData![0].landlineNo.toString();
+  //     _alternateEmail.text = companyData![0].altEmail.toString();
+  //     _landlineNumber.text = companyData![0].landlineNo.toString();
   //     _yearOfEstablishment.text = companyData![0].estYear.toString();
   //     _businessType.text = companyData![0].businessTyp.toString();
   //     _OwnershipType.text = companyData![0].ownershipTyp.toString();
@@ -90,7 +100,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
   //
   //
   //   }else{
-  //     // _nameController.text = "";
+  //     _nameController.text = "";
   //     _managingDirector.text = "";
   //     _ceo.text = "";
   //     _companyName.text = "";
@@ -102,12 +112,12 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
   //     _city.text = "";
   //     _zipCode.text = "";
   //     _gstin.text = "";
-  //     // _companyWebsite.text = "";
+  //     _companyWebsite.text = "";
   //     _mobileNumber.text = "";
-  //     // _alternateNumber.text = "";
+  //     _alternateNumber.text = "";
   //     _primaryEmail.text = "";
-  //     // _alternateEmail.text = "";
-  //     // _landlineNumber.text = "";
+  //     _alternateEmail.text = "";
+  //     _landlineNumber.text = "";
   //     _yearOfEstablishment.text = "";
   //     _businessType.text = "";
   //     _OwnershipType.text = "";
@@ -120,7 +130,107 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
   //
   //   }
   //
+  //
   // }
+  void setData(){
+    setState((){
+
+      _nameController.text = widget.companyData!.name.toString();
+      _managingDirector.text = widget.companyData!.managingDirector.toString();
+      _ceo.text = widget.companyData!.ceo.toString();
+      _companyName.text = widget.companyData!.companyName.toString();
+      _operatorDesignation.text = widget.companyData!.operatorDesignation.toString();
+      _operatorName.text = widget.companyData!.operatorName.toString();
+      _businessAddress.text = widget.companyData!.businessAddress.toString();
+      _country.text = widget.companyData!.country.toString();
+      _state.text = widget.companyData!.state.toString();
+      _city.text = widget.companyData!.city.toString();
+      _zipCode.text = widget.companyData!.zipCode.toString();
+      _gstin.text = widget.companyData!.gstin.toString();
+      _companyWebsite.text = widget.companyData!.website.toString();
+      _mobileNumber.text = widget.companyData!.mobileNo.toString();
+      _alternateNumber.text = widget.companyData!.altMobileNo.toString();
+      _primaryEmail.text = widget.companyData!.email.toString();
+      _alternateEmail.text = widget.companyData!.altEmail.toString();
+      _landlineNumber.text = widget.companyData!.landlineNo.toString();
+      _yearOfEstablishment.text = widget.companyData!.estYear.toString();
+      _businessType.text = widget.companyData!.businessTyp.toString();
+      _OwnershipType.text = widget.companyData!.ownershipTyp.toString();
+      _numberOfEmployees.text = widget.companyData!.totEmployee.toString();
+      _annualTurnover.text = widget.companyData!.annualTurnover.toString();
+      _panNo.text = widget.companyData!.panNo.toString();
+      _tanNo.text = widget.companyData!.tanNo.toString();
+      _cinNo.text = widget.companyData!.cinNo.toString();
+      _dfgt.text = widget.companyData!.dfgt.toString();
+    });
+    // if(companydataList.length>0){
+    //
+    //
+    //
+    // }else{
+    //   _nameController.text = "";
+    //   _managingDirector.text = "";
+    //   _ceo.text = "";
+    //   _companyName.text = "";
+    //   _operatorDesignation.text = "";
+    //   _operatorName.text = "";
+    //   _businessAddress.text = "";
+    //   _country.text = "";
+    //   _state.text = "";
+    //   _city.text = "";
+    //   _zipCode.text = "";
+    //   _gstin.text = "";
+    //   _companyWebsite.text = "";
+    //   _mobileNumber.text = "";
+    //   _alternateNumber.text = "";
+    //   _primaryEmail.text = "";
+    //   _alternateEmail.text = "";
+    //   _landlineNumber.text = "";
+    //   _yearOfEstablishment.text = "";
+    //   _businessType.text = "";
+    //   _OwnershipType.text = "";
+    //   _numberOfEmployees.text = "";
+    //   _annualTurnover.text = "";
+    //   _panNo.text = "";
+    //   _tanNo.text = "";
+    //   _cinNo.text = "";
+    //   _dfgt.text = "";
+    //
+    // }
+
+
+  }
+
+  void dispose(){
+    _nameController.clear();
+    _managingDirector.clear();
+    _ceo.clear();
+    _companyName.clear();
+    _operatorDesignation.clear();
+    _operatorName.clear();
+    _businessAddress.clear();
+    _country.clear();
+    _state.clear();
+    _city.clear();
+    _zipCode.clear();
+    _gstin.clear();
+    _companyWebsite.clear();
+    _mobileNumber.clear();
+    _alternateNumber.clear();
+    _primaryEmail.clear();
+    _alternateEmail.clear();
+    _landlineNumber.clear();
+    _yearOfEstablishment.clear();
+    _businessType.clear();
+    _OwnershipType.clear();
+    _numberOfEmployees.clear();
+    _annualTurnover.clear();
+    _panNo.clear();
+    _tanNo.clear();
+    _cinNo.clear();
+    _dfgt.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +239,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
           leading: GestureDetector(
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DrawerWidget(context)));
+                  MaterialPageRoute(builder: (context) => DrawerWidget()));
             },
             child: Icon(Icons.arrow_back_ios),
           ),
@@ -138,15 +248,18 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
           centerTitle: true,
           title: Text('Company Profile'),
         ),
-        body:BlocBuilder<CompanyProfileBloc, CompanyProfileState>(builder: (context, state) {
+        body:
+        BlocBuilder<CompanyProfileBloc, CompanyProfileState>(builder: (context, state) {
           if (state is CompanyProfileSuccess) {
-            companyData = state.companyProfileData;
+            // companyData = state.companyProfileData;
             // setData(companyData!);
+            // setData();
           }
 
           if(state is CompanyProfileListLoadFail){
-            companyData=[];
+            // companyData=[];
             // setData(companyData!);
+            // setData();
           }
 
           return
@@ -162,8 +275,8 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                           child:
                           Container(
                               height: MediaQuery.of(context).size.height * 0.7,
-                              child:  companyData!=null
-                                  ?
+                              child:widget.companyData!=null
+                              ?
                               ListView(
                                   children: [
                                     Padding(
@@ -189,15 +302,15 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                   TextFormField(
                                                     // initialValue: companyData![0].name.toString(),
                                                     controller: _nameController,
-                                                    obscureText: false,
                                                     textAlign: TextAlign.start,
                                                     keyboardType: TextInputType.text,
+                                                    focusNode: _focusFirstName,
                                                     style: TextStyle(
                                                       fontSize: 18,
                                                       height: 1.5,
                                                     ),
                                                     decoration:  InputDecoration(
-                                                      hintText: companyData![0].name.toString(),
+                                                      hintText: "name",
                                                       contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                                                       hintStyle: TextStyle(fontSize: 15),
                                                       enabledBorder: OutlineInputBorder(
@@ -231,9 +344,12 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       return null;
                                                     },
                                                     onChanged: (value) {
+
                                                       // profile.name = value;
                                                       setState(() {
+                                                        // _nameController.text = value;
                                                         if ( _formKey.currentState!.validate()) {}
+
                                                       });
                                                     },
                                                   ),
@@ -276,7 +392,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].managingDirector.toString(),
+                                                      hintText: "Managing Director",
                                                     ),
                                                     validator: (value) {
                                                       // Pattern pattern =
@@ -292,6 +408,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                       return null;
                                                     },
                                                     onChanged: (value) {
+                                                      // _managingDirector.text = value;
                                                       setState(() {
                                                         if ( _formKey.currentState!.validate()) {}
                                                       });
@@ -336,7 +453,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].ceo.toString(),
+                                                      hintText: "ceo",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -391,7 +508,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].companyName.toString(),
+                                                      hintText: "Company Name",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -453,7 +570,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].operatorDesignation.toString(),
+                                                            hintText: "Operator Designation",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -509,7 +626,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].operatorName.toString(),
+                                                            hintText: "Operator Name",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -566,7 +683,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].businessAddress.toString(),
+                                                      hintText: "Business Address",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -628,7 +745,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].country.toString(),
+                                                            hintText: "Country",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -682,7 +799,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].city.toString(),
+                                                            hintText: "City",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -738,7 +855,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].state.toString(),
+                                                            hintText: "State",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -792,7 +909,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].zipCode.toString(),
+                                                            hintText: "Zip Code",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -848,7 +965,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].gstin.toString(),
+                                                      hintText: "GSTIN",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -901,7 +1018,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].website.toString(),
+                                                      hintText: "Company Website",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -954,7 +1071,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].mobileNo.toString(),
+                                                      hintText: "Mobile Number",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1007,7 +1124,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].altMobileNo.toString(),
+                                                      hintText: "Alternate Number",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1060,7 +1177,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].email.toString(),
+                                                      hintText: "Primary Email",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1113,7 +1230,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].altEmail.toString(),
+                                                      hintText: "Alternate Email",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1166,7 +1283,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].landlineNo.toString(),
+                                                      hintText: "Landline Number",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1219,7 +1336,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].estYear.toString(),
+                                                      hintText: "Year of establishment",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1281,7 +1398,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].businessTyp.toString(),
+                                                            hintText: "Business Type",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -1335,7 +1452,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].totEmployee.toString(),
+                                                            hintText: "Number of employee",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -1391,7 +1508,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].ownershipTyp.toString(),
+                                                            hintText: "Ownership Type",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -1445,7 +1562,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                                 borderSide:
                                                                 BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                            hintText: companyData![0].annualTurnover.toString(),
+                                                            hintText: "Annual Turnover",
                                                           ),
                                                           validator: (value) {
                                                             if(value==null || value.isEmpty){
@@ -1501,7 +1618,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].panNo.toString(),
+                                                      hintText: "Pan no",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1554,7 +1671,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].tanNo.toString(),
+                                                      hintText: "Tan no",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1607,7 +1724,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].cinNo.toString(),
+                                                      hintText: "CIN no",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1660,7 +1777,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                                                           borderSide:
                                                           BorderSide(width: 0.8, color: ThemeColors.textFieldBgColor)),
-                                                      hintText: companyData![0].dfgt.toString(),
+                                                      hintText: "DFGT/IE code",
                                                     ),
                                                     validator: (value) {
                                                       if(value==null || value.isEmpty){
@@ -1682,8 +1799,9 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                       ),
                                     )
                                   ])
-                                  :
-                              Center(child: CircularProgressIndicator()))
+                                  :Center(child:CircularProgressIndicator())
+
+                          )
 
                       ),
                       SizedBox(height: 10,),
@@ -1701,7 +1819,7 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
                                 if(_formKey.currentState!.validate()){
                                   Fluttertoast.showToast(msg: "Save Successfully");
                                   _companyProbileBloc!.add(UpdateCompanyProfile(
-                                      userid: "874",
+                                      userid: widget.companyData!.userId.toString(),
                                       name: _nameController.text,
                                       managingdirector: _managingDirector.text,
                                       ceo: _ceo.text,

@@ -100,7 +100,7 @@ class _DashBoardState extends State<DashBoard> {
           ],
         ),
       ),
-      drawer: DrawerWidget(context),
+      drawer: DrawerWidget(),
       body: Scaffold(
           body: BlocBuilder<HomeBloc,HomeState>(builder:(context,dashboard){
             return BlocListener<HomeBloc,HomeState>(listener: (context,state){
@@ -326,7 +326,7 @@ class _DashBoardState extends State<DashBoard> {
                                     fontWeight: FontWeight.normal),
                               ),
                               Text(
-                                'Cancalled Leads',
+                                'Cancelled Leads',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18),
