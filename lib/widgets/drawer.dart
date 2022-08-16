@@ -23,7 +23,6 @@ import '../Screens/businessNetworking.dart';
 import '../Screens/business_networking_contact.dart';
 import '../Screens/business_networking_lead.dart';
 import '../Screens/company_profile.dart';
-import '../Screens/company_profile_update.dart';
 import '../Screens/payment_history.dart';
 import '../Screens/product_I_am_buying.dart';
 import '../config/image.dart';

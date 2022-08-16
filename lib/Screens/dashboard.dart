@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unstoppable/Blocs/home/bloc.dart';
 import 'package:unstoppable/Screens/search_page.dart';
+import 'package:unstoppable/Screens/unstoppableProducts.dart';
 import 'package:unstoppable/Utils/application.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
 import 'package:unstoppable/widgets/drawer.dart';
 
 import '../widgets/bell_icon.dart';
+import 'Leads.dart';
+import 'business_networking_lead.dart';
+import 'customerEnquiries.dart';
 
 
 class DashBoard extends StatefulWidget {
@@ -155,7 +159,10 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UnstoppableProducts()));
                           },
                           child: Container(
                             height: 60,
@@ -215,8 +222,10 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> EditPasswordPage()));
-
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CustomerEnquiries()));
                           },
                           child: Container(
                             height: 60,
@@ -276,8 +285,10 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> PaymentHistory()));
-
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Leads()));
                           },
                           child: Container(
                             height: 60,
@@ -337,7 +348,10 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ManageAllBuyingRequirementDetails()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Leads()));
                           },
                           child: Container(
                             height: 60,
@@ -397,8 +411,10 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CompanyProfileEditPage()));
-
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BusinessNetworkingLead()));
                           },
                           child: Container(
                             height: 60,
@@ -458,7 +474,10 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                             onTap: (){
-                              // AddProduct(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => BusinessNetworkingLead()));
                             },
                             child: Container(
                               height: 60,

@@ -295,28 +295,28 @@ class _AddProductScreenState extends State<AddProductScreen> {
       margin: EdgeInsets.only(top:5.0,right: 8,left: 8,bottom: 5),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Add Products",
-                  style: TextStyle(
-                      fontSize: FontSize.xxLarge,
-                      fontWeight: FontWeight.bold),
-                ),
-                InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Icon(
-                      Icons.clear,
-                      color: ThemeColors.drawerTextColor,
-                    ))
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(5.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text(
+          //         "Add Products",
+          //         style: TextStyle(
+          //             fontSize: FontSize.xxLarge,
+          //             fontWeight: FontWeight.bold),
+          //       ),
+          //       InkWell(
+          //           onTap: () {
+          //             Navigator.of(context).pop();
+          //           },
+          //           child: Icon(
+          //             Icons.clear,
+          //             color: ThemeColors.drawerTextColor,
+          //           ))
+          //     ],
+          //   ),
+          // ),
     Container(
     child: Form(
     key: _formKey,
@@ -773,6 +773,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
        //  _buildAvatar(),
 
         // For Update button
+        SizedBox(height: 10,),
         BlocBuilder<AddProductFormBloc,AddProductFormState>(builder: (context,addProd){
           return BlocListener<AddProductFormBloc,AddProductFormState>(listener: (context,state){
             if(state is AddProductSuccess){
@@ -863,7 +864,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
             ),
           )
           );
-        })
+        }),
+
+        SizedBox(height: 250,),
 
                     ]),
     ))),
