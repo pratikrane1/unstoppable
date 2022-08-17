@@ -258,7 +258,7 @@ class _LeadsState extends State<Leads> {
           return
             SingleChildScrollView(
               child: Container(
-                height: 500,
+                height: MediaQuery.of(context).size.height * 0.87,
                 decoration: new BoxDecoration(
                   //borderRadius: new BorderRadius.circular(16.0),
                   color: Colors.black12,

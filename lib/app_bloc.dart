@@ -5,6 +5,7 @@ import 'package:unstoppable/Blocs/authentication/authentication_bloc.dart';
 import 'package:unstoppable/Blocs/businessOpportunity/bloc.dart';
 import 'package:unstoppable/Blocs/home/home_bloc.dart';
 import 'package:unstoppable/Blocs/login/login_bloc.dart';
+import 'package:unstoppable/Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_block.dart';
 import 'package:unstoppable/Blocs/settings/settings_bloc.dart';
 import 'package:unstoppable/Blocs/theme/theme_bloc.dart';
 import 'package:unstoppable/Repository/UserRepository.dart';
@@ -27,6 +28,7 @@ class AppBloc {
   static final customerEnquiriesBloc = CustomerEnquiriesBloc(customerEnquiriesModelRepo: userRepository);
   static final productImageBloc = AddProductFormBloc(productImageRepo: userRepository);
   static final leadBloc = LeadsBloc(leadsRepo: userRepository);
+  static final managingAllBuyingRequirementBloc = ManageAllBuyingRequirementBloc(manageAllBuyingRequirementRepo: userRepository);
   static final companyProfileBloc = CompanyProfileBloc(companyProfileRepo: userRepository);
   static final businessOpportunityBloc = BusinessOpprtunityBloc(businessOpportunityRepo: userRepository);
   static final mytoolsBloc = MytoolsBloc(productBuyingRepo: userRepository);
@@ -66,6 +68,9 @@ class AppBloc {
     BlocProvider<LeadsBloc>(
       create: (context) => leadBloc,
     ),
+    BlocProvider<ManageAllBuyingRequirementBloc>(
+      create: (context) => managingAllBuyingRequirementBloc,
+    ),
     BlocProvider<CompanyProfileBloc>(
       create: (context) => companyProfileBloc,
     ),
@@ -97,6 +102,7 @@ class AppBloc {
     businessOpportunityBloc.close();
     mytoolsBloc.close();
     settingsBloc.close();
+    managingAllBuyingRequirementBloc.close();
   }
 
   ///Singleton factory

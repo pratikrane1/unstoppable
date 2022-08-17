@@ -12,6 +12,7 @@ import '../Models/company_profile_model.dart';
 import '../Models/customerEnquiries_model.dart';
 import '../Models/home_model.dart';
 import '../Models/leads_model.dart';
+import '../Models/manageAllBuyingRequirements_model.dart';
 import '../Models/productImage_model.dart';
 import '../Models/product_model.dart';
 
@@ -39,6 +40,8 @@ class Api {
   static const String uploadImage = HOST_URL+"upload_product_images";
   static const String removeImage = HOST_URL+"remove_product_images";
   static const String Leads ="get_leads";
+  static const String ManageAllBuyingRequirement ="get_all_buying_requirement";
+  static const String delAllBuyingRequirement = HOST_URL+"delete_buying_requirement";
   static const String COMPANY_PROFILE ="get_company_profile";
   static const String updateCompanyProfile =HOST_URL+"update_company_profile";
   static const String BUSI_NET_LIST =HOST_URL+"get_business_networking_leads";
@@ -113,6 +116,18 @@ class Api {
       final responseJson = json.decode(response.body);
       print(responseJson);
       return LeadsRepo.fromJson(responseJson);
+    }
+  }
+
+  static Future<dynamic> getManageAllBuying(params) async {
+    final response = await http.post(
+      Uri.parse(HOST_URL+ManageAllBuyingRequirement),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return ManageAllBuyingRequirementRepo.fromJson(responseJson);
     }
   }
 
