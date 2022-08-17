@@ -91,6 +91,11 @@ class UserRepository {
     final params = {"user_id":userId};
     return await Api.getLeads(params);
   }
+
+  Future<dynamic> fetchManageAllBuying({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getManageAllBuying(params);
+  }
   Future<dynamic> fetchCompanyProfile({String? userId}) async {
     final params = {"user_id":userId};
     return await Api.getCompanyProfile(params);
