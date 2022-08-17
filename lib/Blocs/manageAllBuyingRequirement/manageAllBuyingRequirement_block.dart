@@ -47,6 +47,42 @@ class ManageAllBuyingRequirementBloc extends Bloc<ManageAllBuyingRequirementEven
 
     }
 
+    if (event is SaveBuyingRequirementForm) {
+      yield SaveBuyingRequiementForm();
+      Map<String, String> params;
+      params = {
+        'user_id': event.userid,
+        'cat_id':event.categoryId,
+        'sub_cat_id':event.subCateId,
+        'product_name':event.prodName,
+        'type':event.type,
+        'other':event.other,
+        'use':event.use,
+        'other1': event.other1,
+        'approx':event.approx,
+        'unit_type':event.unitType,
+        'qty':event.quantity,
+        'supplier_from':event.suppFrom,
+        'supplier_will':event.suppWill,
+        'description':event.descrip,
+      };
+
+      var response = await http.post(
+          Uri.parse(Api.BuyingRequirementForm),
+          body: params
+      );
+
+      try {
+        final resp = json.decode(response.body);
+        if (resp['result'] == 'Success') {
+          yield SaveBuyingRequiementFormSuccess();
+        }
+      } catch (e) {
+        print(e);
+        rethrow;
+      }
+    }
+
     if (event is DeleteAllBuyingRequirement) {
       yield DeleteAllBuyingRequirementLoading();
       Map<String, String> params;

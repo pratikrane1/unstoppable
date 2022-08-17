@@ -24,6 +24,16 @@ class ManageAllBuyingRequirementListSuccess extends ManageAllBuyingRequirementSt
   ManageAllBuyingRequirementListSuccess({this.manageAllBuyingList});
 }
 
+
+class SaveBuyingRequiementForm extends ManageAllBuyingRequirementState {}
+
+
+class SaveBuyingRequiementFormSuccess extends ManageAllBuyingRequirementState {
+  SaveBuyingRequiementFormSuccess();
+}
+
+
+
 class DeleteAllBuyingRequirementSuccess extends ManageAllBuyingRequirementState {
   DeleteAllBuyingRequirementSuccess();
 }
