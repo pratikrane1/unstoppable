@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:unstoppable/Models/businessNetworking_model.dart';
 import 'package:unstoppable/Models/category_model.dart';
+import 'package:unstoppable/Models/get_BNC_model.dart';
 import 'package:unstoppable/Models/productIamBuying_model.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 
@@ -45,6 +46,7 @@ class Api {
   static const String COMPANY_PROFILE ="get_company_profile";
   static const String updateCompanyProfile =HOST_URL+"update_company_profile";
   static const String BUSI_NET_LIST =HOST_URL+"get_business_networking_leads";
+  static const String GET_BNC =HOST_URL+"get_bnc";
   static const String CHANGE_PASS=HOST_URL+"update_password";
 
   ///Login api
@@ -176,6 +178,18 @@ class Api {
       final responseJson = json.decode(response.body);
       print(responseJson);
       return BusinessNetworkingRepo.fromJson(responseJson);
+    }
+  }
+
+  static Future<dynamic> getBNC(params) async {
+    final response = await http.post(
+      Uri.parse(GET_BNC),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return GetBNCRepo.fromJson(responseJson);
     }
   }
 

@@ -1,8 +1,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unstoppable/Blocs/businessOpportunity/bloc.dart';
+import 'package:unstoppable/Models/get_BNC_model.dart';
 import 'package:unstoppable/widgets/drawer.dart';
-
+import '../Blocs/businessOpportunity/businessOpportunity_bloc.dart';
+import '../Utils/application.dart';
 import '../constant/theme_colors.dart';
 import 'bottom_navbar.dart';
 import 'business_networking_contact.dart';
@@ -13,6 +17,15 @@ class BusinessNetworkingLead extends StatefulWidget{
 }
 
 class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
+  BusinessOpprtunityBloc? _businessOpprtunityBloc;
+  List<GetBNCmodel> LeadList=[];
+  String rowid1 = "1";
+  String rowid2 = "2";
+  String rowid3 = "3";
+  String rowid4 = "4";
+  String rowid5 = "5";
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -47,7 +60,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                     onTap: () {
 
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
+                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(rowId: rowid1)));
 
                     },
                     child: Padding(
@@ -111,7 +124,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                 InkWell(
                     onTap: () {
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
+                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(rowId: rowid2)));
 
                     },
                     child: Padding(
@@ -173,8 +186,8 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                 // For Lead 3
                 InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
+                      // Navigator.push(
+                      //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
 
                     },
                     child: Padding(
@@ -237,8 +250,8 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                 InkWell(
                     onTap: () {
 
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
+                      // Navigator.push(
+                      //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
 
                     },
                     child: Padding(
@@ -300,8 +313,8 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                 // For Lead 5
                 InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
+                      // Navigator.push(
+                      //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
 
                     },
                     child: Padding(

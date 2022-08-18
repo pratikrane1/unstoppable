@@ -59,6 +59,7 @@ class UserRepository {
       "offset":offset};
     return await Api.getProduct(params);
   }
+
   Future<dynamic> fetchProductBuying({String? userId,String? offset}) async {
     final params = {"user_id":userId,
       "offset":offset};
@@ -105,6 +106,12 @@ class UserRepository {
     final params = {"user_id":userId,
       "offset":offset};
     return await Api.getBusinessNetworkingList(params);
+  }
+
+  Future<dynamic> getBNCLead({String? userId,String? rowId}) async {
+    final params = {"user_id":userId,
+      "row_id":rowId};
+    return await Api.getBNC(params);
   }
 
 }

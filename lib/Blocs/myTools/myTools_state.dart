@@ -13,6 +13,7 @@ class InitialMytoolsState extends MytoolsState {}
 class ProductIamBuyingLoading extends MytoolsState {}
 class AddProductBuyingLoading extends MytoolsState {}
 
+
 class AddProductBuyingSuccess extends MytoolsState {
  String? message ;
  AddProductBuyingSuccess({this.message});

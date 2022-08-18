@@ -11,6 +11,11 @@ class OnLoadingBusinesNetworkingList extends BusinessOpportunityEvent {
   OnLoadingBusinesNetworkingList({required this.userid,required this.offset });
 }
 
-
+class OnLoadingBNC extends BusinessOpportunityEvent {
+  String userid;
+  String rowid;
+  // String prodid;
+  OnLoadingBNC({required this.userid,required this.rowid });
+}
 
 
