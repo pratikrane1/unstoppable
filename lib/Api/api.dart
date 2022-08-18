@@ -42,6 +42,7 @@ class Api {
   static const String removeImage = HOST_URL+"remove_product_images";
   static const String Leads ="get_leads";
   static const String ManageAllBuyingRequirement ="get_all_buying_requirement";
+  static const String BuyingRequirementForm =HOST_URL+"save_buying_requirement";
   static const String delAllBuyingRequirement = HOST_URL+"delete_buying_requirement";
   static const String COMPANY_PROFILE ="get_company_profile";
   static const String updateCompanyProfile =HOST_URL+"update_company_profile";
