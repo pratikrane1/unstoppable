@@ -57,7 +57,13 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
 
     _allBuyingRequirementBloc = BlocProvider.of<ManageAllBuyingRequirementBloc>(context);
 
+  }
 
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _ProdNameController.clear();
+    _discription.clear();
   }
 
   @override

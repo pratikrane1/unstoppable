@@ -23,6 +23,7 @@ class Api {
   //static const String HOST_URL="https://unstoppabletrade.in/App_details/";
   static const String HOST_URL="http://unstoppabletrade.ezii.live/App_details/";
   static const String VENDOR_LOGIN="app_login";
+  static const String VENDOR_Registration=HOST_URL+"register_vendor";
   static const String Vendor_Dashboard_Count ="get_dashboard_data";
   static const String Product ="get_products";
   static const String ProductBuying ="get_product_buying";
