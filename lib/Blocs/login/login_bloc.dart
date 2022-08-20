@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:unstoppable/Api/api.dart';
 import 'package:unstoppable/Blocs/authentication/authentication_event.dart';
 import 'package:unstoppable/Blocs/login/login_event.dart';
 import 'package:unstoppable/Blocs/login/login_state.dart';
@@ -79,7 +80,49 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             ///Notify loading to UI
             yield LogoutFail("error");
           }
-          }
+
+
+
+    if (event is OnRegistration) {
+      yield VendorRegistration();
+      Map<String, String> params;
+      params = {
+        'user_type': event.userType,
+        'full_name':event.fullName,
+        'cat_id':event.catId,
+        'subcat_id':event.subId,
+        'subsubcat_id':event.subSubId,
+        'bussiness_name':event.businessName,
+        'ownership_type':event.ownershipType,
+        'est_year': event.estYear,
+        'tot_employee':event.totalEmp,
+        'annual_turnover':event.annualTurnover,
+        'gst_no':event.gSTIN,
+        'address':event.address,
+        'pin_code':event.pinCode,
+        'mobile_no':event.mobile,
+        'email':event.email,
+        'refer_by':event.referby,
+        'com_logo ':event.comLogo,
+      };
+
+      var response = await http.post(
+          Uri.parse(Api.VENDOR_Registration),
+          body: params
+      );
+
+      try {
+        final resp = json.decode(response.body);
+        if (resp['result'] == 'Success') {
+          yield VendorRegistrationSuccess();
+        }
+      } catch (e) {
+        print(e);
+        rethrow;
+      }
+    }
+
+  }
 
           // yield LogoutSuccess();
         }
