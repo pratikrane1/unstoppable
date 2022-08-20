@@ -300,66 +300,66 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
   //   );
   // }
   Future AddProduct(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      isDismissible: true,
-      shape: const RoundedRectangleBorder(
-          borderRadius:
-          BorderRadius.vertical(top: Radius.circular(16))),
-      builder: (context) => DraggableScrollableSheet(
-        initialChildSize: 0.4,
-        minChildSize: 0.2,
-        maxChildSize: 0.75,
-        expand: false,
-        builder: (_, controller) => Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Add Products",
-                    style: TextStyle(
-                        fontSize: FontSize.xxLarge,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Icon(
-                        Icons.clear,
-                        color: ThemeColors.drawerTextColor,
-                      ))
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                controller: controller,
-                itemCount: 1,
-                itemBuilder: (_, index) {
-                  return AddProductScreen(productDetail:new ProductDetail(),);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
     // return showModalBottomSheet(
-    //     isScrollControlled: true,
-    //     // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-    //     shape: RoundedRectangleBorder(
-    //         borderRadius: BorderRadius.only(
-    //             topLeft: Radius.circular(35.0),
-    //             topRight: Radius.circular(35.0))),
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return SingleChildScrollView(child: AddProductScreen(productDetail:new ProductDetail(),));
-    //     });
+    //   context: context,
+    //   isScrollControlled: true,
+    //   isDismissible: true,
+    //   shape: const RoundedRectangleBorder(
+    //       borderRadius:
+    //       BorderRadius.vertical(top: Radius.circular(16))),
+    //   builder: (context) => DraggableScrollableSheet(
+    //     initialChildSize: 0.4,
+    //     minChildSize: 0.2,
+    //     maxChildSize: 0.75,
+    //     expand: false,
+    //     builder: (_, controller) => Column(
+    //       children: [
+    //         Padding(
+    //           padding: const EdgeInsets.all(10.0),
+    //           child: Row(
+    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //             children: [
+    //               Text(
+    //                 "Add Products",
+    //                 style: TextStyle(
+    //                     fontSize: FontSize.xxLarge,
+    //                     fontWeight: FontWeight.bold),
+    //               ),
+    //               InkWell(
+    //                   onTap: () {
+    //                     Navigator.of(context).pop();
+    //                   },
+    //                   child: Icon(
+    //                     Icons.clear,
+    //                     color: ThemeColors.drawerTextColor,
+    //                   ))
+    //             ],
+    //           ),
+    //         ),
+    //         Expanded(
+    //           child: ListView.builder(
+    //             controller: controller,
+    //             itemCount: 1,
+    //             itemBuilder: (_, index) {
+    //               return AddProductScreen(productDetail:new ProductDetail(),);
+    //             },
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+    return showModalBottomSheet(
+        isScrollControlled: true,
+        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(35.0),
+                topRight: Radius.circular(35.0))),
+        context: context,
+        builder: (BuildContext context) {
+          return SingleChildScrollView(child: AddProductScreen(productDetail:new ProductDetail(),));
+        });
   }
 
 
@@ -383,7 +383,7 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Unstoppable Products"),
+                  Text("My Unstoppable Products"),
                   myAppBarIcon(),
                 ],
               ),

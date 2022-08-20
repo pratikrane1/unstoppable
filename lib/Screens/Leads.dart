@@ -235,7 +235,7 @@ class _LeadsState extends State<Leads> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Leads"),
+                  Text("Business Opportunity"),
                   myAppBarIcon(),
                 ],
               ),

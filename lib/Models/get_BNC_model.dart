@@ -4,18 +4,19 @@ class GetBNCRepo {
 
   GetBNCRepo({this.result, this.data});
 
-  GetBNCRepo.fromJson(Map<String, dynamic> json) {
-    result = json['result'];
-    data = json['data'] != null ? new GetBNCmodel.fromJson(json['data']) : null;
-  }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['result'] = this.result;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
+  factory GetBNCRepo.fromJson(Map<dynamic, dynamic> json) {
+    try {
+      return GetBNCRepo(
+        result: json['result'],
+        data: json['data'],
+      );
+    } catch (error) {
+      return GetBNCRepo(
+        result: "",
+        data: null,
+      );
     }
-    return data;
   }
 
   // GetBNCRepo.fromJson(Map<String, dynamic> json) {
@@ -41,60 +42,60 @@ class GetBNCRepo {
 class GetBNCmodel {
   String? id;
   String? row;
-  String? productId;
   String? catId;
+  String? catName;
   String? subCatId;
+  String? subCatName;
   String? sscatId;
+  String? ssCatName;
+  String? productId;
+  String? prodName;
   String? userId;
   String? type;
-  String? createdAt;
-  String? updatedAt;
-  String? addedDate;
-  String? userAsLeadId;
 
   GetBNCmodel(
       {this.id,
         this.row,
-        this.productId,
         this.catId,
+        this.catName,
         this.subCatId,
+        this.subCatName,
         this.sscatId,
+        this.ssCatName,
+        this.productId,
+        this.prodName,
         this.userId,
-        this.type,
-        this.createdAt,
-        this.updatedAt,
-        this.addedDate,
-        this.userAsLeadId});
+        this.type});
 
   GetBNCmodel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     row = json['row'];
-    productId = json['product_id'];
     catId = json['cat_id'];
+    catName = json['cat_name'];
     subCatId = json['sub_cat_id'];
+    subCatName = json['sub_cat_name'];
     sscatId = json['sscat_id'];
+    ssCatName = json['ss_cat_name'];
+    productId = json['product_id'];
+    prodName = json['prod_name'];
     userId = json['user_id'];
     type = json['type'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    addedDate = json['added_date'];
-    userAsLeadId = json['user_as_lead_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['row'] = this.row;
-    data['product_id'] = this.productId;
     data['cat_id'] = this.catId;
+    data['cat_name'] = this.catName;
     data['sub_cat_id'] = this.subCatId;
+    data['sub_cat_name'] = this.subCatName;
     data['sscat_id'] = this.sscatId;
+    data['ss_cat_name'] = this.ssCatName;
+    data['product_id'] = this.productId;
+    data['prod_name'] = this.prodName;
     data['user_id'] = this.userId;
     data['type'] = this.type;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['added_date'] = this.addedDate;
-    data['user_as_lead_id'] = this.userAsLeadId;
     return data;
   }
 }

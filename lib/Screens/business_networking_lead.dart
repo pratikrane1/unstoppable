@@ -18,7 +18,6 @@ class BusinessNetworkingLead extends StatefulWidget{
 
 class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
   BusinessOpprtunityBloc? _businessOpprtunityBloc;
-  List<GetBNCmodel> LeadList=[];
   String rowid1 = "1";
   String rowid2 = "2";
   String rowid3 = "3";
@@ -60,7 +59,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                     onTap: () {
 
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(rowId: rowid1)));
+                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(rowId: rowid1,bnCmodel: GetBNCmodel(),)));
 
                     },
                     child: Padding(
@@ -124,7 +123,8 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                 InkWell(
                     onTap: () {
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(rowId: rowid2)));
+                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(rowId: rowid2,bnCmodel: GetBNCmodel(),)));
+
 
                     },
                     child: Padding(
@@ -186,8 +186,9 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                 // For Lead 3
                 InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(rowId: rowid3,bnCmodel: GetBNCmodel(),)));
+
 
                     },
                     child: Padding(
@@ -250,8 +251,9 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                 InkWell(
                     onTap: () {
 
-                      // Navigator.push(
-                      //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(rowId: rowid4,bnCmodel: GetBNCmodel(),)));
+
 
                     },
                     child: Padding(
@@ -313,8 +315,9 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                 // For Lead 5
                 InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(rowId: rowid5,bnCmodel: GetBNCmodel(),)));
+
 
                     },
                     child: Padding(
@@ -388,271 +391,3 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
 }
 
 
-
-// Widget _UpdateButton(BuildContext context) {
-//   return Center(
-//     child: ClipRRect(
-//       borderRadius: BorderRadius.circular(0),
-//       child: SizedBox(
-//         width: MediaQuery.of(context).size.width,
-//         height: 40,
-//         child: ElevatedButton(
-//           style: ElevatedButton.styleFrom(
-//             primary: ThemeColors.drawerTextColor,
-//           ),
-//           onPressed: () {},
-//           child: Text(
-//             'Save',
-//             style: TextStyle(
-//               fontSize: 18,
-//               fontWeight: FontWeight.w400,
-//             ),
-//           ),
-//         ),
-//       ),
-//     ),
-//   );
-// }
-//
-//
-// Widget _List(BuildContext context){
-//   return SingleChildScrollView(
-//     scrollDirection: Axis.vertical,
-//     child: Container(
-//       height: 600,
-//       decoration: BoxDecoration(
-//       color: Colors.white,
-//       borderRadius: BorderRadius.circular(16),
-//     ),
-//       child: ListView(
-//         children: [
-//           _Category(context),
-//           _SubCategory(context),
-//           _SubSubCategory(context),
-//           _ProductName(context),
-//           _Type(context)
-//         ],
-//       ),
-//
-//     ),
-//   );
-// }
-// Widget _Category(BuildContext context){
-//   return Card(
-//     elevation: 1,
-//     margin: EdgeInsets.all(10),
-//     color: Colors.white,
-//     shadowColor: Colors.blueGrey,
-//     shape:  OutlineInputBorder(
-//         borderRadius: BorderRadius.circular(10),
-//         borderSide: BorderSide(color: ThemeColors.drawerTextColor, width: 1)
-//     ),
-//     child: Container(
-//
-//       child: ExpansionTile(
-//
-//         // leading: Icon(CupertinoIcons.pencil_ellipsis_rectangle, color: ThemeColors.drawerTextColor,),
-//         title: Text('Category', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//
-//         children: <Widget>[
-//           Container(
-//             decoration: BoxDecoration(
-//                 border: Border(
-//                     bottom: BorderSide(
-//                       width: 0.3,
-//                     )
-//                 )
-//             ),
-//             child: ListTile(
-//               onTap: (){},
-//               title: const Text('Not Intrested', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//             ),
-//           ),
-//           ListTile(
-//             onTap: (){
-//               // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BusinessNetworking()));
-//
-//             },
-//             title: const Text('Complete', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-//
-// Widget _SubCategory(BuildContext context){
-//   return Card(
-//     elevation: 1,
-//     margin: EdgeInsets.all(10),
-//     color: Colors.white,
-//     shadowColor: Colors.blueGrey,
-//     shape:  OutlineInputBorder(
-//         borderRadius: BorderRadius.circular(10),
-//         borderSide: BorderSide(color: ThemeColors.drawerTextColor, width: 1)
-//     ),
-//     child: Container(
-//
-//       child: ExpansionTile(
-//
-//         // leading: Icon(CupertinoIcons.pencil_ellipsis_rectangle, color: ThemeColors.drawerTextColor,),
-//         title: Text('Sub Category', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//
-//         children: <Widget>[
-//           Container(
-//             decoration: BoxDecoration(
-//                 border: Border(
-//                     bottom: BorderSide(
-//                       width: 0.3,
-//                     )
-//                 )
-//             ),
-//             child: ListTile(
-//               onTap: (){},
-//               title: const Text('Not Interested', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//             ),
-//           ),
-//           ListTile(
-//             onTap: (){
-//               // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BusinessNetworking()));
-//
-//             },
-//             title: const Text('Completed', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-//
-// Widget _SubSubCategory(BuildContext context){
-//   return Card(
-//     elevation: 1,
-//     margin: EdgeInsets.all(10),
-//     color: Colors.white,
-//     shadowColor: Colors.blueGrey,
-//     shape:  OutlineInputBorder(
-//         borderRadius: BorderRadius.circular(10),
-//         borderSide: BorderSide(color: ThemeColors.drawerTextColor, width: 1)
-//     ),
-//     child: Container(
-//
-//       child: ExpansionTile(
-//
-//         // leading: Icon(CupertinoIcons.pencil_ellipsis_rectangle, color: ThemeColors.drawerTextColor,),
-//         title: Text('Sub Sub Category', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//
-//         children: <Widget>[
-//           Container(
-//             decoration: BoxDecoration(
-//                 border: Border(
-//                     bottom: BorderSide(
-//                       width: 0.3,
-//                     )
-//                 )
-//             ),
-//             child: ListTile(
-//               onTap: (){},
-//               title: const Text('Not Interested', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//             ),
-//           ),
-//           ListTile(
-//             onTap: (){
-//               // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BusinessNetworking()));
-//
-//             },
-//             title: const Text('Completed', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-//
-// Widget _ProductName(BuildContext context){
-//   return Card(
-//     elevation: 1,
-//     margin: EdgeInsets.all(10),
-//     color: Colors.white,
-//     shadowColor: Colors.blueGrey,
-//     shape:  OutlineInputBorder(
-//         borderRadius: BorderRadius.circular(10),
-//         borderSide: BorderSide(color: ThemeColors.drawerTextColor, width: 1)
-//     ),
-//     child: Container(
-//
-//       child: ExpansionTile(
-//
-//         // leading: Icon(CupertinoIcons.pencil_ellipsis_rectangle, color: ThemeColors.drawerTextColor,),
-//         title: Text('Product Name', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//
-//         children: <Widget>[
-//           Container(
-//             decoration: BoxDecoration(
-//                 border: Border(
-//                     bottom: BorderSide(
-//                       width: 0.3,
-//                     )
-//                 )
-//             ),
-//             child: ListTile(
-//               onTap: (){},
-//               title: const Text('Not Interested', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//             ),
-//           ),
-//           ListTile(
-//             onTap: (){
-//               // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BusinessNetworking()));
-//
-//             },
-//             title: const Text('Completed', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-//
-// Widget _Type(BuildContext context){
-//   return Card(
-//     elevation: 1,
-//     margin: EdgeInsets.all(10),
-//     color: Colors.white,
-//     shadowColor: Colors.blueGrey,
-//     shape:  OutlineInputBorder(
-//         borderRadius: BorderRadius.circular(10),
-//         borderSide: BorderSide(color: ThemeColors.drawerTextColor, width: 1)
-//     ),
-//     child: Container(
-//
-//       child: ExpansionTile(
-//
-//         // leading: Icon(CupertinoIcons.pencil_ellipsis_rectangle, color: ThemeColors.drawerTextColor,),
-//         title: Text('Type', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//
-//         children: <Widget>[
-//           Container(
-//             decoration: BoxDecoration(
-//                 border: Border(
-//                     bottom: BorderSide(
-//                       width: 0.3,
-//                     )
-//                 )
-//             ),
-//             child: ListTile(
-//               onTap: (){},
-//               title: const Text('Not Interested', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//             ),
-//           ),
-//           ListTile(
-//             onTap: (){
-//               // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BusinessNetworking()));
-//
-//             },
-//             title: const Text('Completed', style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }

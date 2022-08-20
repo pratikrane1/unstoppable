@@ -363,7 +363,7 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
                                               'Automatic',
                                               style: new TextStyle(fontSize: 13.0),
                                             ),
-                                            SizedBox(width: 23,),
+                                            SizedBox(width: 10,),
                                                     Radio(
                                                       value: 2,
                                                       groupValue: typeId,
@@ -401,7 +401,7 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
                                               style: new TextStyle(fontSize: 13.0),
                                             ),
                                             SizedBox(
-                                              width: 40,
+                                              width: 24,
                                             ),
 
                                             Radio(

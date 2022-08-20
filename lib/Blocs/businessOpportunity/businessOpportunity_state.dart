@@ -24,9 +24,25 @@ class GetBNCLoadSuccess extends BusinessOpportunityState {
  GetBNCLoadSuccess({this.getBNCLeadList});
 }
 
-class BusinessNetworkingListLoadFail extends BusinessOpportunityState {}
-class GetBNCLoadFail extends BusinessOpportunityState {}
+class AddBNCSuccess extends BusinessOpportunityState {
+ String? message ;
+ AddBNCSuccess({this.message});
+}
 
+class BusinessNetworkingListLoadFail extends BusinessOpportunityState {}
+class GetBNCLoadFail extends BusinessOpportunityState {
+ String? message ;
+ GetBNCLoadFail({this.message});
+}
+class UpdateBNCSuccess extends BusinessOpportunityState {
+ String? message;
+ UpdateBNCSuccess({this.message});
+}
+
+class UpdateBNCFail extends BusinessOpportunityState {
+ String? message;
+ UpdateBNCFail({this.message});
+}
 
 
 

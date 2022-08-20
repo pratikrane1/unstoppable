@@ -34,6 +34,7 @@ class Api {
   static const String Category = HOST_URL+"get_category";
   static const String SubCategory = HOST_URL+"get_sub_category";
   static const String SubSubCategory = HOST_URL+"get_sub_sub_category";
+  static const String ProductName = HOST_URL+"get_products_by_sscat";
   static const String addProduct = HOST_URL+"save_product";
   static const String delProduct = HOST_URL+"delete_product";
   static const String delEnquiry = HOST_URL+"delete_customer_enquiry";
@@ -46,6 +47,7 @@ class Api {
   static const String delAllBuyingRequirement = HOST_URL+"delete_buying_requirement";
   static const String COMPANY_PROFILE ="get_company_profile";
   static const String updateCompanyProfile =HOST_URL+"update_company_profile";
+  static const String updateBNC =HOST_URL+"update_bnc";
   static const String BUSI_NET_LIST =HOST_URL+"get_business_networking_leads";
   static const String GET_BNC =HOST_URL+"get_bnc";
   static const String CHANGE_PASS=HOST_URL+"update_password";

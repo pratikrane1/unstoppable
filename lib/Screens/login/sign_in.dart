@@ -22,6 +22,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  bool _isObscure = true;
   String? _gender = "";
   LoginBloc? _userLoginBloc;
   bool isconnectedToInternet = false;
@@ -165,11 +166,21 @@ class _SignInPageState extends State<SignInPage> {
                                 height: 40,
                                 child: TextFormField(
                                   controller: _textPasswordController,
-                                  obscureText: true,
+                                  obscureText: _isObscure,
                                   keyboardType: TextInputType.visiblePassword,
                                   decoration: InputDecoration(
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        _isObscure ? Icons.visibility : Icons.visibility_off,
+                                      ), onPressed: () {
+                                      setState(() {
+                                        _isObscure = !_isObscure;
+                                      });
+                                    },
+                                    ),
                                     // labelText: 'Email Address',
                                     hintText: 'Enter your password here',
+
                                   ),
                                   validator: (value){
                                     if(value==null || value.isEmpty){

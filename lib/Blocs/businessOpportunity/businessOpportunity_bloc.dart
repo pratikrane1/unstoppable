@@ -76,5 +76,39 @@ class BusinessOpprtunityBloc extends Bloc<BusinessOpportunityEvent, BusinessOppo
         yield GetBNCLoadFail();
       }
     }
+
+
+    // For bnc Update
+    if (event is UpdateBNC) {
+      yield GetBNCLoading();
+      Map<String, String> params;
+      params = {
+        'id':event.id,
+        'user_id': event.userid,
+        'row_id':event.rowid,
+        'cat_id':event.catid,
+        'sub_cat_id':event.subcatid,
+        'sscatid':event.sscatid,
+        'product_id':event.productid,
+        'type':event.type,
+
+
+      };
+
+      var response = await http.post(
+          Uri.parse(Api.updateBNC),
+          body: params
+      );
+
+      try {
+        final resp = json.decode(response.body);
+        if (resp['result'] == 'Success') {
+          yield UpdateBNCSuccess();
+        }
+      } catch (e) {
+        print(e);
+        rethrow;
+      }
+    }
   }
 }

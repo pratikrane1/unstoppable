@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.unstoppable">
+    package="com.unstoppableTrade.b2bPlatform">
    <application
-        android:label="unstoppable"
+        android:label="Unstoppable Trade B2B Platform"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

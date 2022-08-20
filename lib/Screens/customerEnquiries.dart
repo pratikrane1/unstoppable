@@ -239,7 +239,7 @@ class _CustomerEnquiriesState extends State<CustomerEnquiries> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Customer Enquiries"),
+                Text("Product Enquiries"),
                 myAppBarIcon(),
               ],
             ),

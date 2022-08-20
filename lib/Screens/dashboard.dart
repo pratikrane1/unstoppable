@@ -336,11 +336,13 @@ class _DashBoardState extends State<DashBoard> {
                                     fontSize: 18,
                                     fontWeight: FontWeight.normal),
                               ),
-                              Text(
-                                'Cancelled Leads',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
+                              Center(
+                                child: Text(
+                                  'Cancelled Leads',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
                               ),
                             ],
                           ),
