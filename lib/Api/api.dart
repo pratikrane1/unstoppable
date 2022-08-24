@@ -37,10 +37,13 @@ class Api {
   static const String Category = HOST_URL+"get_category";
   static const String SubCategory = HOST_URL+"get_sub_category";
   static const String SubSubCategory = HOST_URL+"get_sub_sub_category";
+  static const String ProductName = HOST_URL+"get_products_by_sscat";
   static const String addProduct = HOST_URL+"save_product";
   static const String delProduct = HOST_URL+"delete_product";
   static const String delEnquiry = HOST_URL+"delete_customer_enquiry";
+  static const String delProductBuying = HOST_URL+"delete_product_buying";
   static const String updateProduct = HOST_URL+"update_product";
+  static const String updateBNC = HOST_URL+"update_bnc";
   static const String uploadImage = HOST_URL+"upload_product_images";
   static const String removeImage = HOST_URL+"remove_product_images";
   static const String Leads ="get_leads";
@@ -54,6 +57,9 @@ class Api {
   static const String BUSI_NET_LIST =HOST_URL+"get_business_networking_leads";
   static const String CHANGE_PASS=HOST_URL+"update_password";
   static const String CSR=HOST_URL+"get_csr_details";
+  static const String GetBNC=HOST_URL+"get_bnc";
+  static const String Getorders=HOST_URL+"my_unstoppable_orders";
+
 
   ///Login api
   static Future<dynamic> login(params) async {
@@ -126,6 +132,17 @@ class Api {
       return LeadsRepo.fromJson(responseJson);
     }
   }
+  static Future<dynamic> getbncLeads(params) async {
+    final response = await http.post(
+      Uri.parse(GetBNC),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return LeadsRepo.fromJson(responseJson);
+    }
+  }
 
   static Future<dynamic> getManageAllBuying(params) async {
     final response = await http.post(
@@ -184,6 +201,18 @@ class Api {
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
       return ProductDetailRepo.fromJson(responseJson);
+    }
+  }
+
+  static Future<dynamic> getOrders(params) async {
+    final response = await http.post(
+      Uri.parse(Getorders),
+      body: params,
+    );
+    print(response);
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      return ProductBuyingRepo.fromJson(responseJson);
     }
   }
 

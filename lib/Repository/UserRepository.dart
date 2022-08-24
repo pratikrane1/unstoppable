@@ -83,9 +83,20 @@ class UserRepository {
     return await Api.getProductDetail(params);
   }
 
+  Future<dynamic> fetchOrders({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getOrders(params);
+  }
+
   Future<dynamic> fetchCSR({String? userid}) async {
     final params = {"user_id":userid};
     return await Api.getCSR(params);
+  }
+
+  Future<dynamic> getBNCLead({String? userId, String?  rowId}) async {
+    final params = {"user_id":userId,
+                      "row_id":rowId};
+    return await Api.getbncLeads(params);
   }
 
   Future<dynamic> fetchCustomerEnquiries({String? userId}) async {
