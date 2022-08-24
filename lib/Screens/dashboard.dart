@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:unstoppable/Blocs/home/bloc.dart';
 import 'package:unstoppable/Screens/search_page.dart';
 import 'package:unstoppable/Screens/unstoppableProducts.dart';
@@ -26,6 +28,36 @@ class _DashBoardState extends State<DashBoard> {
   String? totalProd;
   int? totalInquiries,
       totalLeads,cancelledLeads,monthlyTarget,achievements;
+  bool? isStaging;
+  bool? restrictAppInvoke;
+  String? mid = "DIY12386817555501617";
+  String? orderId;
+  String? amount;
+  String? txnToken;
+  String? callbackUrl;
+  String? result;
+
+  paytm(){
+    var response = AllInOneSdk.startTransaction(
+        mid!, orderId!, amount!, txnToken!, callbackUrl!, isStaging!, restrictAppInvoke!);
+    response.then((value) {
+      print(value);
+      setState(() {
+        result = value.toString();
+      });
+    }).catchError((onError) {
+      if (onError is PlatformException) {
+        setState(() {
+          result = onError.message! + " \n  " + onError.details.toString();
+        });
+      } else {
+        setState(() {
+          result = onError.toString();
+        });
+      }
+    });
+
+  }
 
 
   void initState() {
@@ -38,6 +70,10 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () { paytm(); },
+
+
+      ),
       appBar:
       AppBar(
         backgroundColor: ThemeColors.baseThemeColor,

@@ -12,6 +12,7 @@ import 'package:unstoppable/Screens/reward.dart';
 import 'package:unstoppable/Screens/unstoppableOrders.dart';
 import 'package:unstoppable/Screens/unstoppable_orders.dart';
 import 'package:unstoppable/Utils/application.dart';
+import '../Blocs/User Profile/User_profile_api.dart';
 import '../Blocs/companyProfile/comapny_profile_state.dart';
 import '../Blocs/companyProfile/company_profile_block.dart';
 import '../Blocs/companyProfile/company_profile_event.dart';
@@ -41,6 +42,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
   List<CompanyProfileModel>? companyData;
   List<UserProfileModel>? userProfileData;
 
+  late Future<UserProfileModel> profileData;
 
 
   @override
@@ -50,9 +52,8 @@ class _DrawerWidgetState extends State<DrawerWidget>{
     // _companyProbileBloc!.add(OnLoadingUserProfile(userid: Application.vendorLogin!.userId.toString()));
     _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: Application.vendorLogin!.userId.toString()));
 
-    // _userProfileBloc = BlocProvider.of<CompanyProfileBloc>(context);
-    // _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: "874"));
-    // final _nameController = TextEditingController(text: companyData![0].name.toString());
+    profileData = getUserProfile();
+
   }
 
   @override
@@ -96,68 +97,84 @@ class _DrawerWidgetState extends State<DrawerWidget>{
 
           return (companyData!=null)
             ?
-            Container(
-              // decoration: const BoxDecoration(
-              //   image: DecorationImage(
-              //     image: AssetImage(Images.bg),
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
-              child:
-              ListView(
-                // Important: Remove any padding from the ListView.
-                padding: EdgeInsets.zero,
-                children: [
-                  // SizedBox(
-                  //   height: 50,
-                  // ),
-                  // Container(
-                  //   height: 50,
-                  //   width: MediaQuery.of(context).size.width,
-                  //   color: ThemeColors.baseThemeColor,
-                  //   child: Row(
-                  //     children: [
-                  //       SizedBox(width: 20,),
-                  //       InkWell(
-                  //         onTap: (){
-                  //           // Navigator.popAndPushNamed(context, MaterialPageRoute(builder: (context) => BottomNavigation()))
-                  //           Navigator.of(context).pop();
-                  //         },
-                  //         child: Icon(Icons.arrow_back_ios,color: ThemeColors.whiteTextColor,),
-                  //
-                  //       ),
-                  //       SizedBox(
-                  //         width: 20,
-                  //       ),
-                  //       Text("More", style: TextStyle(fontSize: FontSize.large, color: ThemeColors.whiteTextColor),)
-                  //     ],
+              FutureBuilder<UserProfileModel>(
+                  future: profileData,
+                  builder: (context, snapshot){
+                    if(snapshot.hasData){
+
+                    }
+                    else if (snapshot.hasError){
+                      return Text("${snapshot.error}");
+                    }
+                    return Container(
+                  // decoration: const BoxDecoration(
+                  //   image: DecorationImage(
+                  //     image: AssetImage(Images.bg),
+                  //     fit: BoxFit.cover,
                   //   ),
                   // ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  CircleAvatar(
-                    radius: 70,
-                    backgroundColor: Colors.orange,
-                    child: Text(
-                      "A",
-                      style: TextStyle(fontSize: 40),
-                    ),
-                  ),
+                  child:(snapshot.hasData)
+                      ?
+                  ListView(
+                    // Important: Remove any padding from the ListView.
+                    padding: EdgeInsets.zero,
+                    children: [
+                      // SizedBox(
+                      //   height: 50,
+                      // ),
+                      // Container(
+                      //   height: 50,
+                      //   width: MediaQuery.of(context).size.width,
+                      //   color: ThemeColors.baseThemeColor,
+                      //   child: Row(
+                      //     children: [
+                      //       SizedBox(width: 20,),
+                      //       InkWell(
+                      //         onTap: (){
+                      //           // Navigator.popAndPushNamed(context, MaterialPageRoute(builder: (context) => BottomNavigation()))
+                      //           Navigator.of(context).pop();
+                      //         },
+                      //         child: Icon(Icons.arrow_back_ios,color: ThemeColors.whiteTextColor,),
+                      //
+                      //       ),
+                      //       SizedBox(
+                      //         width: 20,
+                      //       ),
+                      //       Text("More", style: TextStyle(fontSize: FontSize.large, color: ThemeColors.whiteTextColor),)
+                      //     ],
+                      //   ),
+                      // ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CircleAvatar(
+                        radius: 70,
+                        backgroundColor: Colors.orange,
+                        child: Text(
+                          "A",
+                          style: TextStyle(fontSize: 40),
+                        ),
+                      ),
 
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _Rewards(context),
-                  _BussinessOpp(context),
-                  _MyTools(context),
-                  _Settings(context, companyData![0]),
-                  _CSR(context),
-                  _ShareUrl(context),
-                  _LogOutButton(context)
-                ],
-              ),
-            )
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _Rewards(context),
+                      _BussinessOpp(context),
+                      _MyTools(context),
+                      _Settings(context, companyData![0], snapshot.data!),
+                      _CSR(context),
+                      _ShareUrl(context),
+                      _LogOutButton(context)
+                    ],
+                  )
+                      :
+                      Center(
+                        child: CircularProgressIndicator(),
+                      )
+                );
+              })
+
               :
               Center(child: CircularProgressIndicator());
         }
@@ -416,7 +433,7 @@ Widget _MyTools(BuildContext context) {
   );
 }
 
-Widget _Settings(BuildContext context, CompanyProfileModel companyData) {
+Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProfileModel data) {
   return Card(
     elevation: 1,
     margin: EdgeInsets.all(10),
@@ -444,7 +461,7 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData) {
           child: ListTile(
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()));
+                  MaterialPageRoute(builder: (context) => ProfileScreen(profileData: data)));
             },
             title: const Text(
               'My Profile',
