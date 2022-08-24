@@ -91,7 +91,7 @@ class MytoolsBloc extends Bloc<MytoolsEvent, MytoolsState> {
       }
     }
 
-    //remove productBuying
+   // remove productBuying
     if (event is DeleteProductBuying) {
       yield DeleteProductBuyingLoading();
       Map<String, String> params;
@@ -124,8 +124,8 @@ class MytoolsBloc extends Bloc<MytoolsEvent, MytoolsState> {
       final ProductBuyingRepo response = await productBuyingRepo!
           .fetchOrders(
           userId: event.userid,
-          offset:
-          event.offset.toString()
+          // offset:
+          // event.offset.toString()
       );
 
       final Iterable refactorOrders = response.data ?? [];

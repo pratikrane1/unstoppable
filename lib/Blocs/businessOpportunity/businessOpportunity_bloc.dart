@@ -78,7 +78,7 @@ class BusinessOpprtunityBloc extends Bloc<BusinessOpportunityEvent, BusinessOppo
     }
 
 
-    // For bnc Update
+//    For bnc Update
     if (event is UpdateBNC) {
       yield GetBNCLoading();
       Map<String, String> params;
