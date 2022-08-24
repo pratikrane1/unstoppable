@@ -247,13 +247,15 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DrawerWidget()));
-              //Navigator.of(context).pop();
+          leading: InkWell(
+            onTap: (){
+              Navigator.pop(context);
             },
-            child: Icon(Icons.arrow_back_ios),
+            child: Icon(
+              CupertinoIcons.chevron_left,
+              color: Colors.white,
+              size: 18,
+            ),
           ),
           backgroundColor: ThemeColors.baseThemeColor,
           elevation: 0.0,
@@ -369,32 +371,32 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
                                     ), // InputDecoration
                                   ),
                                 ),
-                                // trailing: InkWell(
-                                //   onTap: () {
-                                //     //AddProduct(context);
-                                //   },
-                                //   child: Container(
-                                //     width: 35,
-                                //     height: 35,
-                                //     decoration: BoxDecoration(
-                                //         shape: BoxShape.circle,
-                                //         //color: Color(0xffc32c37),
-                                //         color: Colors.indigo,
-                                //         border: Border.all(color: Colors.black, width: 1)),
-                                //     child: Container(
-                                //       width: 30,
-                                //       height: 30,
-                                //       alignment: Alignment.center,
-                                //       child: Stack(
-                                //         children: [
-                                //           Center(
-                                //               child:Icon(Icons.add,color: Colors.white,)
-                                //           ),
-                                //         ],
-                                //       ),
-                                //     ),
-                                //   ),
-                                // )
+                                trailing: InkWell(
+                                  onTap: () {
+                                    //AddProduct(context);
+                                  },
+                                  child: Container(
+                                    width: 35,
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        //color: Color(0xffc32c37),
+                                        color: Colors.indigo,
+                                        border: Border.all(color: Colors.black, width: 1)),
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      alignment: Alignment.center,
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                              child:Icon(Icons.edit,color: Colors.white,)
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
                             ),
                             // info(),
                             //for product ListView
