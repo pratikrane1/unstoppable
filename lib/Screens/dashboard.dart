@@ -22,9 +22,8 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> {
   //final FirebaseAuth auth = FirebaseAuth.instance;
-  String dropdownValue = 'My Acc';
   HomeBloc? _userHomeBloc;
-  String totalProd="";
+  String? totalProd;
   int? totalInquiries,
       totalLeads,cancelledLeads,monthlyTarget,achievements;
 
@@ -49,7 +48,7 @@ class _DashBoardState extends State<DashBoard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("My Acc", style: TextStyle(color: ThemeColors.whiteTextColor),),
+                Text("Unstoppable Trade", style: TextStyle(color: ThemeColors.whiteTextColor),),
                 // DropdownButton<String>(
                 //   value: dropdownValue,
                 //   icon: const Icon(
@@ -81,23 +80,23 @@ class _DashBoardState extends State<DashBoard> {
                 //     );
                 //   }).toList(),
                 // ),
-                SizedBox(
-                  width: 130,
-                ),
-                Expanded(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      size: 30,
-                    ),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SearchPage()));
-                    },
-                  ),
-                ),
+                // SizedBox(
+                //   width: 130,
+                // ),
+                // Expanded(
+                //   child: IconButton(
+                //     icon: Icon(
+                //       Icons.search,
+                //       size: 30,
+                //     ),
+                //     onPressed: () {
+                //       Navigator.pushReplacement(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (context) => SearchPage()));
+                //     },
+                //   ),
+                // ),
                 myAppBarIcon(),
               ],
             ),
@@ -140,13 +139,24 @@ class _DashBoardState extends State<DashBoard> {
                           padding: const EdgeInsets.all(25.0),
                           child: Column(
                             children: [
+                              (totalProd!=null)
+                                  ?
                               Text(
                                 totalProd.toString(),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.normal),
+                              )
+                              :
+                              Text(
+                                "0",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
                               ),
+
                               Text(
                                 'Total Products',
                                 style: TextStyle(
@@ -203,8 +213,18 @@ class _DashBoardState extends State<DashBoard> {
                           padding: const EdgeInsets.all(25.0),
                           child: Column(
                             children: [
+                              (totalInquiries!=null)
+                                  ?
                               Text(
                                 totalInquiries.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                              )
+                                  :
+                              Text(
+                                "0",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -266,8 +286,18 @@ class _DashBoardState extends State<DashBoard> {
                           padding: const EdgeInsets.all(25.0),
                           child: Column(
                             children:  [
+                              (totalLeads!=null)
+                                  ?
                               Text(
                                 totalLeads.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                              )
+                                  :
+                              Text(
+                                "0",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -329,8 +359,18 @@ class _DashBoardState extends State<DashBoard> {
                           padding: const EdgeInsets.all(25.0),
                           child: Column(
                             children:  [
+                              (cancelledLeads!=null)
+                                  ?
                               Text(
                                 cancelledLeads.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                              )
+                                  :
+                              Text(
+                                "0",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -394,8 +434,18 @@ class _DashBoardState extends State<DashBoard> {
                           padding: const EdgeInsets.all(25.0),
                           child: Column(
                             children:  [
+                              (monthlyTarget!=null)
+                                  ?
                               Text(
                                 monthlyTarget.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                              )
+                                  :
+                              Text(
+                                "0",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -457,8 +507,18 @@ class _DashBoardState extends State<DashBoard> {
                           padding: const EdgeInsets.all(25.0),
                           child: Column(
                             children:  [
+                              (achievements!=null)
+                                  ?
                               Text(
                                 achievements.toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal),
+                              )
+                                  :
+                              Text(
+                                "0",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,

@@ -21,7 +21,7 @@ class LoginSuccess extends LoginState {
 
 }
 
-class VendorRegistration extends LoginState {}
+class VendorRegistrationLoading extends LoginState {}
 
 class VendorRegistrationSuccess extends LoginState {
   VendorRegistrationSuccess();

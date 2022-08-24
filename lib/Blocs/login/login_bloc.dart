@@ -84,7 +84,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
 
     if (event is OnRegistration) {
-      yield VendorRegistration();
+      yield VendorRegistrationLoading();
       Map<String, String> params;
       params = {
         'user_type': event.userType,

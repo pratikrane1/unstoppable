@@ -8,6 +8,7 @@ import 'package:unstoppable/Repository/UserRepository.dart';
 import 'package:http/http.dart' as http;
 import '../../Api/api.dart';
 import '../../Models/company_profile_model.dart';
+import '../../Models/user_profile_model.dart';
 import 'comapny_profile_state.dart';
 import 'company_profile_event.dart';
 
@@ -21,7 +22,7 @@ class CompanyProfileBloc extends Bloc<CompanyProfileEvent, CompanyProfileState> 
   Stream<CompanyProfileState> mapEventToState(event) async* {
 
 
-    ///Event for Leads
+    ///Event for Company Profile
     if (event is OnLoadingCompanyProfileList) {
       ///Notify loading to UI
       yield CompanyProfileListLoading();
@@ -100,7 +101,39 @@ class CompanyProfileBloc extends Bloc<CompanyProfileEvent, CompanyProfileState> 
       }
     }
 
+
+
+    //User Profile
+    if (event is OnLoadingUserProfile) {
+      ///Notify loading to UI
+      yield UserProfileLoading();
+
+      ///Fetch API via repository
+      final UserProfileRepo response = await companyProfileRepo!
+          .fetchUserProfile(
+        userId: event.userid,
+        // userId: "874",
+      );
+
+      final Iterable refactorProduct = response.data ?? [];
+      final userProfileData = refactorProduct.map((item) {
+        return UserProfileModel.fromJson(item);
+      }).toList();
+      if(refactorProduct.length>0){
+        yield UserProfileSuccess(userProfileData: userProfileData);
+
+      }else{
+        yield UserProfileLoadFail();
+
+      }
+
+
+    }
+
+
   }
+
+
 
 
 

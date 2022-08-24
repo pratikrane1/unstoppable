@@ -70,3 +70,9 @@ class UpdateCompanyProfile extends CompanyProfileEvent{
     required this.cinno,
     required this.dfgt});
 }
+
+
+class OnLoadingUserProfile extends CompanyProfileEvent {
+  String userid;
+  OnLoadingUserProfile({required this.userid});
+}
