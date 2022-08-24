@@ -11,11 +11,6 @@ import '../widgets/app_dialogs.dart';
 import '../widgets/drawer.dart';
 import 'bottom_navbar.dart';
 
-// import '/Controllers/profile_controller.dart';
-// import '/services/validators.dart';
-// import '/utils/theme_colors.dart';
-// import '/widgets/loader.dart';
-// import 'package:get/get.dart';
 
 class EditPasswordPage extends StatefulWidget {
   @override
