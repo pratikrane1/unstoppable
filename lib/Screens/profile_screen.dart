@@ -61,12 +61,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: {"user_id":Application.vendorLogin!.userId.toString()},
     );
     if (response.statusCode == 200) {
-      final responseJson = json.decode(response.body);
+      final responseJson = json.decode(response.body)["data"];
       // print(responseJson);
-      data = responseJson['data'];
-      userData = data[0];
-      print("DATA $userData");
-      print("DATA ${userData[0]}");
+      data = responseJson;
+      print("DATA $data");
+      // print("DATA ${userData}");
       // final Iterable refactorProduct = data ?? [];
       // final userProfileData = refactorProduct.map((item) {
       //   return UserProfileModel.fromJson(item);
@@ -74,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // // print("Data $userProfileData");
       // return UserProfileRepo.fromJson(responseJson);
     }
-
+  return data;
 
   }
 
