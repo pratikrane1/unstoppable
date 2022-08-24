@@ -5,6 +5,7 @@ import 'package:unstoppable/Models/category_model.dart';
 import 'package:unstoppable/Models/get_BNC_model.dart';
 import 'package:unstoppable/Models/productIamBuying_model.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
+import 'package:unstoppable/Models/untoppable_order_model.dart';
 
 import 'dart:convert';
 import 'package:unstoppable/Models/vendor_login.dart';
@@ -27,6 +28,7 @@ class Api {
   static const String VENDOR_Registration=HOST_URL+"register_vendor";
   static const String Vendor_Dashboard_Count ="get_dashboard_data";
   static const String Product ="get_products";
+  static const String MyOrders ="my_unstoppable_orders";
   static const String ProductBuying ="get_product_buying";
   static const String AddProductBuying =HOST_URL+"save_product_buying";
   static const String ProductImage ="get_product_images";
@@ -38,6 +40,7 @@ class Api {
   static const String ProductName = HOST_URL+"get_products_by_sscat";
   static const String addProduct = HOST_URL+"save_product";
   static const String delProduct = HOST_URL+"delete_product";
+  static const String delProductBuying = HOST_URL+"delete_product_buying";
   static const String delEnquiry = HOST_URL+"delete_customer_enquiry";
   static const String updateProduct = HOST_URL+"update_product";
   static const String uploadImage = HOST_URL+"upload_product_images";
@@ -86,6 +89,18 @@ class Api {
       final responseJson = json.decode(response.body);
       print(responseJson);
       return ProductRepo.fromJson(responseJson);
+    }
+  }
+
+  static Future<dynamic> getOrders(params) async {
+    final response = await http.post(
+      Uri.parse(HOST_URL+MyOrders),
+      body: params,
+    );
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return ProductBuyingRepo.fromJson(responseJson);
     }
   }
 

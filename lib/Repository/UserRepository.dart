@@ -60,6 +60,12 @@ class UserRepository {
     return await Api.getProduct(params);
   }
 
+  Future<dynamic> fetchOrders({String? userId,String? offset}) async {
+    final params = {"user_id":userId,
+      "offset":offset};
+    return await Api.getOrders(params);
+  }
+
   Future<dynamic> fetchProductBuying({String? userId,String? offset}) async {
     final params = {"user_id":userId,
       "offset":offset};
