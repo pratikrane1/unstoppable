@@ -1,8 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io';
+
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:unstoppable/Blocs/login/login_bloc.dart';
 import 'package:unstoppable/Blocs/login/login_event.dart';
@@ -11,7 +14,7 @@ import 'package:unstoppable/Screens/login/sign_in.dart';
 import 'package:unstoppable/Utils/connectivity_check.dart';
 import 'package:unstoppable/constant/font_size.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
-
+import '../../Config/image.dart';
 import '../../Models/category_model.dart';
 import '../../Models/subCategory_model.dart';
 import '../../Models/subSubCategory_model.dart';
@@ -19,8 +22,7 @@ import '../../NetworkFunction/fetchCategory.dart';
 import '../../NetworkFunction/fetchSubCategory.dart';
 import '../../NetworkFunction/fetchSubSubCategory.dart';
 import '../../widgets/app_dialogs.dart';
-import '../bottom_navbar.dart';
-import '../dashboard.dart';
+import '../image_file.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -33,15 +35,6 @@ class _SignUpPageState extends State<SignUpPage>{
 
 
   ListItem? supplierValue;
- // List<String> supplierList = ["Manufacturers", "Wholesaler", "Retailer", "Service Provide", "Freelancer"];
-
- List<ListItem> supplierList = [
-   ListItem(3, "Manufacturers"),
-   ListItem(4, "Wholesaler"),
-   ListItem(5, "Retailer"),
-   ListItem(6, "Service Provide"),
-   ListItem(7, "Freelancer"),
- ];
  final _formKey = GlobalKey<FormState>();
  final _nameController = TextEditingController();
  final _businessController = TextEditingController();
@@ -55,155 +48,223 @@ class _SignUpPageState extends State<SignUpPage>{
  final _mobNoController = TextEditingController();
  final _emailController = TextEditingController();
  final _gSTNController = TextEditingController();
+ final _referBy = TextEditingController();
  CategoryModel? categoryModelselected;
  SubSubCategoryModel? subsubcategoryModelselected;
  SubCategoryModel? subcategoryModelselected;
  final picker = ImagePicker();
   String _value = "3";
-
-//For Display uploaded image
-//   Widget _buildAvatar() {
-//     if (_image!=null&&imageFile!=null) {
-//       return Container(
-//         width: MediaQuery.of(context).size.width,
-//         height: MediaQuery.of(context).size.height,
-//         margin: EdgeInsets.all(5.0),
-//         decoration: BoxDecoration(
-//           // borderRadius: BorderRadius.circular(10),
-//           border: Border.all(
-//             color:
-//             ThemeColors.textFieldBgColor,  // red as border color
-//           ),
-//           color:
-//           Colors.white,
-//
-//         ),
-//
-//         child:
-//         ClipRRect(
-//           child: Image.file(
-//             _image!,
-//             fit: BoxFit.fill,
-//           ),
-//
-//           // borderRadius: BorderRadius.circular(20),
-//
-//         ),
-//
-//       );
-//     }
-//     else{
-//       return CachedNetworkImage(
-//         imageUrl: imageFile!.imagePath.toString(),
-//         imageBuilder: (context, imageProvider) {
-//           return Container(
-//             width: 110,
-//             height: 110,
-//             decoration: BoxDecoration(
-//               shape: BoxShape.rectangle
-//               ,
-//               image: DecorationImage(
-//                 image: imageProvider,
-//                 fit: BoxFit.fill,
-//               ),
-//             ),
-//           );
-//         },
-//         placeholder: (context, url) {
-//           return Shimmer.fromColors(
-//             baseColor: Theme
-//                 .of(context)
-//                 .hoverColor,
-//             highlightColor: Theme
-//                 .of(context)
-//                 .highlightColor,
-//             enabled: true,
-//             child: Container(
-//               width: 110,
-//               height: 110,
-//               // decoration: BoxDecoration(
-//               //   shape: BoxShape.rectangle,
-//               //   color: Colors.white,
-//               // ),
-//             ),
-//           );
-//         },
-//         errorWidget: (context, url, error) {
-//           return Shimmer.fromColors(
-//             baseColor: Theme
-//                 .of(context)
-//                 .hoverColor,
-//             highlightColor: Theme
-//                 .of(context)
-//                 .highlightColor,
-//             enabled: true,
-//             child: Container(
-//               width: 110,
-//               height: 110,
-//               // decoration: BoxDecoration(
-//               //   shape: BoxShape.rectangle,
-//               //   color: Colors.white,
-//               // ),
-//               child: Icon(Icons.error),
-//             ),
-//           );
-//         },
-//       );
-//
-//     }
-//     //updated on 30/11/2020
-//     return Container(
-//       width: MediaQuery.of(context).size.width,
-//       height: 120,
-//       margin: EdgeInsets.all(8.0),
-//       decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(20),
-//         border: Border.all(
-//           color:
-//           ThemeColors.textFieldBgColor,  // red as border color
-//         ),
-//         color:
-//         Colors.white,
-//
-//       ),
-//       child:
-//       Container(
-//         child: Image.asset(Images.splash,
-//           fit: BoxFit.fill,
-//           height: 120,
-//           width: MediaQuery.of(context).size.width,),
-//       ),
-//
-//
-//
-//     );
-//   }
+  ImageFile? imageFile;
+  File? _image;
+  String flagImage="";
 
 
- //method to open gallery
- // _openGallery(BuildContext context) async {
- //
- //   final image = await picker.getImage(source: ImageSource.gallery,imageQuality: 25);
- //   imageFile=new ImageFile();
- //   if (image != null) {
- //
- //     _cropImage(image);
- //
- //   }
- // }
+
+// For Display uploaded image
+  Widget _buildAvatar() {
+    if (_image != null) {
+      return Container(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        margin: EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+          // borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color:
+            ThemeColors.textFieldBgColor, // red as border color
+          ),
+          color:
+          Colors.white,
+
+        ),
+
+        child:
+        ClipRRect(
+          child: Image.file(
+            _image!,
+            fit: BoxFit.fill,
+          ),
+
+          // borderRadius: BorderRadius.circular(20),
+
+        ),
+
+      );
+    }
+    else {
+      // return CachedNetworkImage(
+      //     imageUrl: imageFile!.imagePath.toString(),
+      //     imageBuilder: (context, imageProvider) {
+      //       return Container(
+      //         width: 110,
+      //         height: 110,
+      //         decoration: BoxDecoration(
+      //           shape: BoxShape.rectangle
+      //           ,
+      //           image: DecorationImage(
+      //             image: imageProvider,
+      //             fit: BoxFit.fill,
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //     placeholder: (context, url) {
+      //       return Shimmer.fromColors(
+      //         baseColor: Theme
+      //             .of(context)
+      //             .hoverColor,
+      //         highlightColor: Theme
+      //             .of(context)
+      //             .highlightColor,
+      //         enabled: true,
+      //         child: Container(
+      //           width: 110,
+      //           height: 110,
+      //           // decoration: BoxDecoration(
+      //           //   shape: BoxShape.rectangle,
+      //           //   color: Colors.white,
+      //           // ),
+      //         ),
+      //       );
+      //     },
+      //     errorWidget: (context, url, error) {
+      //       return Shimmer.fromColors(
+      //         baseColor: Theme
+      //             .of(context)
+      //             .hoverColor,
+      //         highlightColor: Theme
+      //             .of(context)
+      //             .highlightColor,
+      //         enabled: true,
+      //         child: Container(
+      //           width: 110,
+      //           height: 110,
+      //           // decoration: BoxDecoration(
+      //           //   shape: BoxShape.rectangle,
+      //           //   color: Colors.white,
+      //           // ),
+      //           child: Icon(Icons.error),
+      //         ),
+      //       );
+      //     },
+      //   );
+      //
+      // }
+      // updated on 30/11/2020
+      return Container(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: 120,
+        margin: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color:
+            ThemeColors.textFieldBgColor, // red as border color
+          ),
+          color:
+          Colors.white,
+
+        ),
+        child:
+        Container(
+          child: Image.asset(Images.splash,
+            fit: BoxFit.fill,
+            height: 120,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,),
+        ),
+
+
+      );
+    }
+  }
+
+
+ // method to open gallery
+ _openGallery(BuildContext context) async {
+
+   final image = await picker.getImage(source: ImageSource.gallery,imageQuality: 25);
+   // imageFile=new ImageFile();
+   if (image != null) {
+
+     _cropImage(image);
+
+   }
+ }
+
+  // For crop image
+
+  Future<Null> _cropImage(PickedFile imageCropped) async {
+    File? croppedFile = await ImageCropper.cropImage(
+        sourcePath: imageCropped.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+          // CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio4x3,
+        ]
+            : [
+          // CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio4x3,
+        ],
+        androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Theme.of(context).primaryColor,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.square,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          title: 'Cropper',
+        ));
+    if (croppedFile != null) {
+      // Navigator.pop(context);
+
+      setState(() {
+        // mImageFile.image = croppedFile;
+        // print(mImageFile.image.path);
+        // state = AppState.cropped;
+        _image = croppedFile;
+        // imageFile!.image = croppedFile;
+        // imageFile!.imagePath=_image!.path;
+        // flagImage="0";//when cropped
+      });
+    }
+
+  }
 
   void initState(){
     super.initState();
     _userLoginBloc = BlocProvider.of<LoginBloc>(context);
 
-
   }
+
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     _nameController.clear();
     _businessController.clear();
+    _emailController.clear();
+    _mobNoController.clear();
+    _gSTNController.clear();
+    _pinController.clear();
+    _BusinessAddressController.clear();
+    _annualTurnController.clear();
+    _totalEmpController.clear();
+    _establishmentController.clear();
+    _ownershipController.clear();
+    _referBy.clear();
   }
 
   @override
@@ -213,6 +274,8 @@ class _SignUpPageState extends State<SignUpPage>{
       body: SingleChildScrollView(
         child: BlocBuilder<LoginBloc,LoginState>(builder: (context,login){
           return BlocListener<LoginBloc,LoginState>(listener: (context,state){
+            if(state is VendorRegistrationLoading){
+            }
             if(state is VendorRegistrationSuccess)
             {
               // Fluttertoast.showToast(msg: "Registered Successfully");
@@ -318,7 +381,7 @@ class _SignUpPageState extends State<SignUpPage>{
                                         value: "5",
                                         child:
                                         Text(
-                                          "Service Provide ",
+                                          "Retainer",
                                           // style: TextStyle(
                                           //     fontSize: 18.0, fontWeight: FontWeight.w600),
 
@@ -328,7 +391,7 @@ class _SignUpPageState extends State<SignUpPage>{
                                         value: "6",
                                         child:
                                         Text(
-                                          "Freelancer",
+                                          "Service Provide ",
                                           // style: TextStyle(
                                           //     fontSize: 18.0, fontWeight: FontWeight.w600),
 
@@ -338,12 +401,12 @@ class _SignUpPageState extends State<SignUpPage>{
                                         value: "7",
                                         child:
                                         Text(
-                                          "Generation",
+                                          "Freelancer",
                                           // style: TextStyle(
                                           //     fontSize: 18.0, fontWeight: FontWeight.w600),
 
                                         ),
-                                      )
+                                      ),
                                     ],
 
                                     onChanged: (String? value) {
@@ -866,13 +929,64 @@ class _SignUpPageState extends State<SignUpPage>{
                                 ),
                                 const SizedBox(height: 15,),
 
-                                //Annual Turnover:
-                                const Align(alignment: Alignment.topLeft,
-                                    child: Text("GST Number:", textAlign: TextAlign.start,)),
+
+                                //GST Number:
+
+                                 Align(alignment: Alignment.topLeft,
+                                    child: (_value == "5" || _value == "7")
+                                        ?
+                                    Text("PAN Number:", textAlign: TextAlign.start,)
+                                        :
+                                    Text("GST Number:", textAlign: TextAlign.start,)
+                                    ),
                                 const SizedBox(height: 5,),
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width ,
-                                  child: TextFormField(
+                                  child: (_value == "5" || _value == "7")
+                                      ?
+                                  TextFormField(
+                                    controller: _gSTNController,
+                                    obscureText: false,
+                                    //initialValue: widget.userdata['name'],
+                                    textAlign: TextAlign.start,
+                                    keyboardType: TextInputType.text,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600),
+                                    decoration: const InputDecoration(
+                                      contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                      hintStyle: TextStyle(fontSize: 12),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                        borderSide:
+                                        BorderSide(width: 0.8, color: Colors.black),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                        borderSide:
+                                        BorderSide(width: 0.8, color: Colors.black),
+                                      ),
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                          borderSide:
+                                          BorderSide(width: 0.8, color: Colors.black)),
+                                      hintText: "PAN Number",
+                                    ),
+                                    validator: (value){
+                                      if(value==null || value.isEmpty){
+                                        return 'Please Enter PAN Number';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (value) {
+                                      setState(() {
+                                        if ( _formKey.currentState!.validate()) {}
+                                      });
+                                    },
+                                  )
+                                      :
+                                  TextFormField(
                                     controller: _gSTNController,
                                     obscureText: false,
                                     //initialValue: widget.userdata['name'],
@@ -913,6 +1027,8 @@ class _SignUpPageState extends State<SignUpPage>{
                                       });
                                     },
                                   ),
+
+
                                 ),
                                 const SizedBox(height: 15,),
 
@@ -1125,53 +1241,114 @@ class _SignUpPageState extends State<SignUpPage>{
                                 ),
                                 const SizedBox(height: 15,),
 
-                                //Company Logo:
-                                //     const Align(alignment: Alignment.topLeft,
-                                //         child: Text("Company Logo:", textAlign: TextAlign.start,)),
-                                //     const SizedBox(height: 5,),
-                                //     Padding(
-                                //   padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
-                                //   child: InkWell(
-                                //     onTap: () {
-                                //       _openGallery(context);
-                                //       // Navigator.push(
-                                //       //     context,
-                                //       //     MaterialPageRoute(
-                                //       //         builder: (context) => MyImagePicker()));
-                                //     },
-                                //     child: DottedBorder(
-                                //       color: ThemeColors.textFieldHintColor,
-                                //       strokeWidth: 1,
-                                //       dashPattern: [10, 6],
-                                //       child: Container(
-                                //           height: _image==null?100:110,
-                                //           width: MediaQuery.of(context).size.width * 0.9,
-                                //           child: imageFile!.image!=null
-                                //               ?
-                                //           Column(
-                                //             mainAxisAlignment: MainAxisAlignment.center,
-                                //             crossAxisAlignment: CrossAxisAlignment.center,
-                                //             children: [
-                                //
-                                //               Icon(
-                                //                 CupertinoIcons.arrow_down_doc,
-                                //                 color: ThemeColors.textFieldHintColor,
-                                //               ),
-                                //               Text(
-                                //                 "Browse & Upload",
-                                //                 style: TextStyle(
-                                //                     fontSize: FontSize.medium,
-                                //                     color: ThemeColors.textFieldHintColor),
-                                //               )
-                                //             ],
-                                //           ):
-                                //           _buildAvatar()
-                                //
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                                //     const SizedBox(height: 15,),
+                                //Refer by:
+                                const Align(alignment: Alignment.topLeft,
+                                    child: Text("Refer by(optional):", textAlign: TextAlign.start,)),
+                                const SizedBox(height: 5,),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width ,
+                                  child: TextFormField(
+                                    controller: _emailController,
+                                    obscureText: false,
+                                    //initialValue: widget.userdata['name'],
+                                    textAlign: TextAlign.start,
+                                    keyboardType: TextInputType.text,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600),
+                                    decoration: const InputDecoration(
+                                      contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                      hintStyle: TextStyle(fontSize: 12),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                        borderSide:
+                                        BorderSide(width: 0.8, color: Colors.black),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                        borderSide:
+                                        BorderSide(width: 0.8, color: Colors.black),
+                                      ),
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                          borderSide:
+                                          BorderSide(width: 0.8, color: Colors.black)),
+                                      hintText: "Refer by",
+                                    ),
+                                    // validator: (value){
+                                    //   if(value==null || value.isEmpty){
+                                    //     return 'Please Enter Refer by';
+                                    //   }
+                                    //   return null;
+                                    // },
+                                    onChanged: (value) {
+                                      setState(() {
+                                        if ( _formKey.currentState!.validate()) {}
+                                      });
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(height: 15,),
+
+                                // // Company Logo:
+                                    const Align(alignment: Alignment.topLeft,
+                                        child: Text("Company Logo:", textAlign: TextAlign.start,)),
+                                    const SizedBox(height: 5,),
+                                    Padding(
+                                  padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      _openGallery(context);
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => MyImagePicker()));
+                                    },
+                                    child: DottedBorder(
+                                      color: ThemeColors.textFieldHintColor,
+                                      strokeWidth: 1,
+                                      dashPattern: [10, 6],
+                                      child: Container(
+                                          height: _image==null?100:110,
+                                          width: MediaQuery.of(context).size.width * 0.9,
+                                          child:
+                                          _image!=null
+                                              ?
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+
+                                              Icon(
+                                                CupertinoIcons.arrow_down_doc,
+                                                color: ThemeColors.textFieldHintColor,
+                                              ),
+                                              (_image!=null)
+                                                  ?
+                                              Text(
+                                                _image!.path,
+                                                style: TextStyle(
+                                                    fontSize: FontSize.medium,
+                                                    color: ThemeColors.textFieldHintColor),
+                                              )
+                                                  :
+                                              Text(
+                                                "Browse & Upload",
+                                                style: TextStyle(
+                                                    fontSize: FontSize.medium,
+                                                    color: ThemeColors.textFieldHintColor),
+                                              )
+                                            ],
+                                          )
+                                              :
+                                          _buildAvatar()
+
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                    const SizedBox(height: 15,),
                               ],
                             ),
                           ),
@@ -1215,9 +1392,8 @@ class _SignUpPageState extends State<SignUpPage>{
                                         pinCode: _pinController.text,
                                         mobile: _mobNoController.text,
                                         email: _emailController.text,
-                                        comLogo: "",
-                                        referby: ""
-
+                                        comLogo: _image!.path,
+                                        referby: _referBy.text,
                                       ));
                                     }
                                     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNavigation()));
@@ -1238,25 +1414,7 @@ class _SignUpPageState extends State<SignUpPage>{
                                   ),
                                 ),
                               )
-                            // ElevatedButton.icon(
-                            //   style: ElevatedButton.styleFrom(
-                            //     primary: ThemeColors.baseThemeColor,
-                            //   ),
-                            //   icon: Icon(
-                            //     Icons.update,
-                            //     size: 26,
-                            //   ),
-                            //   label: Text(
-                            //     'Update',
-                            //     style: TextStyle(
-                            //       fontSize: 18,
-                            //       fontWeight: FontWeight.w400,
-                            //     ),
-                            //   ),
-                            //   onPressed: () {
-                            //     // profile.updateUserPassword(context: context);
-                            //   },
-                            // ),
+
                           ),
                         ),
                       ),

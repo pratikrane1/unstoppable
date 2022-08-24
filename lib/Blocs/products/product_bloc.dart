@@ -56,7 +56,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     }
 
-/////////////
+    //Product Detail
     if (event is OnLoadingProductDetail) {
       ///Notify loading to UI
       yield ProductDetailLoading();

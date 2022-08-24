@@ -1,10 +1,6 @@
 import 'package:meta/meta.dart';
-import 'package:unstoppable/Blocs/home/bloc.dart';
-import 'package:unstoppable/Models/leads_model.dart';
-import 'package:unstoppable/Models/product_detail_model.dart';
-import 'package:unstoppable/Models/product_model.dart';
-
 import '../../Models/company_profile_model.dart';
+import '../../Models/user_profile_model.dart';
 
 @immutable
 abstract class CompanyProfileState {}
@@ -32,3 +28,22 @@ class UpdateCompanyProfileSuccess extends CompanyProfileState {
 
 
 class CompanyProfileListLoadFail extends CompanyProfileState {}
+
+class UserProfileLoading extends CompanyProfileState {}
+
+// class UpdateCompanyProfileLoading extends UserProfileState {}
+
+
+class UserProfileSuccess extends CompanyProfileState {
+  List<UserProfileModel>? userProfileData;
+  UserProfileSuccess({this.userProfileData});
+}
+
+// class UpdateCompanyProfileSuccess extends UserProfileState {
+//   UpdateCompanyProfileSuccess();
+// }
+
+
+
+
+class UserProfileLoadFail extends CompanyProfileState {}

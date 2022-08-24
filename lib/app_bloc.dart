@@ -3,6 +3,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unstoppable/Blocs/authentication/authentication_bloc.dart';
 import 'package:unstoppable/Blocs/businessOpportunity/bloc.dart';
+import 'package:unstoppable/Blocs/csr/csr_bloc.dart';
 import 'package:unstoppable/Blocs/home/home_bloc.dart';
 import 'package:unstoppable/Blocs/login/login_bloc.dart';
 import 'package:unstoppable/Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_block.dart';
@@ -10,11 +11,13 @@ import 'package:unstoppable/Blocs/settings/settings_bloc.dart';
 import 'package:unstoppable/Blocs/theme/theme_bloc.dart';
 import 'package:unstoppable/Repository/UserRepository.dart';
 
+import 'Blocs/User Profile/user_profile_bloc.dart';
 import 'Blocs/addProductForm/addProductForm_bloc.dart';
 import 'Blocs/companyProfile/company_profile_block.dart';
 import 'Blocs/customerEnquiries/customerEnquiries_bloc.dart';
 import 'Blocs/leads/leads_block.dart';
 import 'Blocs/myTools/myTools_bloc.dart';
+import 'Blocs/paymenHistory/payment_history_bloc.dart';
 import 'Blocs/products/product_bloc.dart';
 
 class AppBloc {
@@ -33,6 +36,9 @@ class AppBloc {
   static final businessOpportunityBloc = BusinessOpprtunityBloc(businessOpportunityRepo: userRepository);
   static final mytoolsBloc = MytoolsBloc(productBuyingRepo: userRepository);
   static final settingsBloc = SettingsBloc(settingsRepo: userRepository);
+  static final paymentHistoryBloc = PaymentHistoryBloc(paymentHistoryRepo: userRepository);
+  // static final userProfileBloc = UserProfileBloc(userProfileRepo: userRepository);
+  static final csrBloc = CSRBloc(csrRepo: userRepository);
 
 
 
@@ -84,6 +90,15 @@ class AppBloc {
     BlocProvider<SettingsBloc>(
       create: (context) => settingsBloc,
     ),
+    BlocProvider<PaymentHistoryBloc>(
+      create: (context) => paymentHistoryBloc,
+    ),
+    // BlocProvider<UserProfileBloc>(
+    //   create: (context) => userProfileBloc,
+    // ),
+    BlocProvider<CSRBloc>(
+      create: (context) => csrBloc,
+    ),
 
   ];
 
@@ -103,6 +118,8 @@ class AppBloc {
     mytoolsBloc.close();
     settingsBloc.close();
     managingAllBuyingRequirementBloc.close();
+    paymentHistoryBloc.close();
+    csrBloc.close();
   }
 
   ///Singleton factory

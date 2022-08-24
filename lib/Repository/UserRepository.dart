@@ -24,6 +24,7 @@ class UserRepository {
     );
   }
 
+
   // //save image
   // Future<dynamic> saveImage(String image) async {
   //   return await UtilPreferences.setString(
@@ -82,6 +83,11 @@ class UserRepository {
     return await Api.getProductDetail(params);
   }
 
+  Future<dynamic> fetchCSR({String? userid}) async {
+    final params = {"user_id":userid};
+    return await Api.getCSR(params);
+  }
+
   Future<dynamic> fetchCustomerEnquiries({String? userId}) async {
     final params = {"user_id":userId};
     return await Api.getCustomerEnquiry(params);
@@ -96,15 +102,26 @@ class UserRepository {
     final params = {"user_id":userId};
     return await Api.getManageAllBuying(params);
   }
+
   Future<dynamic> fetchCompanyProfile({String? userId}) async {
     final params = {"user_id":userId};
     return await Api.getCompanyProfile(params);
+  }
+
+  Future<dynamic> fetchUserProfile({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getUserProfile(params);
   }
 
   Future<dynamic> fetchBusinessNetworking({String? userId,String? offset}) async {
     final params = {"user_id":userId,
       "offset":offset};
     return await Api.getBusinessNetworkingList(params);
+  }
+
+  Future<dynamic> fetchPaymentHistory({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getPaymentHistory(params);
   }
 
 }

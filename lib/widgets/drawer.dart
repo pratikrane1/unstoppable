@@ -3,26 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unstoppable/Screens/Leads.dart';
+import 'package:unstoppable/Screens/Payment%20History/payment_history_updated/payment_history_updated.dart';
 import 'package:unstoppable/Screens/change_password.dart';
 import 'package:unstoppable/Screens/login/sign_in.dart';
 import 'package:unstoppable/Screens/manageAllBuyingRequirement.dart';
+import 'package:unstoppable/Screens/profile_screen.dart';
 import 'package:unstoppable/Screens/reward.dart';
 import 'package:unstoppable/Screens/unstoppableOrders.dart';
 import 'package:unstoppable/Utils/application.dart';
-import 'package:unstoppable/constant/font_size.dart';
-
 import '../Blocs/companyProfile/comapny_profile_state.dart';
 import '../Blocs/companyProfile/company_profile_block.dart';
 import '../Blocs/companyProfile/company_profile_event.dart';
 import '../Blocs/login/login_bloc.dart';
-import '../Blocs/login/login_event.dart';
-import '../Blocs/login/login_state.dart';
 import '../Models/company_profile_model.dart';
+import '../Models/user_profile_model.dart';
+import '../Screens/CSR/csr_screen.dart';
 import '../Screens/bottom_navbar.dart';
 import '../Screens/businessNetworking.dart';
 import '../Screens/business_networking_lead.dart';
 import '../Screens/company_profile.dart';
-import '../Screens/payment_history.dart';
 import '../Screens/product_I_am_buying.dart';
 import '../constant/theme_colors.dart';
 import 'app_button.dart';
@@ -39,6 +38,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
 
   CompanyProfileBloc? _companyProbileBloc;
   List<CompanyProfileModel>? companyData;
+  List<UserProfileModel>? userProfileData;
 
 
 
@@ -46,7 +46,10 @@ class _DrawerWidgetState extends State<DrawerWidget>{
   void initState() {
     super.initState();
     _companyProbileBloc = BlocProvider.of<CompanyProfileBloc>(context);
+    // _companyProbileBloc!.add(OnLoadingUserProfile(userid: Application.vendorLogin!.userId.toString()));
     _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: Application.vendorLogin!.userId.toString()));
+
+    // _userProfileBloc = BlocProvider.of<CompanyProfileBloc>(context);
     // _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: "874"));
     // final _nameController = TextEditingController(text: companyData![0].name.toString());
   }
@@ -78,12 +81,19 @@ class _DrawerWidgetState extends State<DrawerWidget>{
             // setData(companyData!);
           }
 
+
           if(state is CompanyProfileListLoadFail){
             companyData=[];
             // setData(companyData!);
           }
 
-          return companyData!=null
+          //
+          if(state is UserProfileLoadFail){
+            userProfileData=[];
+            // setData(companyData!);
+          }
+
+          return (companyData!=null)
             ?
             Container(
               // decoration: const BoxDecoration(
@@ -141,6 +151,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
                   _BussinessOpp(context),
                   _MyTools(context),
                   _Settings(context, companyData![0]),
+                  _CSR(context),
                   _ShareUrl(context),
                   _LogOutButton(context)
                 ],
@@ -155,6 +166,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
     );
   }
 }
+
 
 
 Widget _Rewards(BuildContext context) {
@@ -431,10 +443,10 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData) {
           child: ListTile(
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => EditPasswordPage()));
+                  MaterialPageRoute(builder: (context) => ProfileScreen()));
             },
             title: const Text(
-              'Change Password',
+              'My Profile',
               style:
                   TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
             ),
@@ -443,7 +455,18 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData) {
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => PaymentHistory()));
+                MaterialPageRoute(builder: (context) => EditPasswordPage()));
+          },
+          title: const Text(
+            'Change Password',
+            style:
+            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+          ),
+        ),
+        ListTile(
+          onTap: () {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => PaymentHistoryUpdated()));
           },
           title: const Text(
             'Payment History',
@@ -491,6 +514,41 @@ Widget _ShareUrl(BuildContext context) {
                   TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
             ),
             onTap: () {},
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+
+Widget _CSR(BuildContext context) {
+  return InkWell(
+    onTap: () {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => CSRScreen()));
+    },
+    child: Card(
+      elevation: 1,
+      margin: EdgeInsets.all(10),
+      color: Colors.white,
+      shadowColor: Colors.blueGrey,
+      shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white, width: 1)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            leading: Icon(
+              Icons.apps_sharp,
+              color: ThemeColors.drawerTextColor,
+            ),
+            title: const Text(
+              'CSR',
+              style:
+              TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+            ),
           )
         ],
       ),
