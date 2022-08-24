@@ -10,6 +10,7 @@ import 'package:unstoppable/Blocs/login/login_event.dart';
 import 'package:unstoppable/Blocs/login/login_state.dart';
 import 'package:unstoppable/Models/home_model.dart';
 import 'package:unstoppable/Models/product_model.dart';
+import 'package:unstoppable/Models/untoppable_order_model.dart';
 import 'package:unstoppable/Models/vendor_login.dart';
 import 'package:unstoppable/Repository/UserRepository.dart';
 import 'package:unstoppable/app_bloc.dart';
@@ -28,8 +29,9 @@ import 'package:mime/mime.dart';
 
 
 class MytoolsBloc extends Bloc<MytoolsEvent, MytoolsState> {
-  MytoolsBloc({this.productBuyingRepo}) : super(InitialMytoolsState());
+  MytoolsBloc({this.productBuyingRepo,}) : super(InitialMytoolsState());
   final UserRepository? productBuyingRepo;
+
 
 
 
@@ -86,6 +88,54 @@ class MytoolsBloc extends Bloc<MytoolsEvent, MytoolsState> {
       } catch (e) {
         print(e);
         rethrow;
+      }
+    }
+
+    //remove productBuying
+    if (event is DeleteProductBuying) {
+      yield DeleteProductBuyingLoading();
+      Map<String, String> params;
+      params = {
+        'ord_id': event.ordid
+      };
+
+      var response = await http.post(
+          Uri.parse(Api.delProductBuying),
+          body: params
+      );
+
+      try {
+        final resp = json.decode(response.body);
+        if (resp['result'] == 'Success') {
+          yield DeleteProductBuyingSuccess();
+        }
+      } catch (e) {
+        print(e);
+        rethrow;
+      }
+    }
+
+    // List for unstoppable orders
+    if (event is OnLoadingUnstoppableOrderList) {
+      ///Notify loading to UI
+      yield UnstoppableOrdersLoading();
+
+      ///Fetch API via repository
+      final ProductBuyingRepo response = await productBuyingRepo!
+          .fetchOrders(
+          userId: event.userid,
+          offset:
+          event.offset.toString()
+      );
+
+      final Iterable refactorOrders = response.data ?? [];
+      final listorders = refactorOrders.map((item) {
+        return UnstoppableOrderModel.fromJson(item);
+      }).toList();
+      if (refactorOrders.length > 0) {
+        yield UnstoppableOrdersListSuccess(ordersList: listorders);
+      } else {
+        yield UnstoppableOrdersListLoadFail();
       }
     }
 

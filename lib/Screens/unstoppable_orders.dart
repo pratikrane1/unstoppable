@@ -2,13 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unstoppable/Blocs/myTools/bloc.dart';
 import 'package:unstoppable/Blocs/products/bloc.dart';
 import 'package:unstoppable/Blocs/products/product_bloc.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 import 'package:unstoppable/Models/product_model.dart';
+import 'package:unstoppable/Models/untoppable_order_model.dart';
 import 'package:unstoppable/Screens/add_product.dart';
 import 'package:unstoppable/Screens/productDetail.dart';
 import 'package:unstoppable/Utils/application.dart';
+import '../Blocs/myTools/myTools_bloc.dart';
 import '../Constant/font_size.dart';
 import '../constant/theme_colors.dart';
 import '../widgets/bell_icon.dart';
@@ -18,19 +21,17 @@ import '../widgets/seeIcon.dart';
 import 'package:shimmer/shimmer.dart';
 import 'UnstoppableProductsDetails.dart';
 
-class UnstoppableProducts extends StatefulWidget {
+class UnstoppableOrders extends StatefulWidget {
   @override
-  State<UnstoppableProducts> createState() => _UnstoppableProductsState();
+  State<UnstoppableOrders> createState() => _UnstoppableOrdersState();
 }
 
-// ProductBloc? _productBloc;
-// List<ProductModel> productList = [];
-// int rowsPerPage = 2;
 
-class _UnstoppableProductsState extends State<UnstoppableProducts> {
-  ProductBloc? _productBloc;
-  List<ProductModel> productList=[];
-  List<ProductModel> searchResult=[];
+
+class _UnstoppableOrdersState extends State<UnstoppableOrders> {
+  MytoolsBloc? _ordersBloc;
+  List<UnstoppableOrderModel> ordersList=[];
+  List<UnstoppableOrderModel> searchResult=[];
   int offset = 0;
   int _rowsPerPage = 10;
   double pageCount = 0;
@@ -45,47 +46,14 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _productBloc = BlocProvider.of<ProductBloc>(context);
-    _productBloc!.add(OnLoadingProductList(
+    _ordersBloc = BlocProvider.of<MytoolsBloc>(context);
+    _ordersBloc!.add(OnLoadingUnstoppableOrderList(
         userid: Application.vendorLogin!.userId.toString(),
         offset: offset));
     _isSearching = false;
 
   }
-  // Widget loadListView(BoxConstraints constraints) {
-  //   List<Widget> _getChildren() {
-  //     final List<Widget> stackChildren = [];
-  //
-  //     if (productList.isNotEmpty) {
-  //       stackChildren.add(ListView.custom(
-  //           childrenDelegate: CustomSliverChildBuilderDelegate(indexBuilder)));
-  //     }
-  //
-  //     if (showLoadingIndicator) {
-  //       stackChildren.add(Container(
-  //         color: Colors.black12,
-  //         width: constraints.maxWidth,
-  //         height: constraints.maxHeight,
-  //         child: Align(
-  //           alignment: Alignment.center,
-  //           child: CircularProgressIndicator(
-  //             strokeWidth: 3,
-  //           ),
-  //         ),
-  //       ));
-  //     }
-  //     return stackChildren;
-  //   }
-  //
-  //   return Stack(
-  //     children: _getChildren(),
-  //   );
-  // }
 
-
-  // void rebuildList() {
-  //   setState(() {});
-  // }
 
   void _handleSearchStart() {
     setState(() {
@@ -98,23 +66,25 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
   void searchOperation(String searchText) {
     searchResult.clear();
     if (_isSearching != null) {
-      for (int i = 0; i < productList.length; i++) {
-        ProductModel product = new ProductModel();
-        product.productName = productList[i].productName.toString();
-        product.categoryName = productList[i].categoryName.toString();
-        product.productId = productList[i].productId.toString();
-        product.price = productList[i].price.toString();
-        product.description = productList[i].description.toString();
-        product.status = productList[i].status.toString();
-        product.statusName = productList[i].statusName.toString();
+      for (int i = 0; i < ordersList.length; i++) {
+        UnstoppableOrderModel order = new UnstoppableOrderModel();
+        order.businessName = ordersList[i].businessName.toString();
+        order.customerName = ordersList[i].customerName.toString();
+        order.customerContact = ordersList[i].customerContact.toString();
+        order.customerMail = ordersList[i].customerMail.toString();
+        order.prodName = ordersList[i].prodName.toString();
+        order.unitType = ordersList[i].unitType.toString();
+        order.qty = ordersList[i].qty.toString();
 
 
-        if (product.productName.toString().toLowerCase().contains(searchText.toLowerCase()) ||
-            product.categoryName.toString().toLowerCase().contains(searchText.toLowerCase()) ||
-            product.price.toString().toLowerCase().contains(searchText.toLowerCase()) ||
-            product.statusName.toString().toLowerCase().contains(searchText.toLowerCase()) ) {
+
+        if (order.businessName.toString().toLowerCase().contains(searchText.toLowerCase()) ||
+            order.customerName.toString().toLowerCase().contains(searchText.toLowerCase()) ||
+            order.customerContact.toString().toLowerCase().contains(searchText.toLowerCase()) ||
+            order.prodName.toString().toLowerCase().contains(searchText.toLowerCase()) ||
+            order.customerMail.toString().toLowerCase().contains(searchText.toLowerCase()) ) {
           flagNoDataAvailable=false;
-          searchResult.add(product);
+          searchResult.add(order);
         }
       }
       setState(() {
@@ -126,8 +96,8 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
   }
 
   Widget buildProductList(
-      BuildContext context, List<ProductModel> productList) {
-    if (productList.length <= 0) {
+      BuildContext context, List<UnstoppableOrderModel> ordersList) {
+    if (ordersList.length <= 0) {
       return ListView.builder(
         scrollDirection: Axis.vertical,
         // padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
@@ -250,105 +220,15 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
       scrollDirection: Axis.vertical,
       padding: EdgeInsets.only(top: 10, bottom: 15),
       itemBuilder: (context, index) {
-        return unstoppableProductCard(context, productList[index]);
+        return unstoppableProductCard(context, ordersList[index]);
       },
-      itemCount: productList.length,
+      itemCount: ordersList.length,
     );
   }
 
-  // Widget indexBuilder(BuildContext context, int index) {
-  //
-  //   return ListTile(
-  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-  //     title: LayoutBuilder(
-  //       builder: (context, constraint) {
-  //         return Container(
-  //             width: constraint.maxWidth,
-  //             height: 100,
-  //             child: Row(
-  //               children: [
-  //                 Align(
-  //                   alignment: Alignment.centerRight,
-  //                   child: Container(
-  //                     clipBehavior: Clip.antiAlias,
-  //                     decoration: BoxDecoration(
-  //                         borderRadius: BorderRadius.circular(10)),
-  //                     child: Image.asset("assets/icon.png", width: 100, height: 100),
-  //                   ),
-  //                 ),
-  //                 Container(
-  //                   padding: EdgeInsets.fromLTRB(20, 10, 5, 5),
-  //                   child: Column(
-  //                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                     children: [
-  //                       Container(
-  //                         width: constraint.maxWidth - 130,
-  //                         child: Text(productList[index].productName.toString(),
-  //                             style: TextStyle(
-  //                                 fontWeight: FontWeight.w600,
-  //                                 color: Colors.black87,
-  //                                 fontSize: 15)),
-  //                       ),
-  //
-  //                     ],
-  //                   ),
-  //                 ),
-  //               ],
-  //             ));
-  //       },
-  //     ),
-  //   );
-  // }
+
   Future AddProduct(BuildContext context) {
-    // return showModalBottomSheet(
-    //   context: context,
-    //   isScrollControlled: true,
-    //   isDismissible: true,
-    //   shape: const RoundedRectangleBorder(
-    //       borderRadius:
-    //       BorderRadius.vertical(top: Radius.circular(16))),
-    //   builder: (context) => DraggableScrollableSheet(
-    //     initialChildSize: 0.4,
-    //     minChildSize: 0.2,
-    //     maxChildSize: 0.75,
-    //     expand: false,
-    //     builder: (_, controller) => Column(
-    //       children: [
-    //         Padding(
-    //           padding: const EdgeInsets.all(10.0),
-    //           child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             children: [
-    //               Text(
-    //                 "Add Products",
-    //                 style: TextStyle(
-    //                     fontSize: FontSize.xxLarge,
-    //                     fontWeight: FontWeight.bold),
-    //               ),
-    //               InkWell(
-    //                   onTap: () {
-    //                     Navigator.of(context).pop();
-    //                   },
-    //                   child: Icon(
-    //                     Icons.clear,
-    //                     color: ThemeColors.drawerTextColor,
-    //                   ))
-    //             ],
-    //           ),
-    //         ),
-    //         Expanded(
-    //           child: ListView.builder(
-    //             controller: controller,
-    //             itemCount: 1,
-    //             itemBuilder: (_, index) {
-    //               return AddProductScreen(productDetail:new ProductDetail(),);
-    //             },
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
+
     return showModalBottomSheet(
         isScrollControlled: true,
         // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -367,14 +247,14 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          // leading: GestureDetector(
-          //   onTap: () {
-          //     // Navigator.pushReplacement(context,
-          //     //     MaterialPageRoute(builder: (context) => BottomNavigation()));
-          //     Navigator.of(context).pop();
-          //   },
-          //   child: Icon(Icons.arrow_back_ios),
-          // ),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => DrawerWidget()));
+              //Navigator.of(context).pop();
+            },
+            child: Icon(Icons.arrow_back_ios),
+          ),
           backgroundColor: ThemeColors.baseThemeColor,
           elevation: 0.0,
           centerTitle: false,
@@ -383,25 +263,24 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("My Unstoppable Products"),
-                  myAppBarIcon(),
+                  Text("My Unstoppable Orders"),
                 ],
               ),
             ],
           ),
         ),
-        drawer: DrawerWidget(),
-        body: BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
-          if (state is ProductListSuccess) {
-            productList = state.productList!;
+        // drawer: DrawerWidget(),
+        body: BlocBuilder<MytoolsBloc, MytoolsState>(builder: (context, state) {
+          if (state is UnstoppableOrdersListSuccess) {
+            ordersList = state.ordersList!;
             // pageCount = (productList.length / rowsPerPage).ceilToDouble();
             // _productBloc!.add(OnUpdatePageCnt(productList: productList, rowsPerPage: rowsPerPage));
           }
-          if (state is ProductLoading) {
+          if (state is UnstoppableOrdersLoading) {
             flagNoDataAvailable = false;
           }
 
-          if (state is ProductListLoadFail) {
+          if (state is UnstoppableOrdersListLoadFail) {
             flagNoDataAvailable = true;
           }
           // if(state is ProductPageCntSucess){
@@ -431,91 +310,91 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
                           children: [
                             //for search bar
                             ListTile(
-                              title:Padding(
-                                padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 0.0),
-                                child: TextField(
-                                  controller: _searchcontroller,
-                                  onChanged: (value) {
-                                    // this.phoneNo=value;
-                                    print(value);
-                                    searchOperation(value);
-                                  },
+                                title:Padding(
+                                  padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 0.0),
+                                  child: TextField(
+                                    controller: _searchcontroller,
+                                    onChanged: (value) {
+                                      // this.phoneNo=value;
+                                      print(value);
+                                      searchOperation(value);
+                                    },
 
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: const Color(0xFFFFFFFF),
-                                    isDense: true,
-                                    contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
-                                    /* -- Text and Icon -- */
-                                    hintText: "Search Here...",
-                                    hintStyle: const TextStyle(
-                                      fontSize: 18,
-                                      color: Color(0xFFB3B1B1),
-                                    ), // TextStyle
-                                    prefixIcon:  IconButton(
-                                      icon: Icon(
-                                        Icons.search,
-                                        size: 25.0,
-                                      ),
-                                      onPressed: () {
-                                        _handleSearchStart();
-                                      },
-                                    ),
-
-
-                                    // Icon
-                                    /* -- Border Styling -- */
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(45.0),
-                                      borderSide: const BorderSide(
-                                        width: 1.0,
-                                        color: Color(0xFFFF0000),
-                                      ), // BorderSide
-                                    ), // OutlineInputBorder
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(45.0),
-                                      borderSide: const BorderSide(
-                                        width: 1.0,
-                                        color: Colors.grey,
-                                      ), // BorderSide
-                                    ), // OutlineInputBorder
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(45.0),
-                                      borderSide: const BorderSide(
-                                        width: 2.0,
-                                        color: Colors.grey,
-                                      ), // BorderSide
-                                    ), // OutlineInputBorder
-                                  ), // InputDecoration
-                                ),
-                              ),
-                              trailing: InkWell(
-                                  onTap: () {
-                                    AddProduct(context);
-                                  },
-                                child: Container(
-                                  width: 35,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      //color: Color(0xffc32c37),
-                                      color: Colors.indigo,
-                                      border: Border.all(color: Colors.black, width: 1)),
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    alignment: Alignment.center,
-                                    child: Stack(
-                                      children: [
-                                        Center(
-                                            child:Icon(Icons.add,color: Colors.white,)
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: const Color(0xFFFFFFFF),
+                                      isDense: true,
+                                      contentPadding:
+                                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                                      /* -- Text and Icon -- */
+                                      hintText: "Search Here...",
+                                      hintStyle: const TextStyle(
+                                        fontSize: 18,
+                                        color: Color(0xFFB3B1B1),
+                                      ), // TextStyle
+                                      prefixIcon:  IconButton(
+                                        icon: Icon(
+                                          Icons.search,
+                                          size: 25.0,
                                         ),
-                                      ],
-                                    ),
+                                        onPressed: () {
+                                          _handleSearchStart();
+                                        },
+                                      ),
+
+
+                                      // Icon
+                                      /* -- Border Styling -- */
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(45.0),
+                                        borderSide: const BorderSide(
+                                          width: 1.0,
+                                          color: Color(0xFFFF0000),
+                                        ), // BorderSide
+                                      ), // OutlineInputBorder
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(45.0),
+                                        borderSide: const BorderSide(
+                                          width: 1.0,
+                                          color: Colors.grey,
+                                        ), // BorderSide
+                                      ), // OutlineInputBorder
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(45.0),
+                                        borderSide: const BorderSide(
+                                          width: 2.0,
+                                          color: Colors.grey,
+                                        ), // BorderSide
+                                      ), // OutlineInputBorder
+                                    ), // InputDecoration
                                   ),
                                 ),
-                            )
+                                // trailing: InkWell(
+                                //   onTap: () {
+                                //     //AddProduct(context);
+                                //   },
+                                //   child: Container(
+                                //     width: 35,
+                                //     height: 35,
+                                //     decoration: BoxDecoration(
+                                //         shape: BoxShape.circle,
+                                //         //color: Color(0xffc32c37),
+                                //         color: Colors.indigo,
+                                //         border: Border.all(color: Colors.black, width: 1)),
+                                //     child: Container(
+                                //       width: 30,
+                                //       height: 30,
+                                //       alignment: Alignment.center,
+                                //       child: Stack(
+                                //         children: [
+                                //           Center(
+                                //               child:Icon(Icons.add,color: Colors.white,)
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ),
+                                // )
                             ),
                             // info(),
                             //for product ListView
@@ -528,103 +407,13 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
                                     ?
                                 buildProductList(context,searchResult)
                                     :
-                                buildProductList(context,productList))
+                                buildProductList(context,ordersList))
                             )
                                 :
                             Container(
                                 margin: EdgeInsets.only(top:180.0),
                                 child: Center(child:Text("No Data Available"),))
-                            // Expanded(child:
-                            //     Padding(
-                            //       padding: EdgeInsets.only(bottom:20.0),
-                            //         child:buildProductList(context, productList))
-                            // // LayoutBuilder(builder: (context, constraint) {
-                            // //   return Column(
-                            // //     children: [
-                            // //       Container(
-                            // //         // height: constraint.maxHeight - dataPagerHeight,
-                            // //         height: 400,
-                            // //         child: loadListView(constraint),
-                            // //       ),
-                            // //       Container(
-                            // //         // height: dataPagerHeight,
-                            // //         child: SfDataPagerTheme(
-                            // //             data: SfDataPagerThemeData(
-                            // //               // backgroundColor: Colors.indigo,
-                            // //               itemBorderRadius: BorderRadius.circular(5),
-                            // //             ),
-                            // //             child: SfDataPager(
-                            // //                 itemPadding: EdgeInsets.all(10.0),
-                            // //                 availableRowsPerPage: [10, 20, 30],
-                            // //                 onRowsPerPageChanged: (int? rowsPerPage) {
-                            // //                   setState(() {
-                            // //                     _rowsPerPage = rowsPerPage!;
-                            // //                     // employeeDataSource.updateDataGriDataSource();
-                            // //                   });
-                            // //                 },
-                            // //                 pageItemBuilder: (String itemName) {
-                            // //                   if (itemName == 'Next') {
-                            // //                     return Container(
-                            // //                       decoration: BoxDecoration(
-                            // //                         shape: BoxShape.rectangle,
-                            // //                         borderRadius:  BorderRadius.circular(5.0),
-                            // //                         //color: Color(0xffc32c37),
-                            // //                         color: Colors.indigo,
-                            // //                         // border: Border.all(color: Colors.black, width: 1)
-                            // //                       ),
-                            // //                       child: Center(
-                            // //                         child: Icon(
-                            // //                           CupertinoIcons.arrow_right,
-                            // //                           color: Colors.white,
-                            // //                           size: 21,
-                            // //                         ),
-                            // //                       ),
-                            // //                     );
-                            // //                   }
-                            // //                   if (itemName == 'Previous') {
-                            // //                     return Container(
-                            // //                       decoration: BoxDecoration(
-                            // //                         shape: BoxShape.rectangle,
-                            // //                         borderRadius:  BorderRadius.circular(5.0),
-                            // //                         //color: Color(0xffc32c37),
-                            // //                         color: Colors.indigo,
-                            // //                         // border: Border.all(color: Colors.black, width: 1)
-                            // //                       ),
-                            // //                       child: Center(
-                            // //                         child: Icon(
-                            // //                           CupertinoIcons.arrow_left,
-                            // //                           color: Colors.white,
-                            // //                           size: 21,
-                            // //                         ),
-                            // //                       ),
-                            // //                     );
-                            // //                   }
-                            // //                 },
-                            // //                 firstPageItemVisible: false,
-                            // //                 lastPageItemVisible: false,
-                            // //                 visibleItemsCount: 0,
-                            // //                 pageCount: double.parse(productList.length.toString()),
-                            // //                 onPageNavigationStart: (pageIndex) {
-                            // //                   setState(() {
-                            // //                     showLoadingIndicator = true;
-                            // //                   });
-                            // //                 },
-                            // //                 onPageNavigationEnd: (pageIndex) {
-                            // //                   setState(() {
-                            // //                     showLoadingIndicator = false;
-                            // //                   });
-                            // //                 },
-                            // //
-                            // //                 delegate:
-                            // //                 // CustomSliverChildBuilderDelegate(buildProductList(context,productList))
-                            // //                 //   ..addListener(rebuildList))),
-                            // //                 CustomSliverChildBuilderDelegate(indexBuilder)
-                            // //                   ..addListener(rebuildList)))
-                            // //       )
-                            // //     ],
-                            // //   );
-                            // // })
-                            // ),
+
                           ],
                         ),
 
@@ -644,15 +433,7 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    // Column(
-                                    //   children: [
-                                    //     Text(
-                                    //       "Items per page:",
-                                    //       style: TextStyle(fontSize: 10, color: Colors.black),
-                                    //     ),
-                                    //     DropdownButtonWidget(),
-                                    //   ],
-                                    // ),
+
                                     Row(
                                       children: [
                                         //back icon
@@ -660,13 +441,13 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
                                           InkWell(
                                               onTap: (){
 
-                                                productList=[];
+                                                ordersList=[];
                                                 if(offset==0){
-                                                  _productBloc!.add(OnLoadingProductList(userid: Application.vendorLogin!.userId.toString(), offset: offset));
+                                                  _ordersBloc!.add(OnLoadingUnstoppableOrderList(userid: Application.vendorLogin!.userId.toString(), offset: offset));
 
                                                 }else {
                                                   offset -= 10;
-                                                  _productBloc!.add(OnLoadingProductList(
+                                                  _ordersBloc!.add(OnLoadingUnstoppableOrderList(
                                                       userid: Application.vendorLogin!
                                                           .userId.toString(),
                                                       offset: offset));
@@ -705,9 +486,9 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
                                         //fwd icon
                                         InkWell(
                                             onTap: (){
-                                              productList=[];
+                                              ordersList=[];
                                               offset+=10;
-                                              _productBloc!.add(OnLoadingProductList(userid: Application.vendorLogin!.userId.toString(), offset: offset));
+                                              _ordersBloc!.add(OnLoadingUnstoppableOrderList(userid: Application.vendorLogin!.userId.toString(), offset: offset));
                                             },
                                             child:Container(
                                               width: 40,
@@ -813,16 +594,16 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
 //   ); // Expanded
 // }
 
-Widget unstoppableProductCard(BuildContext context, ProductModel productData) {
+Widget unstoppableProductCard(BuildContext context, UnstoppableOrderModel orderData) {
   return InkWell(
       onTap: () {
-        if(productData.status!="0"){ //0 for disable and 1=enable
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => UnstoppableProductsDetails(
-                      productId: productData.productId)));
-        }
+        // if(orderData.status!="0"){ //0 for disable and 1=enable
+        //   Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //           builder: (context) => UnstoppableProductsDetails(
+        //               productId: productData.productId)));
+        // }
 
       },
       child: Padding(
@@ -839,64 +620,12 @@ Widget unstoppableProductCard(BuildContext context, ProductModel productData) {
                 contentPadding: EdgeInsets.zero,
                 //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                 // leading: nameIcon(),
-                leading: CachedNetworkImage(
-                  filterQuality: FilterQuality.medium,
-                  // imageUrl: Api.PHOTO_URL + widget.users.avatar,
-                  // imageUrl: "https://picsum.photos/250?image=9",
-                  imageUrl: productData.productImage == null
-                      ? "https://picsum.photos/250?image=9"
-                      : productData.productImage.toString(),
-                  placeholder: (context, url) {
-                    return Shimmer.fromColors(
-                      baseColor: Theme.of(context).hoverColor,
-                      highlightColor: Theme.of(context).highlightColor,
-                      enabled: true,
-                      child: Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    );
-                  },
-                  imageBuilder: (context, imageProvider) {
-                    return Container(
-                      height: 80,
-                      width: 80,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    );
-                  },
-                  errorWidget: (context, url, error) {
-                    return Shimmer.fromColors(
-                      baseColor: Theme.of(context).hoverColor,
-                      highlightColor: Theme.of(context).highlightColor,
-                      enabled: true,
-                      child: Container(
-                        height: 80,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Icon(Icons.error),
-                      ),
-                    );
-                  },
-                ),
                 title: Column(
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        productData.categoryName.toString(),
+                        orderData.businessName.toString(),
                         overflow: TextOverflow.clip,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -910,46 +639,68 @@ Widget unstoppableProductCard(BuildContext context, ProductModel productData) {
                       // mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          productData.productName.toString(),
+                          orderData.customerName.toString(),
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black87,
                             fontSize: 14.0,
                           ),
                         ),
-                        // SizedBox(width: 20,)
-
+                         SizedBox(height: 10,),
+                        Text(
+                          orderData.customerContact.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10.0,
+                              color: Colors.orange),
+                        ),
+                        SizedBox(height: 10,),
+                        Text(
+                          orderData.customerMail.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10.0,
+                              color: Colors.orange),
+                        ),
+                        SizedBox(height: 10,),
+                        Text(
+                          orderData.prodName.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10.0,
+                              color: Colors.orange),
+                        ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              CupertinoIcons.check_mark_circled_solid,
-                              color: Colors.green,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
+
                             Text(
-                              productData.statusName.toString(),
+                              orderData.unitType.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10.0,
+                                  color: Colors.orange),
+                            ),
+
+                            Text(
+                              orderData.qty.toString(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 10.0,
                                   color: Colors.orange),
                             ),
                           ],
-                        ),
+                        )
                       ],
                     ),
                   ],
                 ),
 
                 //dense: true,
-                trailing: Text(
-                  '\u{20B9}' + productData.price.toString(),
-                  style: TextStyle(color: Colors.indigo, fontSize: 14),
-                )),
+
           ),
         ),
-      ));
+      )));
 }
 
 Widget detailCard() {

@@ -51,7 +51,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Leads Detail"),
+                Text("Choose Business Network Contacts"),
               ],
             ),
           ],

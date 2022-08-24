@@ -47,7 +47,7 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
             },
             child: Icon(CupertinoIcons.chevron_left,color: Colors.white,size: 18,)),
         //leading: Center(child: Text("<",style: TextStyle(color: Colors.white,fontSize: 30),)),
-        title: Text("Customer Enquiries Details",style: TextStyle(fontSize: 15),),
+        title: Text("Product Enquiries Details",style: TextStyle(fontSize: 15),),
 
       ),
       body:BlocBuilder<CustomerEnquiriesBloc,CustomerEnquiriesState>(builder:(context,state) {

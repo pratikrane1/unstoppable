@@ -77,7 +77,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     }
 
 
-    //remove product image
+    //remove product
     if (event is DeleteProduct) {
       yield DeleteProductLoading();
       Map<String, String> params;
