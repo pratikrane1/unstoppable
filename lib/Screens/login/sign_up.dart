@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:unstoppable/Blocs/login/login_bloc.dart';
 import 'package:unstoppable/Blocs/login/login_event.dart';
 import 'package:unstoppable/Blocs/login/login_state.dart';
@@ -59,25 +61,17 @@ class _SignUpPageState extends State<SignUpPage>{
   String flagImage="";
 
 
-
-// For Display uploaded image
   Widget _buildAvatar() {
-    if (_image != null) {
+    if (_image!=null&&imageFile!=null) {
       return Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         margin: EdgeInsets.all(5.0),
         decoration: BoxDecoration(
           // borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color:
-            ThemeColors.textFieldBgColor, // red as border color
+            ThemeColors.textFieldBgColor,  // red as border color
           ),
           color:
           Colors.white,
@@ -97,111 +91,122 @@ class _SignUpPageState extends State<SignUpPage>{
 
       );
     }
-    else {
-      // return CachedNetworkImage(
-      //     imageUrl: imageFile!.imagePath.toString(),
-      //     imageBuilder: (context, imageProvider) {
-      //       return Container(
-      //         width: 110,
-      //         height: 110,
-      //         decoration: BoxDecoration(
-      //           shape: BoxShape.rectangle
-      //           ,
-      //           image: DecorationImage(
-      //             image: imageProvider,
-      //             fit: BoxFit.fill,
-      //           ),
-      //         ),
-      //       );
-      //     },
-      //     placeholder: (context, url) {
-      //       return Shimmer.fromColors(
-      //         baseColor: Theme
-      //             .of(context)
-      //             .hoverColor,
-      //         highlightColor: Theme
-      //             .of(context)
-      //             .highlightColor,
-      //         enabled: true,
-      //         child: Container(
-      //           width: 110,
-      //           height: 110,
-      //           // decoration: BoxDecoration(
-      //           //   shape: BoxShape.rectangle,
-      //           //   color: Colors.white,
-      //           // ),
-      //         ),
-      //       );
-      //     },
-      //     errorWidget: (context, url, error) {
-      //       return Shimmer.fromColors(
-      //         baseColor: Theme
-      //             .of(context)
-      //             .hoverColor,
-      //         highlightColor: Theme
-      //             .of(context)
-      //             .highlightColor,
-      //         enabled: true,
-      //         child: Container(
-      //           width: 110,
-      //           height: 110,
-      //           // decoration: BoxDecoration(
-      //           //   shape: BoxShape.rectangle,
-      //           //   color: Colors.white,
-      //           // ),
-      //           child: Icon(Icons.error),
-      //         ),
-      //       );
-      //     },
-      //   );
-      //
-      // }
-      // updated on 30/11/2020
-      return Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
-        height: 120,
-        margin: EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color:
-            ThemeColors.textFieldBgColor, // red as border color
-          ),
-          color:
-          Colors.white,
-
-        ),
-        child:
-        Container(
-          child: Image.asset(Images.splash,
-            fit: BoxFit.fill,
-            height: 120,
-            width: MediaQuery
+    else{
+      return CachedNetworkImage(
+        imageUrl: imageFile!.imagePath.toString(),
+        imageBuilder: (context, imageProvider) {
+          return Container(
+            width: 110,
+            height: 110,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle
+              ,
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.fill,
+              ),
+            ),
+          );
+        },
+        placeholder: (context, url) {
+          return Shimmer.fromColors(
+            baseColor: Theme
                 .of(context)
-                .size
-                .width,),
-        ),
+                .hoverColor,
+            highlightColor: Theme
+                .of(context)
+                .highlightColor,
+            enabled: true,
+            child: Container(
+              width: 110,
+              height: 110,
+              // decoration: BoxDecoration(
+              //   shape: BoxShape.rectangle,
 
+              //   color: Colors.white,
+              // ),
+            ),
+          );
+        },
+        errorWidget: (context, url, error) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
 
+              Icon(
+                CupertinoIcons.arrow_down_doc,
+                color: ThemeColors.textFieldHintColor,
+              ),
+              Text(
+                "Browse & Upload",
+                style: TextStyle(
+                    fontSize: FontSize.medium,
+                    color: ThemeColors.textFieldHintColor),
+              )
+            ],
+          );
+          // return Shimmer.fromColors(
+          //   baseColor: Theme
+          //       .of(context)
+          //       .hoverColor,
+          //   highlightColor: Theme
+          //       .of(context)
+          //       .highlightColor,
+          //   enabled: true,
+          //   child: Container(
+          //     width: 110,
+          //     height: 110,
+          //     // decoration: BoxDecoration(
+          //     //   shape: BoxShape.rectangle,
+          //     //   color: Colors.white,
+          //     // ),
+          //   child: Icon(Icons.error),
+          //
+          //   ),
+          // );
+        },
       );
+
+    }
+    //updated on 30/11/2020
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 120,
+      margin: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color:
+          ThemeColors.textFieldBgColor,  // red as border color
+        ),
+        color:
+        Colors.white,
+
+      ),
+      child:
+      Container(
+        child: Image.asset(Images.splash,
+          fit: BoxFit.fill,
+          height: 120,
+          width: MediaQuery.of(context).size.width,),
+      ),
+
+
+
+    );
+  }
+  //method to open gallery
+  _openGallery(BuildContext context) async {
+
+    final image = await picker.getImage(source: ImageSource.gallery,imageQuality: 25);
+    imageFile=new ImageFile();
+    if (image != null) {
+
+      _cropImage(image);
+
     }
   }
-
-
- // method to open gallery
- _openGallery(BuildContext context) async {
-
-   final image = await picker.getImage(source: ImageSource.gallery,imageQuality: 25);
-   // imageFile=new ImageFile();
-   if (image != null) {
-
-     _cropImage(image);
-
-   }
- }
 
   // For crop image
 
@@ -227,24 +232,24 @@ class _SignUpPageState extends State<SignUpPage>{
           title: 'Cropper',
         ));
     if (croppedFile != null) {
-      // Navigator.pop(context);
 
       setState(() {
         // mImageFile.image = croppedFile;
         // print(mImageFile.image.path);
         // state = AppState.cropped;
         _image = croppedFile;
-        // imageFile!.image = croppedFile;
-        // imageFile!.imagePath=_image!.path;
-        // flagImage="0";//when cropped
+        imageFile!.imagePath=_image!.path;
       });
+      // Navigator.pop(context);
     }
-
   }
 
   void initState(){
     super.initState();
     _userLoginBloc = BlocProvider.of<LoginBloc>(context);
+    imageFile=new ImageFile();
+
+
 
   }
 
@@ -1291,11 +1296,11 @@ class _SignUpPageState extends State<SignUpPage>{
                                 ),
                                 const SizedBox(height: 15,),
 
-                                // // Company Logo:
-                                    const Align(alignment: Alignment.topLeft,
-                                        child: Text("Company Logo:", textAlign: TextAlign.start,)),
-                                    const SizedBox(height: 5,),
-                                    Padding(
+                                // For Upload image
+                                const Align(alignment: Alignment.topLeft,
+                                    child: Text("Company Logo:", textAlign: TextAlign.start,)),
+                                const SizedBox(height: 5,),
+                                Padding(
                                   padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
                                   child: InkWell(
                                     onTap: () {
@@ -1312,9 +1317,7 @@ class _SignUpPageState extends State<SignUpPage>{
                                       child: Container(
                                           height: _image==null?100:110,
                                           width: MediaQuery.of(context).size.width * 0.9,
-                                          child:
-                                          _image!=null
-                                              ?
+                                          child: imageFile!.image!=null?
                                           Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -1324,15 +1327,6 @@ class _SignUpPageState extends State<SignUpPage>{
                                                 CupertinoIcons.arrow_down_doc,
                                                 color: ThemeColors.textFieldHintColor,
                                               ),
-                                              (_image!=null)
-                                                  ?
-                                              Text(
-                                                _image!.path,
-                                                style: TextStyle(
-                                                    fontSize: FontSize.medium,
-                                                    color: ThemeColors.textFieldHintColor),
-                                              )
-                                                  :
                                               Text(
                                                 "Browse & Upload",
                                                 style: TextStyle(
@@ -1340,9 +1334,9 @@ class _SignUpPageState extends State<SignUpPage>{
                                                     color: ThemeColors.textFieldHintColor),
                                               )
                                             ],
-                                          )
-                                              :
+                                          ):
                                           _buildAvatar()
+
 
                                       ),
                                     ),
@@ -1435,6 +1429,7 @@ class _SignUpPageState extends State<SignUpPage>{
 
                       ],
                     ),
+                    SizedBox(height: 20,),
 
 
                   ],

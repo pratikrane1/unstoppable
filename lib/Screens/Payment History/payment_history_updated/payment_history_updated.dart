@@ -206,55 +206,55 @@ class _PaymentHistoryUpdatedState extends State<PaymentHistoryUpdated> {
                   // ),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 20,
-                      ),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
                       // PaymentCard(),
-                      Card(
-                        elevation: 40,
-                        shape: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(color: Colors.white, width: 1)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0),
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                          width: 0.5,
-                                        ))),
-                                child: ListTile(
-                                  title: Text(
-                                    "Payment History",
-                                    style: TextStyle(fontSize: FontSize.xLarge),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                  height: 190,
-                                  child: ListView(
-                                    children: [
-                                      infoCard(),
-                                      infoCard(),
-                                      infoCard(),
-                                      infoCard(),
-                                      infoCard(),
-                                    ],
-                                  )),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Card(
+                      //   elevation: 40,
+                      //   shape: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(15),
+                      //       borderSide: BorderSide(color: Colors.white, width: 1)),
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(16.0),
+                      //       color: Colors.white,
+                      //     ),
+                      //     child: Column(
+                      //       children: [
+                      //         Container(
+                      //           decoration: BoxDecoration(
+                      //               border: Border(
+                      //                   bottom: BorderSide(
+                      //                     width: 0.5,
+                      //                   ))),
+                      //           child: ListTile(
+                      //             title: Text(
+                      //               "Payment History",
+                      //               style: TextStyle(fontSize: FontSize.xLarge),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         SizedBox(
+                      //           height: 5,
+                      //         ),
+                      //         Container(
+                      //             height: 190,
+                      //             child: ListView(
+                      //               children: [
+                      //                 infoCard(),
+                      //                 infoCard(),
+                      //                 infoCard(),
+                      //                 infoCard(),
+                      //                 infoCard(),
+                      //               ],
+                      //             )),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
-                        height: 30,
+                        height: 50,
                       ),
                       // SubscribeCard(),
                       Card(
@@ -286,7 +286,7 @@ class _PaymentHistoryUpdatedState extends State<PaymentHistoryUpdated> {
                                 height: 5,
                               ),
                               Container(
-                                  height: 190,
+                                  height: MediaQuery.of(context).size.height * 0.5,
                                   child: buildSubscriptionList(
                                       context, paymentHistoryList)),
                             ],

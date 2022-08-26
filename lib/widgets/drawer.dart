@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unstoppable/Screens/Leads.dart';
 import 'package:unstoppable/Screens/Payment%20History/payment_history_updated/payment_history_updated.dart';
 import 'package:unstoppable/Screens/change_password.dart';
+import 'package:unstoppable/Screens/dashboard.dart';
 import 'package:unstoppable/Screens/login/sign_in.dart';
 import 'package:unstoppable/Screens/manageAllBuyingRequirement.dart';
 import 'package:unstoppable/Screens/profile_screen.dart';
@@ -159,6 +160,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
                       SizedBox(
                         height: 20,
                       ),
+                      _Home(context),
                       _Rewards(context),
                       _BussinessOpp(context),
                       _MyTools(context),
@@ -185,6 +187,40 @@ class _DrawerWidgetState extends State<DrawerWidget>{
   }
 }
 
+
+Widget _Home(BuildContext context) {
+  return InkWell(
+    onTap: () {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => BottomNavigation()));
+    },
+    child: Card(
+      elevation: 1,
+      margin: EdgeInsets.all(10),
+      color: Colors.white,
+      shadowColor: Colors.blueGrey,
+      shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white, width: 1)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            leading: Icon(
+              Icons.home,
+              color: ThemeColors.drawerTextColor,
+            ),
+            title: const Text(
+              'Home',
+              style:
+              TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
+}
 
 
 Widget _Rewards(BuildContext context) {
@@ -473,12 +509,13 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProf
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => EditPasswordPage()));
+                MaterialPageRoute(builder: (context) => CompanyProfileEditPage(companyData: companyData,)));
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => CompanyProfileUpdate()));
           },
           title: const Text(
-            'Change Password',
-            style:
-            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+            'Company Profile',
+            style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
           ),
         ),
         ListTile(
@@ -494,15 +531,15 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProf
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => CompanyProfileEditPage(companyData: companyData,)));
-            // Navigator.pushReplacement(context,
-            //     MaterialPageRoute(builder: (context) => CompanyProfileUpdate()));
+                MaterialPageRoute(builder: (context) => EditPasswordPage()));
           },
           title: const Text(
-            'Company Profile',
-            style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+            'Change Password',
+            style:
+            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
           ),
         ),
+
       ],
     ),
   );

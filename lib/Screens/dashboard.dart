@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:unstoppable/Blocs/home/bloc.dart';
+import 'package:unstoppable/Screens/PayTM%20Screen/paytm_gateway.dart';
 import 'package:unstoppable/Screens/search_page.dart';
 import 'package:unstoppable/Screens/unstoppableProducts.dart';
 import 'package:unstoppable/Utils/application.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
 import 'package:unstoppable/widgets/drawer.dart';
 
+import '../Blocs/payTMGateway/payment_bloc.dart';
 import '../widgets/bell_icon.dart';
 import 'Leads.dart';
 import 'business_networking_lead.dart';
@@ -31,33 +33,37 @@ class _DashBoardState extends State<DashBoard> {
   bool? isStaging;
   bool? restrictAppInvoke;
   String? mid = "DIY12386817555501617";
-  String? orderId;
-  String? amount;
+  // String? orderId = Application.vendorLogin!.userId.toString();
+  double? amount = 100;
+  String orderId = DateTime
+        .now()
+        .millisecondsSinceEpoch
+        .toString();
   String? txnToken;
   String? callbackUrl;
   String? result;
 
-  paytm(){
-    var response = AllInOneSdk.startTransaction(
-        mid!, orderId!, amount!, txnToken!, callbackUrl!, isStaging!, restrictAppInvoke!);
-    response.then((value) {
-      print(value);
-      setState(() {
-        result = value.toString();
-      });
-    }).catchError((onError) {
-      if (onError is PlatformException) {
-        setState(() {
-          result = onError.message! + " \n  " + onError.details.toString();
-        });
-      } else {
-        setState(() {
-          result = onError.toString();
-        });
-      }
-    });
-
-  }
+  // paytm(){
+  //   var response = AllInOneSdk.startTransaction(
+  //       mid!, orderId!, amount!, txnToken!, callbackUrl!, isStaging!, restrictAppInvoke!);
+  //   response.then((value) {
+  //     print(value);
+  //     setState(() {
+  //       result = value.toString();
+  //     });
+  //   }).catchError((onError) {
+  //     if (onError is PlatformException) {
+  //       setState(() {
+  //         result = onError.message! + " \n  " + onError.details.toString();
+  //       });
+  //     } else {
+  //       setState(() {
+  //         result = onError.toString();
+  //       });
+  //     }
+  //   });
+  //
+  // }
 
 
   void initState() {
@@ -70,10 +76,7 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () { paytm(); },
 
-
-      ),
       appBar:
       AppBar(
         backgroundColor: ThemeColors.baseThemeColor,
@@ -171,35 +174,37 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children: [
-                              (totalProd!=null)
-                                  ?
-                              Text(
-                                totalProd.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                              :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children: [
+                                (totalProd!=null)
+                                    ?
+                                Text(
+                                  totalProd.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
 
-                              Text(
-                                'Total Products',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                                Text(
+                                  'Total Products',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
@@ -245,34 +250,36 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children: [
-                              (totalInquiries!=null)
-                                  ?
-                              Text(
-                                totalInquiries.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Text(
-                                'Total Enquiries',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children: [
+                                (totalInquiries!=null)
+                                    ?
+                                Text(
+                                  totalInquiries.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  'Total Enquiries',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
@@ -318,34 +325,36 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children:  [
-                              (totalLeads!=null)
-                                  ?
-                              Text(
-                                totalLeads.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Text(
-                                'Total Leads',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children:  [
+                                (totalLeads!=null)
+                                    ?
+                                Text(
+                                  totalLeads.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  'Total Leads',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
@@ -391,36 +400,39 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children:  [
-                              (cancelledLeads!=null)
-                                  ?
-                              Text(
-                                cancelledLeads.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Center(
-                                child: Text(
-                                  'Cancelled Leads',
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children:  [
+                                (cancelledLeads!=null)
+                                    ?
+                                Text(
+                                  cancelledLeads.toString(),
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 18),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
                                 ),
-                              ),
-                            ],
+                                Center(
+                                  child: Text(
+                                    'Cancelled Leads',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
@@ -466,34 +478,36 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children:  [
-                              (monthlyTarget!=null)
-                                  ?
-                              Text(
-                                monthlyTarget.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Text(
-                                'Monthly Target',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children:  [
+                                (monthlyTarget!=null)
+                                    ?
+                                Text(
+                                  monthlyTarget.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  'Monthly Target',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
@@ -539,34 +553,36 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children:  [
-                              (achievements!=null)
-                                  ?
-                              Text(
-                                achievements.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Text(
-                                'Achievements',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children:  [
+                                (achievements!=null)
+                                    ?
+                                Text(
+                                  achievements.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  'Achievements',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
@@ -602,6 +618,30 @@ class _DashBoardState extends State<DashBoard> {
                       ],
                     ),
                   ),
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(0),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 40,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: ThemeColors.drawerTextColor,
+                          ),
+                          onPressed: ()  {
+                             PaytmConfig().generateTxnToken(amount!, orderId);
+                          },
+                          child: Text(
+                            'PayTM',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             );

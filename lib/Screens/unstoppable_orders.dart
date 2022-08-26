@@ -247,29 +247,17 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            onTap: (){
-              Navigator.pop(context);
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => DrawerWidget()));
             },
-            child: Icon(
-              CupertinoIcons.chevron_left,
-              color: Colors.white,
-              size: 18,
-            ),
+            child: Icon(Icons.arrow_back_ios),
           ),
           backgroundColor: ThemeColors.baseThemeColor,
           elevation: 0.0,
-          centerTitle: false,
-          title: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("My Unstoppable Orders"),
-                ],
-              ),
-            ],
-          ),
+          centerTitle: true,
+          title: Text('My Unstoppable Orders'),
         ),
         // drawer: DrawerWidget(),
         body: BlocBuilder<MytoolsBloc, MytoolsState>(builder: (context, state) {
@@ -371,32 +359,6 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
                                     ), // InputDecoration
                                   ),
                                 ),
-                                trailing: InkWell(
-                                  onTap: () {
-                                    //AddProduct(context);
-                                  },
-                                  child: Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        //color: Color(0xffc32c37),
-                                        color: Colors.indigo,
-                                        border: Border.all(color: Colors.black, width: 1)),
-                                    child: Container(
-                                      width: 30,
-                                      height: 30,
-                                      alignment: Alignment.center,
-                                      child: Stack(
-                                        children: [
-                                          Center(
-                                              child:Icon(Icons.edit,color: Colors.white,)
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                )
                             ),
                             // info(),
                             //for product ListView

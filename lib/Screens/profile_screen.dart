@@ -1,9 +1,15 @@
-import 'dart:convert';
 
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:unstoppable/Blocs/User%20Profile/User_profile_api.dart';
 import 'package:unstoppable/Blocs/companyProfile/comapny_profile_state.dart';
 import 'package:unstoppable/Blocs/companyProfile/company_profile_event.dart';
@@ -13,6 +19,7 @@ import 'package:unstoppable/widgets/drawer.dart';
 import '../Api/api.dart';
 import '../Blocs/User Profile/user_profile_bloc.dart';
 import '../Blocs/companyProfile/company_profile_block.dart';
+import '../Constant/font_size.dart';
 import '../Models/category_model.dart';
 import '../Models/subCategory_model.dart';
 import '../Models/subSubCategory_model.dart';
@@ -22,6 +29,8 @@ import '../NetworkFunction/fetchSubSubCategory.dart';
 import '../Utils/application.dart';
 import '../constant/theme_colors.dart';
 import 'package:http/http.dart' as http;
+
+import 'image_file.dart';
 
 class ProfileScreen extends StatefulWidget {
   UserProfileModel? profileData;
@@ -55,7 +64,175 @@ class _ProfileScreenState extends State<ProfileScreen> {
   var userData;
   // late Future<UserProfileModel> profileData;
 
+  File? _image;
+  ImageFile? imageFile;
+  final picker = ImagePicker();
+  String flagImage="";
 
+
+
+  Widget _buildAvatar() {
+    if (_image != null && imageFile != null) {
+      return Container(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        margin: EdgeInsets.all(5.0),
+        decoration: BoxDecoration(
+          // borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color:
+            ThemeColors.textFieldBgColor, // red as border color
+          ),
+          color:
+          Colors.white,
+
+        ),
+
+        child:
+        ClipRRect(
+          child: Image.file(
+            _image!,
+            fit: BoxFit.fill,
+          ),
+
+          // borderRadius: BorderRadius.circular(20),
+
+        ),
+
+      );
+    }
+    else {
+      return CachedNetworkImage(
+        imageUrl: imageFile!.imagePath.toString(),
+        imageBuilder: (context, imageProvider) {
+          return Container(
+            width: 110,
+            height: 110,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle
+              ,
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.fill,
+              ),
+            ),
+          );
+        },
+        placeholder: (context, url) {
+          return Shimmer.fromColors(
+            baseColor: Theme
+                .of(context)
+                .hoverColor,
+            highlightColor: Theme
+                .of(context)
+                .highlightColor,
+            enabled: true,
+            child: Container(
+              width: 110,
+              height: 110,
+              // decoration: BoxDecoration(
+              //   shape: BoxShape.rectangle,
+
+              //   color: Colors.white,
+              // ),
+            ),
+          );
+        },
+        errorWidget: (context, url, error) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+
+              Icon(
+                CupertinoIcons.arrow_down_doc,
+                color: ThemeColors.textFieldHintColor,
+              ),
+              Text(
+                "Browse & Upload",
+                style: TextStyle(
+                    fontSize: FontSize.medium,
+                    color: ThemeColors.textFieldHintColor),
+              )
+            ],
+          );
+          // return Shimmer.fromColors(
+          //   baseColor: Theme
+          //       .of(context)
+          //       .hoverColor,
+          //   highlightColor: Theme
+          //       .of(context)
+          //       .highlightColor,
+          //   enabled: true,
+          //   child: Container(
+          //     width: 110,
+          //     height: 110,
+          //     // decoration: BoxDecoration(
+          //     //   shape: BoxShape.rectangle,
+          //     //   color: Colors.white,
+          //     // ),
+          //   child: Icon(Icons.error),
+          //
+          //   ),
+          // );
+        },
+      );
+    }
+  }
+
+  //method to open gallery
+  _openGallery(BuildContext context) async {
+
+    final image = await picker.getImage(source: ImageSource.gallery,imageQuality: 25);
+    imageFile=new ImageFile();
+    if (image != null) {
+
+      _cropImage(image);
+
+    }
+  }
+
+  // For crop image
+
+  Future<Null> _cropImage(PickedFile imageCropped) async {
+    File? croppedFile = await ImageCropper.cropImage(
+        sourcePath: imageCropped.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+          // CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio4x3,
+        ]
+            : [
+          // CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio4x3,
+        ],
+        androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Theme.of(context).primaryColor,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.square,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          title: 'Cropper',
+        )) as File?;
+    if (croppedFile != null) {
+
+      setState(() {
+        // mImageFile.image = croppedFile;
+        // print(mImageFile.image.path);
+        // state = AppState.cropped;
+        _image = croppedFile;
+        imageFile!.imagePath=_image!.path;
+      });
+      // Navigator.pop(context);
+    }
+  }
 
   @override
   void initState() {
@@ -69,6 +246,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       getCategoryByCategoryData();
       setData();
     }
+    imageFile=new ImageFile();
 
     // getUserProfile();
     // profileData = getUserProfile();
@@ -108,45 +286,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _mobNoController.text = widget.profileData!.mobileNo.toString();
       _emailController.text = widget.profileData!.email.toString();
       _gSTNController.text = widget.profileData!.gstNo.toString();
-      _referBy.text = widget.profileData!.referBy.toString();
+      _referBy.text = widget.profileData!.referralCode.toString();
       // categoryModelselected = widget.profileData!.catName.toString();
 
-    });
-    // if(companydataList.length>0){
-    //
-    //
-    //
-    // }else{
-    //   _nameController.text = "";
-    //   _managingDirector.text = "";
-    //   _ceo.text = "";
-    //   _companyName.text = "";
-    //   _operatorDesignation.text = "";
-    //   _operatorName.text = "";
-    //   _businessAddress.text = "";
-    //   _country.text = "";
-    //   _state.text = "";
-    //   _city.text = "";
-    //   _zipCode.text = "";
-    //   _gstin.text = "";
-    //   _companyWebsite.text = "";
-    //   _mobileNumber.text = "";
-    //   _alternateNumber.text = "";
-    //   _primaryEmail.text = "";
-    //   _alternateEmail.text = "";
-    //   _landlineNumber.text = "";
-    //   _yearOfEstablishment.text = "";
-    //   _businessType.text = "";
-    //   _OwnershipType.text = "";
-    //   _numberOfEmployees.text = "";
-    //   _annualTurnover.text = "";
-    //   _panNo.text = "";
-    //   _tanNo.text = "";
-    //   _cinNo.text = "";
-    //   _dfgt.text = "";
-    //
-    // }
+      // if(widget.profileData!.companyLogo!=""){
+      //   flagImage="1";//from edit
+      //   imageFile!.imagePath=widget.profileData!.companyLogo;
+      //   print(imageFile!.imagePath);
+      // }
 
+    });
 
   }
 
@@ -1097,7 +1246,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     SizedBox(
                                                       width: MediaQuery.of(context).size.width ,
                                                       child: TextFormField(
-                                                        controller: _emailController,
+                                                        controller: _referBy,
                                                         obscureText: false,
                                                         //initialValue: widget.userdata['name'],
                                                         textAlign: TextAlign.start,
@@ -1140,53 +1289,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     ),
                                                     const SizedBox(height: 15,),
 
-                                                    // // Company Logo:
-                                                    //     const Align(alignment: Alignment.topLeft,
-                                                    //         child: Text("Company Logo:", textAlign: TextAlign.start,)),
-                                                    //     const SizedBox(height: 5,),
-                                                    //     Padding(
-                                                    //   padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
-                                                    //   child: InkWell(
-                                                    //     onTap: () {
-                                                    //       _openGallery(context);
-                                                    //       // Navigator.push(
-                                                    //       //     context,
-                                                    //       //     MaterialPageRoute(
-                                                    //       //         builder: (context) => MyImagePicker()));
-                                                    //     },
-                                                    //     child: DottedBorder(
-                                                    //       color: ThemeColors.textFieldHintColor,
-                                                    //       strokeWidth: 1,
-                                                    //       dashPattern: [10, 6],
-                                                    //       child: Container(
-                                                    //           height: _image==null?100:110,
-                                                    //           width: MediaQuery.of(context).size.width * 0.9,
-                                                    //           child: imageFile!.image!=null
-                                                    //               ?
-                                                    //           Column(
-                                                    //             mainAxisAlignment: MainAxisAlignment.center,
-                                                    //             crossAxisAlignment: CrossAxisAlignment.center,
-                                                    //             children: [
-                                                    //
-                                                    //               Icon(
-                                                    //                 CupertinoIcons.arrow_down_doc,
-                                                    //                 color: ThemeColors.textFieldHintColor,
-                                                    //               ),
-                                                    //               Text(
-                                                    //                 "Browse & Upload",
-                                                    //                 style: TextStyle(
-                                                    //                     fontSize: FontSize.medium,
-                                                    //                     color: ThemeColors.textFieldHintColor),
-                                                    //               )
-                                                    //             ],
-                                                    //           ):
-                                                    //           _buildAvatar()
-                                                    //
-                                                    //       ),
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-                                                    //     const SizedBox(height: 15,),
+                                                    // For Upload image
+                                                    const Align(alignment: Alignment.topLeft,
+                                                        child: Text("Company Logo:", textAlign: TextAlign.start,)),
+                                                    const SizedBox(height: 5,),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          _openGallery(context);
+                                                          // Navigator.push(
+                                                          //     context,
+                                                          //     MaterialPageRoute(
+                                                          //         builder: (context) => MyImagePicker()));
+                                                        },
+                                                        child: DottedBorder(
+                                                          color: ThemeColors.textFieldHintColor,
+                                                          strokeWidth: 1,
+                                                          dashPattern: [10, 6],
+                                                          child: Container(
+                                                              height: _image==null?100:110,
+                                                              width: MediaQuery.of(context).size.width * 0.9,
+                                                              child: imageFile!.image!=null?
+                                                              Column(
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                children: [
+
+                                                                  Icon(
+                                                                    CupertinoIcons.arrow_down_doc,
+                                                                    color: ThemeColors.textFieldHintColor,
+                                                                  ),
+                                                                  Text(
+                                                                    "Browse & Upload",
+                                                                    style: TextStyle(
+                                                                        fontSize: FontSize.medium,
+                                                                        color: ThemeColors.textFieldHintColor),
+                                                                  )
+                                                                ],
+                                                              ):
+                                                              _buildAvatar()
+
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                               ),

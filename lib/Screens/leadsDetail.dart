@@ -46,16 +46,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
         backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
         centerTitle: false,
-        title: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Choose Business Network Contacts"),
-              ],
-            ),
-          ],
-        ),
+        title: Text("Choose Business Network Contacts"),
       ),
       body: BlocBuilder<LeadsBloc, LeadsState>(builder: (context, state) {
         if (state is LeadsListSuccess) {
