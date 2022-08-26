@@ -54,6 +54,7 @@ class Api {
   static const String COMPANY_PROFILE ="get_company_profile";
   static const String USER_PROFILE =HOST_URL+"get_user_profile";
   static const String updateCompanyProfile =HOST_URL+"update_company_profile";
+  static const String updateOrderData =HOST_URL+"update_leads";
   static const String BUSI_NET_LIST =HOST_URL+"get_business_networking_leads";
   static const String CHANGE_PASS=HOST_URL+"update_password";
   static const String CSR=HOST_URL+"get_csr_details";

@@ -139,6 +139,31 @@ class MytoolsBloc extends Bloc<MytoolsEvent, MytoolsState> {
       }
     }
 
+    // Update Order Data
+    if (event is UpdateOrderData) {
+      yield UpdateOrderDataLoading();
+      Map<String, String> params;
+      params = {
+        'qty':event.qty,
+        'amount':event.amount,
+      };
+
+      var response = await http.post(
+          Uri.parse(Api.updateCompanyProfile),
+          body: params
+      );
+
+      try {
+        final resp = json.decode(response.body);
+        if (resp['result'] == 'Success') {
+          yield UpdateOrderDataSuccess();
+        }
+      } catch (e) {
+        print(e);
+        rethrow;
+      }
+    }
+
   }
 }
 

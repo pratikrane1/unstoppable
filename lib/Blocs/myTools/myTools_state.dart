@@ -16,6 +16,7 @@ class ProductIamBuyingLoading extends MytoolsState {}
 class AddProductBuyingLoading extends MytoolsState {}
 class DeleteProductBuyingLoading extends MytoolsState {}
 class UnstoppableOrdersLoading extends MytoolsState {}
+class UpdateOrderDataLoading extends MytoolsState {}
 
 class AddProductBuyingSuccess extends MytoolsState {
  String? message ;
@@ -44,7 +45,12 @@ class ProductIamBuyingListSuccess extends MytoolsState {
 
 class ProductIamBuyingListLoadFail extends MytoolsState {}
 
-
+class UpdateOrderDataSuccess extends MytoolsState {
+ UpdateOrderDataSuccess();
+}
+class UpdateOrderDataFail extends MytoolsState {
+ UpdateOrderDataFail();
+}
 
 
 
