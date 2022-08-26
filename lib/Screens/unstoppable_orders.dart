@@ -10,6 +10,7 @@ import 'package:unstoppable/Models/product_model.dart';
 import 'package:unstoppable/Models/untoppable_order_model.dart';
 import 'package:unstoppable/Screens/add_product.dart';
 import 'package:unstoppable/Screens/productDetail.dart';
+import 'package:unstoppable/Screens/updateOrder.dart';
 import 'package:unstoppable/Utils/application.dart';
 import '../Blocs/myTools/myTools_bloc.dart';
 import '../Constant/font_size.dart';
@@ -227,7 +228,7 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
   }
 
 
-  Future AddProduct(BuildContext context) {
+  Future UpdateOrder(BuildContext context) {
 
     return showModalBottomSheet(
         isScrollControlled: true,
@@ -238,7 +239,7 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
                 topRight: Radius.circular(35.0))),
         context: context,
         builder: (BuildContext context) {
-          return SingleChildScrollView(child: AddProductScreen(productDetail:new ProductDetail(),));
+          return SingleChildScrollView(child: UpdateOrderScreen(unstoppableOrderModel:new UnstoppableOrderModel(),));
         });
   }
 
@@ -373,7 +374,7 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
                                 ),
                                 trailing: InkWell(
                                   onTap: () {
-                                    //AddProduct(context);
+                                    UpdateOrder(context);
                                   },
                                   child: Container(
                                     width: 35,
@@ -705,232 +706,10 @@ Widget unstoppableProductCard(BuildContext context, UnstoppableOrderModel orderD
       )));
 }
 
-Widget detailCard() {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(width: 2, color: Colors.blue),
-        // color: Colors.black12,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListTile(
-            contentPadding: EdgeInsets.zero,
-            //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-            leading: CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.blue,
-            ),
-            title: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "A for apple",
-                    overflow: TextOverflow.clip,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      //color: Theme.of(context).accentColor
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "Kavita Lande",
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black87,
-                            fontSize: 14.0,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        )
-                      ],
-                    ),
-                    Text(
-                      "Cancel",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10.0,
-                          color: Colors.red),
-                    ),
-                  ],
-                ),
-              ],
-            ),
 
-            //dense: true,
-            trailing: eyepdelete()),
-      ),
-    ),
-  );
-}
 
-Widget eyephone() {
-  return Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      eyeIcon(),
-      SizedBox(
-        width: 5,
-      ),
-      phoneIcon(),
-    ],
-  );
-}
 
-Widget eyepdelete() {
-  return Row(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      eyeIcon(),
-      SizedBox(
-        width: 5,
-      ),
-      deleteIcon(),
-    ],
-  );
-}
 
-// Widget pagenationdetail(BuildContext context) {
-//   return
-//     Container(
-//     width: MediaQuery.of(context).size.width,
-//     child: Padding(
-//       padding: const EdgeInsets.only(
-//         top: 8.0,
-//         right: 15,
-//         left: 15,
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Column(
-//             children: [
-//               Text(
-//                 "Items per page:",
-//                 style: TextStyle(fontSize: 10, color: Colors.black),
-//               ),
-//               DropdownButtonWidget(),
-//             ],
-//           ),
-//           Row(
-//             children: [
-//               //back icon
-//             InkWell(
-//               onTap: (){
-//
-//               },
-//                 child:Container(
-//             width: 40,
-//             height: 25,
-//             decoration: BoxDecoration(
-//               shape: BoxShape.rectangle,
-//               borderRadius:  BorderRadius.circular(5.0),
-//               //color: Color(0xffc32c37),
-//               color: Colors.indigo,
-//               // border: Border.all(color: Colors.black, width: 1)
-//             ),
-//             child: Container(
-//               width: 30,
-//               height: 30,
-//               alignment: Alignment.center,
-//               child: Stack(
-//                 children: [
-//                   Center(
-//                     child: Icon(
-//                       CupertinoIcons.arrow_left,
-//                       color: Colors.white,
-//                       size: 21,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           )),
-//               SizedBox(
-//                 width: 5,
-//               ),
-//               //fwd icon
-//               InkWell(
-//                 onTap: (){
-//                   productList=[];
-//                   _productBloc!.add(OnLoadingProductList(userid: Application.vendorLogin!.userId.toString(), offset: offset+10));
-//                 },
-//                   child:Container(
-//                 width: 40,
-//                 height: 25,
-//                 decoration: BoxDecoration(
-//                   shape: BoxShape.rectangle,
-//                   borderRadius:  BorderRadius.circular(5.0),
-//                   //color: Color(0xffc32c37),
-//                   color: Colors.indigo,
-//                   // border: Border.all(color: Colors.black, width: 1)
-//                 ),
-//                 child: Container(
-//                   width: 30,
-//                   height: 30,
-//                   alignment: Alignment.center,
-//                   child: Stack(
-//                     children: [
-//                       Center(
-//                         child: Icon(
-//                           CupertinoIcons.arrow_right,
-//                           color: Colors.white,
-//                           size: 21,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               )),
-//             ],
-//           )
-//         ],
-//       ),
-//     ),
-//   );
-// }
 
-// class CustomSliverChildBuilderDelegate extends SliverChildBuilderDelegate
-//     with DataPagerDelegate, ChangeNotifier {
-//   CustomSliverChildBuilderDelegate(builder) : super(builder);
-//
-//   @override
-//   int get childCount => productList.length;
-//
-//   @override
-//   Future<bool> handlePageChange(int oldPageIndex, int newPageIndex) async {
-//     int startRowIndex = newPageIndex * rowsPerPage;
-//     int endRowIndex = startRowIndex + rowsPerPage;
-//
-//     if (endRowIndex > productList.length) {
-//       endRowIndex = productList.length - 1;
-//     }
-//
-//     await Future.delayed(Duration(milliseconds: 2000));
-//     productList = productList
-//         .getRange(startRowIndex, endRowIndex)
-//         .toList(growable: false);
-//     notifyListeners();
-//     return true;
-//   }
-//
-//   void updateDataGriDataSource() {
-//     notifyListeners();
-//   }
-//
-//   @override
-//   bool shouldRebuild(covariant CustomSliverChildBuilderDelegate oldDelegate) {
-//     return true;
-//   }
-// }
+
+

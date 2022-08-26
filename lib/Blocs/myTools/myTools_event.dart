@@ -18,8 +18,21 @@ class OnLoadingUnstoppableOrderList extends MytoolsEvent {
   int offset;
   // String prodid;
   OnLoadingUnstoppableOrderList({required this.userid,required this.offset });
+  // OnLoadingUnstoppableOrderList({required this.userid });
 }
 
+class UpdateOrderData extends MytoolsEvent{
+
+  String  qty;
+  String amount;
+  String leadid;
+
+  UpdateOrderData({
+
+    required this.qty,
+    required this.amount,
+  required this.leadid});
+}
 
 class AddProductBuying extends MytoolsEvent{
   String catId,subCatId,sscatId,prodName;
