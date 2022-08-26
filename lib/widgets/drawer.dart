@@ -75,7 +75,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
           backgroundColor: ThemeColors.baseThemeColor,
           elevation: 0.0,
           centerTitle: true,
-          title: Text('Profile'),
+          title: Text('Unstoppable Trade'),
         ),
         body:
         BlocBuilder<CompanyProfileBloc, CompanyProfileState>(builder: (context, state) {

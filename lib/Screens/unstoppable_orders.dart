@@ -359,6 +359,32 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
                                     ), // InputDecoration
                                   ),
                                 ),
+                                trailing: InkWell(
+                                  onTap: () {
+                                    //AddProduct(context);
+                                  },
+                                  child: Container(
+                                    width: 35,
+                                    height: 35,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        //color: Color(0xffc32c37),
+                                        color: Colors.indigo,
+                                        border: Border.all(color: Colors.black, width: 1)),
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      alignment: Alignment.center,
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                              child:Icon(Icons.edit,color: Colors.white,)
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
                             ),
                             // info(),
                             //for product ListView
