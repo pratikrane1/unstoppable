@@ -367,16 +367,16 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            onTap: (){
-              Navigator.pop(context);
-            },
-            child: Icon(
-              CupertinoIcons.chevron_left,
-              color: Colors.white,
-              size: 18,
-            ),
-          ),
+          // leading: InkWell(
+          //   onTap: (){
+          //     Navigator.pop(context);
+          //   },
+          //   child: Icon(
+          //     CupertinoIcons.chevron_left,
+          //     color: Colors.white,
+          //     size: 18,
+          //   ),
+          // ),
           backgroundColor: ThemeColors.baseThemeColor,
           elevation: 0.0,
           centerTitle: false,
@@ -392,7 +392,7 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
             ],
           ),
         ),
-       // drawer: DrawerWidget(),
+       drawer: DrawerWidget(),
         body: BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
           if (state is ProductListSuccess) {
             productList = state.productList!;

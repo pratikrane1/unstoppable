@@ -146,10 +146,11 @@ class MytoolsBloc extends Bloc<MytoolsEvent, MytoolsState> {
       params = {
         'qty':event.qty,
         'amount':event.amount,
+        'lead_id':event.leadid,
       };
 
       var response = await http.post(
-          Uri.parse(Api.updateCompanyProfile),
+          Uri.parse(Api.updateOrderData),
           body: params
       );
 
@@ -159,6 +160,7 @@ class MytoolsBloc extends Bloc<MytoolsEvent, MytoolsState> {
           yield UpdateOrderDataSuccess();
         }
       } catch (e) {
+        yield UpdateOrderDataFail();
         print(e);
         rethrow;
       }

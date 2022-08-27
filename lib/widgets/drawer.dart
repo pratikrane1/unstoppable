@@ -146,19 +146,31 @@ class _DrawerWidgetState extends State<DrawerWidget>{
                       //   ),
                       // ),
                       SizedBox(
-                        height: 20,
-                      ),
-                      CircleAvatar(
-                        radius: 70,
-                        backgroundColor: Colors.orange,
-                        child: Text(
-                          "A",
-                          style: TextStyle(fontSize: 40),
-                        ),
+                        height: 0,
                       ),
 
                       SizedBox(
-                        height: 20,
+                          height: 200,
+                          width: 300,
+                          child: Center(
+                            child: Image.asset('assets/images/Logo.png'),
+                            // Text(
+                            //   "Unstoppable",
+                            //   style: TextStyle(fontSize: FontSize.xxLarge),
+                            // ),
+                          )),
+
+                      // CircleAvatar(
+                      //   radius: 70,
+                      //   backgroundColor: Colors.orange,
+                      //   child: Text(
+                      //     "A",
+                      //     style: TextStyle(fontSize: 40),
+                      //   ),
+                      // ),
+
+                      SizedBox(
+                        height: 0,
                       ),
                       _Home(context),
                       _Rewards(context),

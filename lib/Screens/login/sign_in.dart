@@ -50,10 +50,13 @@ class _SignInPageState extends State<SignInPage> {
           return BlocListener<LoginBloc,LoginState>(listener: (context,state){
             if(state is LoginSuccess)
               {
+                Fluttertoast.showToast(msg: "Login Successfull");
+
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNavigation()));
 
               }
             if(state is LoginFail){
+              Fluttertoast.showToast(msg: "Login Failed");
             }
           },
           child:Container(
@@ -284,6 +287,8 @@ class _SignInPageState extends State<SignInPage> {
                               _userLoginBloc!.add(OnLogin(email: _textEmailController.text,password: _textPasswordController.text));
                             }
                                                 } else {
+                                                  Fluttertoast.showToast(msg: "Login Failed");
+
                                                   CustomDialogs.showDialogCustom(
                                                       "Internet",
                                                       "Please check your Internet Connection!",

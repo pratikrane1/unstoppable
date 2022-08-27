@@ -1291,7 +1291,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                                                     // For Upload image
                                                     const Align(alignment: Alignment.topLeft,
-                                                        child: Text("Company Logo:", textAlign: TextAlign.start,)),
+                                                        child: Text("Company Logo:(optional)", textAlign: TextAlign.start,)),
                                                     const SizedBox(height: 5,),
                                                     Padding(
                                                       padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
