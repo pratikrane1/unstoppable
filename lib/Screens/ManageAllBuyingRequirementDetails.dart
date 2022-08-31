@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unstoppable/Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_state.dart';
 import 'package:unstoppable/Models/manageAllBuyingRequirements_model.dart';
 import 'package:unstoppable/Screens/manageAllBuyingRequirement.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_block.dart';
 import '../Blocs/manageAllBuyingRequirement/manageAllBuyingRequirements_event.dart';
 import '../Constant/theme_colors.dart';
+import '../Utils/translate.dart';
 import '../widgets/seeIcon.dart';
 
 class ManageAllBuyingRequirementDetails  extends StatefulWidget{
@@ -29,6 +31,46 @@ class _ManageAllBuyingRequirementDetailsState extends State<ManageAllBuyingRequi
 
 
   }
+
+  // Future<void> _showMessage(String message,int? role) async {
+  //   return showDialog<void>(
+  //     context: context,
+  //     barrierDismissible: false, // user must tap button!
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text(
+  //             "Delete Prduct",
+  //             style:TextStyle(
+  //                 fontFamily: 'Inter-SemiBold',
+  //                 fontWeight: FontWeight.w500,
+  //                 color: Colors.black
+  //             )
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(
+  //                 message,
+  //                 style: Theme.of(context).textTheme.bodyText1,
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text(
+  //               "OK",
+  //             ),
+  //             onPressed: () {
+  //               Navigator.push(context, MaterialPageRoute(builder: (context)=>MainNavigation(userType:role.toString())));
+  //
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
 
   @override
@@ -298,36 +340,51 @@ class _ManageAllBuyingRequirementDetailsState extends State<ManageAllBuyingRequi
                     // SuppliersFormsSuppliersWillBe(),
                     // Description(),
                     SizedBox(height: 20,),
-                    InkWell(
-                      onTap: (){
-                        _allBuyingRequirementBloc!.add(DeleteAllBuyingRequirement(id:widget.allBuyingRequirementData!.id.toString()));
+                    BlocBuilder<ManageAllBuyingRequirementBloc, ManageAllBuyingRequirementState>(builder: (context, state) {
+                      if (state is DeleteAllBuyingRequirementSuccess) {
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) => ManageAllBuyingRequirement()));
+                        Fluttertoast.showToast(msg: "Product Deleted Successfully");
 
-                      },
-                      child: Container(
-                        width: 45,
-                        height: 45,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            //color: Color(0xffc32c37),
-                            color: Colors.blue,
-                            border: Border.all(color: Colors.black, width: 1)),
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          alignment: Alignment.center,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child:
-                                Icon(Icons.delete,color: Colors.white,),
+                      }
+                      if(state is DeleteAllBuyingRequirementFail){
+                        Fluttertoast.showToast(msg: "Couldn't Deleted Product");
+
+                      }
+
+                      return
+                        InkWell(
+                          onTap: (){
+                            _allBuyingRequirementBloc!.add(DeleteAllBuyingRequirement(id:widget.allBuyingRequirementData!.id.toString()));
+
+
+                          },
+                          child: Container(
+                            width: 45,
+                            height: 45,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                //color: Color(0xffc32c37),
+                                color: Colors.blue,
+                                border: Border.all(color: Colors.black, width: 1)),
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              alignment: Alignment.center,
+                              child: Stack(
+                                children: [
+                                  Center(
+                                    child:
+                                    Icon(Icons.delete,color: Colors.white,),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ) ,
+                        );
+                    }
+                    )
+                     ,
                   ],
                 ),
               ),

@@ -13,6 +13,7 @@ import 'package:unstoppable/Models/vendor_login.dart';
 import '../Models/company_profile_model.dart';
 import '../Models/csr_model.dart';
 import '../Models/customerEnquiries_model.dart';
+import '../Models/get_BNC_model.dart';
 import '../Models/home_model.dart';
 import '../Models/leads_model.dart';
 import '../Models/manageAllBuyingRequirements_model.dart';
@@ -141,7 +142,7 @@ class Api {
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
       print(responseJson);
-      return LeadsRepo.fromJson(responseJson);
+      return GetBNCRepo.fromJson(responseJson);
     }
   }
 

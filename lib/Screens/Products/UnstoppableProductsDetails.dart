@@ -5,13 +5,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/products/bloc.dart';
 import 'package:unstoppable/Constant/theme_colors.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
-import 'package:unstoppable/Screens/add_product.dart';
+import 'package:unstoppable/Screens/Products/add_product.dart';
 import 'package:unstoppable/Screens/product_Images.dart';
-import 'package:unstoppable/Screens/unstoppableProducts.dart';
-import '../Utils/application.dart';
-import '../config/image.dart';
-import '../widgets/seeIcon.dart';
+import 'package:unstoppable/Screens/Products/unstoppableProducts.dart';
+import '../../Utils/application.dart';
+import '../../config/image.dart';
+import '../../widgets/seeIcon.dart';
 import 'package:flutter_html/flutter_html.dart';
+
+import '../bottom_navbar.dart';
+import '../latest_add_product.dart';
 
 
 
@@ -43,9 +46,9 @@ class _UnstoppableProductsDetailsState
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
-              // Navigator.pushReplacement(context,
-              //     MaterialPageRoute(builder: (context) => DrawerWidget()));
-              Navigator.pop(context);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => BottomNavigation(index: 1,)));
+              // Navigator.pop(context);
             },
             child: Icon(Icons.arrow_back_ios),
           ),

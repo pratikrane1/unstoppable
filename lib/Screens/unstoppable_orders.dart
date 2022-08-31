@@ -8,7 +8,6 @@ import 'package:unstoppable/Blocs/products/product_bloc.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 import 'package:unstoppable/Models/product_model.dart';
 import 'package:unstoppable/Models/untoppable_order_model.dart';
-import 'package:unstoppable/Screens/add_product.dart';
 import 'package:unstoppable/Screens/productDetail.dart';
 import 'package:unstoppable/Screens/updateOrder.dart';
 import 'package:unstoppable/Utils/application.dart';
@@ -21,7 +20,7 @@ import '../widgets/dropdown.dart';
 import '../widgets/seeIcon.dart';
 import 'package:shimmer/shimmer.dart';
 import 'My Unstoppable Orders/my_unstoppable_order_details.dart';
-import 'UnstoppableProductsDetails.dart';
+import 'Products/UnstoppableProductsDetails.dart';
 
 class UnstoppableOrders extends StatefulWidget {
   @override

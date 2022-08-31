@@ -58,8 +58,7 @@ class BusinessOpprtunityBloc extends Bloc<BusinessOpportunityEvent, BusinessOppo
       final GetBNCRepo response = await businessOpportunityRepo!
           .getBNCLead(
         userId: event.userid,
-        rowId:
-        event.rowid,
+        rowId: event.rowid,
       );
 
       // final Iterable refactorbusiness = response.data.requirements ?? [];

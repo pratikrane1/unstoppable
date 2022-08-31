@@ -9,7 +9,6 @@ import 'package:unstoppable/Blocs/products/product_bloc.dart';
 import 'package:unstoppable/Models/productIamBuying_model.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 import 'package:unstoppable/Models/product_model.dart';
-import 'package:unstoppable/Screens/add_product.dart';
 import 'package:unstoppable/Screens/productDetail.dart';
 import 'package:unstoppable/Utils/application.dart';
 import '../constant/theme_colors.dart';
@@ -18,7 +17,7 @@ import '../widgets/drawer.dart';
 import '../widgets/dropdown.dart';
 import '../widgets/seeIcon.dart';
 import 'package:shimmer/shimmer.dart';
-import 'UnstoppableProductsDetails.dart';
+import 'Products/UnstoppableProductsDetails.dart';
 import 'addProductIamBuying.dart';
 
 class ProductIamBuying extends StatefulWidget {

@@ -96,6 +96,8 @@ class ManageAllBuyingRequirementBloc extends Bloc<ManageAllBuyingRequirementEven
         final resp = json.decode(response.body);
         if (resp['result'] == 'Success') {
           yield DeleteAllBuyingRequirementSuccess();
+        }else{
+          DeleteAllBuyingRequirementFail();
         }
       } catch (e) {
         print(e);

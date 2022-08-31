@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:unstoppable/Blocs/home/bloc.dart';
 import 'package:unstoppable/Screens/PayTM%20Screen/paytm_gateway.dart';
 import 'package:unstoppable/Screens/search_page.dart';
-import 'package:unstoppable/Screens/unstoppableProducts.dart';
+import 'package:unstoppable/Screens/Products/unstoppableProducts.dart';
 import 'package:unstoppable/Utils/application.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
 import 'package:unstoppable/widgets/drawer.dart';
@@ -13,7 +14,7 @@ import 'package:unstoppable/widgets/drawer.dart';
 import '../Blocs/payTMGateway/payment_bloc.dart';
 import '../widgets/bell_icon.dart';
 import 'Leads.dart';
-import 'business_networking_lead.dart';
+import 'YourBNC/business_networking_lead.dart';
 import 'customerEnquiries.dart';
 
 
@@ -210,10 +211,16 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => UnstoppableProducts()));
+                            if(totalProd != 0){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UnstoppableProducts()));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any products");
+                            }
+
                           },
                           child: Container(
                             height: 60,
@@ -285,10 +292,16 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CustomerEnquiries()));
+                            if(totalInquiries != 0){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CustomerEnquiries()));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any enquiry");
+                            }
+
                           },
                           child: Container(
                             height: 60,
@@ -360,10 +373,17 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Leads()));
+                            if(totalLeads != 0){
+                              // Fluttertoast.showToast(
+                              //     msg: "monthly target");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Leads()));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any total leads");
+                            }
                           },
                           child: Container(
                             height: 60,
@@ -438,10 +458,18 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Leads()));
+                            if(cancelledLeads != 0){
+                              // Fluttertoast.showToast(
+                              //     msg: "monthly target");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Leads()));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any cancelled leads");
+                            }
+
                           },
                           child: Container(
                             height: 60,
@@ -513,10 +541,18 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BusinessNetworkingLead()));
+                            if(monthlyTarget != 0){
+                              Fluttertoast.showToast(
+                                  msg: "monthly target");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => BusinessNetworkingLead()));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any monthly target");
+                            }
+
                           },
                           child: Container(
                             height: 60,
@@ -588,10 +624,18 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                             onTap: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BusinessNetworkingLead()));
+                              if(achievements != 0){
+                                Fluttertoast.showToast(
+                                    msg: " achievements");
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => BusinessNetworkingLead()));
+                              }else {
+                                Fluttertoast.showToast(
+                                    msg: "Do not have any achievements");
+                              }
+
                             },
                             child: Container(
                               height: 60,

@@ -17,7 +17,7 @@ import 'package:unstoppable/Models/product_detail_model.dart';
 import 'package:unstoppable/Models/subCategory_model.dart';
 import 'package:unstoppable/NetworkFunction/fetchSubCategory.dart';
 import 'package:unstoppable/Screens/image_file.dart';
-import 'package:unstoppable/Screens/unstoppableProducts.dart';
+import 'package:unstoppable/Screens/Products/unstoppableProducts.dart';
 import 'package:unstoppable/constant/font_size.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
 import 'package:image_picker/image_picker.dart';
@@ -31,16 +31,16 @@ import '../NetworkFunction/fetchSubSubCategory.dart';
 import '../config/image.dart';
 import 'image_upload.dart';
 
-class AddProductScreen extends StatefulWidget {
+class AddProductScreenLatest extends StatefulWidget {
   int? status;
   ProductDetail productDetail;
-  AddProductScreen({Key? key,required this.productDetail}):super(key:key);
+  AddProductScreenLatest({Key? key,required this.productDetail}):super(key:key);
 
   @override
-  State<AddProductScreen> createState() => _AddProductScreenState();
+  State<AddProductScreenLatest> createState() => _AddProductScreenLatestState();
 }
 
-class _AddProductScreenState extends State<AddProductScreen> {
+class _AddProductScreenLatestState extends State<AddProductScreenLatest> {
   AddProductFormBloc? addProductFormBloc;
   List<CategoryModel> addProductFormCategoryList = [];
   CategoryModel? categoryModelselected;

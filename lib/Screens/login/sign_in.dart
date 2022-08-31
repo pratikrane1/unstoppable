@@ -52,7 +52,7 @@ class _SignInPageState extends State<SignInPage> {
               {
                 Fluttertoast.showToast(msg: "Login Successfull");
 
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNavigation()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNavigation(index: 0,)));
 
               }
             if(state is LoginFail){

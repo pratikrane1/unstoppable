@@ -77,7 +77,7 @@ class _AppState extends State<App> {
             builder: (context, app) {
 
               if (app is AuthenticationSuccess) {
-                return BottomNavigation();
+                return BottomNavigation(index: 0,);
               }
               if (app is AuthenticationFail) {
                 return SignInPage();

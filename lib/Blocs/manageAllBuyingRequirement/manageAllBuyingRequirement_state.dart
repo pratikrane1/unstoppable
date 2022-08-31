@@ -38,6 +38,10 @@ class DeleteAllBuyingRequirementSuccess extends ManageAllBuyingRequirementState 
   DeleteAllBuyingRequirementSuccess();
 }
 
+class DeleteAllBuyingRequirementFail extends ManageAllBuyingRequirementState {
+  DeleteAllBuyingRequirementFail();
+}
+
 class ManageAllBuyingRequirementListLoadFail extends ManageAllBuyingRequirementState {}
 
 

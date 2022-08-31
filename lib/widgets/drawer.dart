@@ -23,7 +23,7 @@ import '../Models/user_profile_model.dart';
 import '../Screens/CSR/csr_screen.dart';
 import '../Screens/bottom_navbar.dart';
 import '../Screens/businessNetworking.dart';
-import '../Screens/business_networking_lead.dart';
+import '../Screens/YourBNC/business_networking_lead.dart';
 import '../Screens/company_profile.dart';
 import '../Screens/product_I_am_buying.dart';
 import '../constant/theme_colors.dart';
@@ -67,7 +67,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
           leading: GestureDetector(
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => BottomNavigation()));
+                  MaterialPageRoute(builder: (context) => BottomNavigation(index: 0,)));
               // Navigator.of(context).pop();
             },
             child: Icon(Icons.arrow_back_ios),
@@ -204,7 +204,7 @@ Widget _Home(BuildContext context) {
   return InkWell(
     onTap: () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => BottomNavigation()));
+          context, MaterialPageRoute(builder: (context) => BottomNavigation(index: 0,)));
     },
     child: Card(
       elevation: 1,
@@ -374,7 +374,7 @@ Widget _BussinessOpp(BuildContext context) {
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => BusinessNetworking()));
+                MaterialPageRoute(builder: (context) => BottomNavigation(index: 2,)));
           },
           title: const Text(
             'Business Networking',

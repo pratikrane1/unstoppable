@@ -250,6 +250,7 @@ class _CustomerEnquiriesState extends State<CustomerEnquiries> {
       body:BlocBuilder<CustomerEnquiriesBloc,CustomerEnquiriesState>(builder:(context,state) {
         if (state is CustomerEnquiriesListSuccess) {
           customerEnquiriesList = state.CustomerEnquiriesList!;
+
         }
         return SafeArea(
           child: Container(
@@ -339,7 +340,12 @@ class _CustomerEnquiriesState extends State<CustomerEnquiries> {
                                 ?
                             buildCustomerEnquiriesList(searchResult)
                                 :
-              buildCustomerEnquiriesList(customerEnquiriesList)),
+                                (customerEnquiriesList.length!=0)
+                            ?
+              buildCustomerEnquiriesList(customerEnquiriesList)
+                        :
+                        Center(child: Text("No Data Available",
+                        style: TextStyle(fontSize: 20),),)),
                         )],),
 
                    // SizedBox(height: 5,),
