@@ -15,6 +15,7 @@ import '../Blocs/payTMGateway/payment_bloc.dart';
 import '../widgets/bell_icon.dart';
 import 'Leads.dart';
 import 'YourBNC/business_networking_lead.dart';
+import 'bottom_navbar.dart';
 import 'customerEnquiries.dart';
 
 
@@ -215,7 +216,7 @@ class _DashBoardState extends State<DashBoard> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => UnstoppableProducts()));
+                                      builder: (context) => BottomNavigation(index: 1,)));
                             }else {
                               Fluttertoast.showToast(
                                   msg: "Don't have any products");
@@ -296,7 +297,7 @@ class _DashBoardState extends State<DashBoard> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => CustomerEnquiries()));
+                                      builder: (context) => BottomNavigation(index: 4,)));
                             }else {
                               Fluttertoast.showToast(
                                   msg: "Don't have any enquiry");
