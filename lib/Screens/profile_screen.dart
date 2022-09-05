@@ -145,42 +145,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         },
         errorWidget: (context, url, error) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-
-              Icon(
-                CupertinoIcons.arrow_down_doc,
-                color: ThemeColors.textFieldHintColor,
-              ),
-              Text(
-                "Browse & Upload",
-                style: TextStyle(
-                    fontSize: FontSize.medium,
-                    color: ThemeColors.textFieldHintColor),
-              )
-            ],
-          );
-          // return Shimmer.fromColors(
-          //   baseColor: Theme
-          //       .of(context)
-          //       .hoverColor,
-          //   highlightColor: Theme
-          //       .of(context)
-          //       .highlightColor,
-          //   enabled: true,
-          //   child: Container(
-          //     width: 110,
-          //     height: 110,
-          //     // decoration: BoxDecoration(
-          //     //   shape: BoxShape.rectangle,
-          //     //   color: Colors.white,
-          //     // ),
-          //   child: Icon(Icons.error),
+          // return
+          //   Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
           //
-          //   ),
+          //     Icon(
+          //       CupertinoIcons.arrow_down_doc,
+          //       color: ThemeColors.textFieldHintColor,
+          //     ),
+          //     Text(
+          //       "Browse & Upload",
+          //       style: TextStyle(
+          //           fontSize: FontSize.medium,
+          //           color: ThemeColors.textFieldHintColor),
+          //     )
+          //   ],
           // );
+          return Shimmer.fromColors(
+            baseColor: Theme
+                .of(context)
+                .hoverColor,
+            highlightColor: Theme
+                .of(context)
+                .highlightColor,
+            enabled: true,
+            child: Container(
+              width: 110,
+              height: 110,
+              // decoration: BoxDecoration(
+              //   shape: BoxShape.rectangle,
+              //   color: Colors.white,
+              // ),
+            child: Icon(Icons.error),
+
+            ),
+          );
         },
       );
     }
@@ -237,6 +238,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    imageFile=new ImageFile();
+
     _userProfileBloc = BlocProvider.of<CompanyProfileBloc>(context);
     _userProfileBloc!.add(OnLoadingUserProfile(userid: Application.vendorLogin!.userId.toString()));
     // _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: "874"));
@@ -246,7 +249,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       getCategoryByCategoryData();
       setData();
     }
-    imageFile=new ImageFile();
 
     // getUserProfile();
     // profileData = getUserProfile();
@@ -289,11 +291,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _referBy.text = widget.profileData!.referralCode.toString();
       // categoryModelselected = widget.profileData!.catName.toString();
 
-      // if(widget.profileData!.companyLogo!=""){
-      //   flagImage="1";//from edit
-      //   imageFile!.imagePath=widget.profileData!.companyLogo;
-      //   print(imageFile!.imagePath);
-      // }
+      if(widget.profileData!.companyLogo!=""){
+        flagImage="1";//from edit
+        imageFile!.imagePath=widget.profileData!.companyLogo;
+      }
 
     });
 
@@ -347,44 +348,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Container(
                         height: MediaQuery.of(context).size.height * 0.7,
                         child:
-                        // widget.profileData!=null
-                        //     ?
 
-                        // FutureBuilder<UserProfileModel>(
-                        //   future: profileData,
-                        //   builder: (context, snapshot) {
-                        //     if (snapshot.hasData) {
-                        //       // _nameController.text = snapshot.data!.name.toString();
-                        //       // _businessController.text = snapshot.data!.bussinessName.toString();
-                        //       // _businessController.text = snapshot.data!.bussinessName.toString();
-                        //       // _ownershipController.text = snapshot.data!.ownershipTyp.toString();
-                        //       // _establishmentController.text = snapshot.data!.estYear.toString();
-                        //       // _totalEmpController.text = snapshot.data!.totEmployee.toString();
-                        //       // _annualTurnController.text = snapshot.data!.annualTurnover.toString();
-                        //       // _gSTNController.text = snapshot.data!.gstNo.toString();
-                        //       // _BusinessAddressController.text = snapshot.data!.address.toString();
-                        //       // _pinController.text = snapshot.data!.pinCode.toString();
-                        //       // _mobNoController.text = snapshot.data!.mobileNo.toString();
-                        //       // _emailController.text = snapshot.data!.email.toString();
-                        //       // _referBy.text = snapshot.data!.referBy.toString();
-                        //       // // categoryModelselected = snapshot.data!.catName.toString();
-                        //       //
-                        //
-                        //
-                        //
-                        //     } else if (snapshot.hasError) {
-                        //       return Text('${snapshot.error}');
-                        //     }
-                        //
-                        //     // By default, show a loading spinner.
-                        //     return (snapshot.hasData)
-                        //         ?
-                        //
-                        //     :
-                        //     Center(child: CircularProgressIndicator());
-                        //
-                        //   },
-                        // ),
                         ListView(
                             children: [
                               Padding(

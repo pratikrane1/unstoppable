@@ -49,21 +49,21 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _businessOpprtunityBloc = BlocProvider.of<BusinessOpprtunityBloc>(context);
+    _businessOpprtunityBloc = BlocProvider.of<BusinessOpprtunityBloc>(context);
     // _businessOpprtunityBloc!.add(OnLoadingBNC(
     //   userid: Application.vendorLogin!.userId.toString(), rowid: widget.rowId.toString(),
     // ));
 
-    if(widget.LeadList.id!=null){
-      // setData();
-      getSubCategoryByCategoryData();
-      getProductCategoryBygetSubSubCategoryBySubCatData();
-      typeData();
-
-    }
+    // if(widget.LeadList.id!=null){
+    //   // setData();
+    //   getSubCategoryByCategoryData();
+    //   getProductCategoryBygetSubSubCategoryBySubCatData();
+    //   setData();
+    //
+    // }
 
   }
-  void typeData(){
+  void setData(){
     typeValue = widget.LeadList.type.toString();
   }
 
@@ -501,7 +501,7 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                     productid:productNameModelselected!.prodId.toString(),
                                     type: typeValue,
                                     rowid: "",
-                                    id: "" ,
+                                    id: "",
 
 
                                   )

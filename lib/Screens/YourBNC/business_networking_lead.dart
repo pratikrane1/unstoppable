@@ -10,6 +10,7 @@ import '../../Utils/application.dart';
 import '../../constant/theme_colors.dart';
 import '../bottom_navbar.dart';
 import 'business_networking_contact.dart';
+import 'business_networking_updated.dart';
 
 class BusinessNetworkingLead extends StatefulWidget{
   @override
@@ -34,14 +35,6 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
     // rowid1;
     _businessOpprtunityBloc = BlocProvider.of<BusinessOpprtunityBloc>(context);
 
-
-
-    // for update product
-    // if(widget.rowId!=null){
-    //   getSubCategoryByCategoryData();
-    //   getSubSubCategoryBySubCatData();
-    //
-    // }
   }
 
 
@@ -68,8 +61,11 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
         if (state is GetBNCLoadSuccess) {
           LeadList = state.getBNCLeadList!;
 
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
+
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
+              context, MaterialPageRoute(builder: (context) => BusinessNetworkingContactUpdated()));
           // data = LeadList[0];
           // companyData = state.companyProfileData;
           // setData(companyData!);
@@ -98,15 +94,20 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                     // For Lead 1
                     InkWell(
                         onTap: () {
-                          setState((){
-                            rowId= "1";
-                          });
-                          _businessOpprtunityBloc!.add(OnLoadingBNC(
-                            userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
-                          ));
+                          // setState((){
+                          //   rowId= "1";
+                          // });
+                          // _businessOpprtunityBloc!.add(OnLoadingBNC(
+                          //   userid: Application.vendorLogin!.userId.toString(), rowid: rowid1,
+                          // ));
+
+                          Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => BusinessNetworkingContactUpdated()));
 
                           // Navigator.push(
                           //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
+                          // Navigator.push(
+                          //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContactUpdated(LeadList: LeadList[0],)));
 
                         },
                         child: Padding(
