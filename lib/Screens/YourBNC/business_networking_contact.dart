@@ -49,11 +49,7 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _businessOpprtunityBloc = BlocProvider.of<BusinessOpprtunityBloc>(context);
-    // _businessOpprtunityBloc!.add(OnLoadingBNC(
-    //   userid: Application.vendorLogin!.userId.toString(), rowid: widget.rowId.toString(),
-    // ));
-
+    _businessOpprtunityBloc = BlocProvider.of<BusinessOpprtunityBloc>(context);
     if(widget.LeadList.id!=null){
       // setData();
       getSubCategoryByCategoryData();
@@ -98,13 +94,12 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => BusinessNetworkingLead()));
-          },
-          child: Icon(Icons.arrow_back_ios),
-        ),
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Navigator.of(context).pop;
+        //   },
+        //   child: Icon(Icons.arrow_back_ios),
+        // ),
         backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
         centerTitle: true,
@@ -187,6 +182,8 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                                       .first as CategoryModel,
                                                   onChanged: (CategoryModel? category) {
                                                     subcategoryModelselected=null;
+                                                    subsubcategoryModelselected=null;
+                                                    productNameModelselected=null;
                                                     // subsubcategoryModelselected=null;
                                                     setState(() {
                                                       categoryModelselected = category;
@@ -195,7 +192,7 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                         ),
                                       ));
                                 })),
-                        //for subcategory
+                        // for subcategory
                         Padding(
                             padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
                             //to hide underline
@@ -251,6 +248,7 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                                       .first as SubCategoryModel,
                                                   onChanged: (SubCategoryModel? subCategory) {
                                                     subsubcategoryModelselected=null;
+                                                    productNameModelselected=null;
                                                     setState(() {
                                                       subcategoryModelselected = subCategory;
                                                     });
@@ -314,7 +312,7 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                                           .ssCatName)
                                                       .first as SubSubCategoryModel,
                                                   onChanged: (SubSubCategoryModel? subsubCategory) {
-
+                                                    productNameModelselected=null;
                                                     setState(() {
                                                       subsubcategoryModelselected = subsubCategory;
                                                     });
@@ -438,7 +436,7 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                 // UpdateButton
                 BlocBuilder<BusinessOpprtunityBloc,BusinessOpportunityState>(builder: (context,updateBNC){
                   return BlocListener<BusinessOpprtunityBloc,BusinessOpportunityState>(listener: (context,state){
-                    if(state is AddBNCSuccess){
+                    if(state is UpdateBNCSuccess){
                       Fluttertoast.showToast(msg: state.message.toString());
                       flagLoading=false;
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BusinessNetworkingLead()));
@@ -478,21 +476,18 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                   primary: ThemeColors.drawerTextColor,
                                 ),
                                 onPressed: () {
-                                  //  if(categoryModelselected==null){
-                                  //   Fluttertoast.showToast(msg: "Please select category");
-                                  // }else if(subcategoryModelselected==null){
-                                  //   Fluttertoast.showToast(msg: "Please select sub category");
-                                  // }else if(subsubcategoryModelselected==null){
-                                  //   Fluttertoast.showToast(msg: "Please select sub sub category");
-                                  // }else if(productNameModelselected==null){
-                                  //    Fluttertoast.showToast(msg: "Please select Product Name");
-                                  //  }
-                                  //  else
-                                  //    if(_formKey.currentState!.validate())
-                                  // {
-                                  //   Fluttertoast.showToast(msg: "Save Successfully");
-                                  //   if(widget.bnCmodel.productId!=null)
-                                  //   { //add api
+                                   if(categoryModelselected==null){
+                                    Fluttertoast.showToast(msg: "Please select category");
+                                  }else if(subcategoryModelselected==null){
+                                    Fluttertoast.showToast(msg: "Please select sub category");
+                                  }else if(subsubcategoryModelselected==null){
+                                    Fluttertoast.showToast(msg: "Please select sub sub category");
+                                  }else if(productNameModelselected==null){
+                                     Fluttertoast.showToast(msg: "Please select Product Name");
+                                   }
+
+                                  else
+                                    { //add api
                                   _businessOpprtunityBloc!.add(UpdateBNC(
                                     userid: Application.vendorLogin!.userId.toString(),
                                     catid: categoryModelselected!.catId.toString(),
@@ -500,16 +495,11 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                     sscatid: subsubcategoryModelselected!.sscatId.toString(),
                                     productid:productNameModelselected!.prodId.toString(),
                                     type: typeValue,
-                                    rowid: "",
-                                    id: "" ,
-
-
+                                    rowid: widget.LeadList.row!,
+                                    id:  widget.LeadList.id! ,
                                   )
                                   );
-                                  // }
-                                  // else{
-                                  //   Fluttertoast.showToast(msg: "Could not save  Data");
-                                  // }
+                                    }
 
 
                                   // }

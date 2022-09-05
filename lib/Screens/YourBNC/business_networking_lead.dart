@@ -52,13 +52,13 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget()));
-          },
-          child: Icon(Icons.arrow_back_ios),
-        ),
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Navigator.pushReplacement(context,
+        //         MaterialPageRoute(builder: (context) => DrawerWidget()));
+        //   },
+        //   child: Icon(Icons.arrow_back_ios),
+        // ),
         backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
         centerTitle: true,
@@ -67,9 +67,11 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
       body:BlocBuilder<BusinessOpprtunityBloc, BusinessOpportunityState>(builder: (context, state) {
         if (state is GetBNCLoadSuccess) {
           LeadList = state.getBNCLeadList!;
+          Future.delayed(Duration(milliseconds: 3), () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
+          });
 
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
           // data = LeadList[0];
           // companyData = state.companyProfileData;
           // setData(companyData!);
@@ -96,83 +98,78 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                 child:  ListView(
                   children: [
                     // For Lead 1
-                    InkWell(
-                        onTap: () {
-                          setState((){
-                            rowId= "1";
-                          });
-                          _businessOpprtunityBloc!.add(OnLoadingBNC(
-                            userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
-                          ));
-
-                          // Navigator.push(
-                          //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
-
-                        },
-                        child: Padding(
+                    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            border: Border.all(width: 2, color: Colors.blue),
+                            // color: Colors.black12,
+                          ),
+                          child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(width: 2, color: Colors.blue),
-                                // color: Colors.black12,
+                            child: ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                              // leading: nameIcon(),
+                              leading:  Text(
+                                "Lead 1",
+                                overflow: TextOverflow.clip,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0,
+                                  //color: Theme.of(context).accentColor
+                                ),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                                  // leading: nameIcon(),
-                                  leading:  Text(
-                                    "Lead 1",
-                                    overflow: TextOverflow.clip,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.0,
-                                      //color: Theme.of(context).accentColor
-                                    ),
-                                  ),
-                                  //dense: true,
-                                  trailing:  // For Edit Icon
-                                  Container(
-                                    width: 40,
-                                    height: 25,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius:  BorderRadius.circular(5.0),
-                                      //color: Color(0xffc32c37),
-                                      color: Colors.indigo,
-                                      // border: Border.all(color: Colors.black, width: 1)
-                                    ),
-                                    child: Container(
-                                      width: 30,
-                                      height: 30,
-                                      alignment: Alignment.center,
-                                      child: Stack(
-                                        children: [
-                                          Center(
-                                            child: Icon(
-                                              Icons.edit,
-                                              color: Colors.white,
-                                              size: 21,
-                                            ),
-                                          ),
-                                        ],
+                              //dense: true,
+                              trailing:  // For Edit Icon
+                              InkWell(
+                                onTap: (){
+                                  rowId= "1";
+
+                                  _businessOpprtunityBloc!.add(OnLoadingBNC(
+                                    userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
+                                  ));
+                                },
+                                child:Container(
+                                width: 40,
+                                height: 25,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  borderRadius:  BorderRadius.circular(5.0),
+                                  //color: Color(0xffc32c37),
+                                  color: Colors.indigo,
+                                  // border: Border.all(color: Colors.black, width: 1)
+                                ),
+                                child: Container(
+                                  width: 30,
+                                  height: 30,
+                                  alignment: Alignment.center,
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                          size: 21,
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ))),
+                            ),
+                          )),
+                        )),
 
 
 
                     // For Lead 2
                     InkWell(
                         onTap: () {
-                          setState((){
+                          // setState((){
                             rowId = "2";
-                          });
+                          // });
                           _businessOpprtunityBloc!.add(OnLoadingBNC(
                             userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
                           ));
@@ -241,9 +238,9 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                     // For Lead 3
                     InkWell(
                         onTap: () {
-                          setState((){
+                          // setState((){
                             rowId= "3";
-                          });
+                          // });
                           _businessOpprtunityBloc!.add(OnLoadingBNC(
                             userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
                           ));
@@ -309,9 +306,9 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                     InkWell(
                         onTap: () {
 
-                          setState((){
+                          // setState((){
                             rowId= "4";
-                          });
+                          // });
                           _businessOpprtunityBloc!.add(OnLoadingBNC(
                             userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
                           ));
@@ -376,9 +373,9 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                     // For Lead 5
                     InkWell(
                         onTap: () {
-                          setState((){
+                          // setState((){
                             rowId= "5";
-                          });
+                          // });
                           _businessOpprtunityBloc!.add(OnLoadingBNC(
                             userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
                           ));

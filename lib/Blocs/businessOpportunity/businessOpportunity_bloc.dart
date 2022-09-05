@@ -80,6 +80,7 @@ class BusinessOpprtunityBloc extends Bloc<BusinessOpportunityEvent, BusinessOppo
 //    For bnc Update
     if (event is UpdateBNC) {
       yield GetBNCLoading();
+
       Map<String, String> params;
       params = {
         'id':event.id,
@@ -87,7 +88,7 @@ class BusinessOpprtunityBloc extends Bloc<BusinessOpportunityEvent, BusinessOppo
         'row_id':event.rowid,
         'cat_id':event.catid,
         'sub_cat_id':event.subcatid,
-        'sscatid':event.sscatid,
+        'ss_cat_id':event.sscatid,
         'product_id':event.productid,
         'type':event.type,
 
@@ -102,7 +103,7 @@ class BusinessOpprtunityBloc extends Bloc<BusinessOpportunityEvent, BusinessOppo
       try {
         final resp = json.decode(response.body);
         if (resp['result'] == 'Success') {
-          yield UpdateBNCSuccess();
+          yield UpdateBNCSuccess(message: resp["msg"].toString());
         }
       } catch (e) {
         print(e);
