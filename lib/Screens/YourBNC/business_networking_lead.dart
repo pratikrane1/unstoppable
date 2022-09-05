@@ -17,7 +17,8 @@ class BusinessNetworkingLead extends StatefulWidget{
 }
 
 class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
-  String rowid1 = "0";
+  String rowId = "0";
+  String rowid1 = "1";
   String rowid2 = "2";
   String rowid3 = "3";
   String rowid4 = "4";
@@ -33,9 +34,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
     // rowid1;
     _businessOpprtunityBloc = BlocProvider.of<BusinessOpprtunityBloc>(context);
 
-    _businessOpprtunityBloc!.add(OnLoadingBNC(
-      userid: Application.vendorLogin!.userId.toString(), rowid: rowid1,
-    ));
+
 
     // for update product
     // if(widget.rowId!=null){
@@ -45,33 +44,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
     // }
   }
 
-  rowId(){
-    if(rowid1 == 1){
-      _businessOpprtunityBloc!.add(OnLoadingBNC(
-        userid: Application.vendorLogin!.userId.toString(), rowid: rowid1,
-      ));
-    }
-    else if( rowid1 == 2){
-      _businessOpprtunityBloc!.add(OnLoadingBNC(
-        userid: Application.vendorLogin!.userId.toString(), rowid: rowid1,
-      ));
-    }
-    else if(rowid1 ==3){
-      _businessOpprtunityBloc!.add(OnLoadingBNC(
-        userid: Application.vendorLogin!.userId.toString(), rowid: rowid1,
-      ));
-    }
-    else if(rowid1 == 4){
-      _businessOpprtunityBloc!.add(OnLoadingBNC(
-        userid: Application.vendorLogin!.userId.toString(), rowid: rowid1,
-      ));
-    }
-    else if(rowid1 ==5){
-      _businessOpprtunityBloc!.add(OnLoadingBNC(
-        userid: Application.vendorLogin!.userId.toString(), rowid: rowid1,
-      ));
-    }
-  }
+
 
 
   @override
@@ -91,44 +64,49 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
         centerTitle: true,
         title: Text('Business Networking'),
       ),
-      body:
-      Container(
-        color: Colors.black12,
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child:
+      body:BlocBuilder<BusinessOpprtunityBloc, BusinessOpportunityState>(builder: (context, state) {
+        if (state is GetBNCLoadSuccess) {
+          LeadList = state.getBNCLeadList!;
+
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
+          // data = LeadList[0];
+          // companyData = state.companyProfileData;
+          // setData(companyData!);
+          // setData(LeadList);
+        }
+
+        // if(state is CompanyProfileListLoadFail){
+        //   // companyData=[];
+        //   // setData(companyData!);
+        //   // setData();
+        // }
+
+        return
           Container(
-            decoration: BoxDecoration(
+            color: Colors.black12,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child:
+              Container(
+                decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
-            child:  ListView(
-              children: [
-                // For Lead 1
-                BlocBuilder<BusinessOpprtunityBloc, BusinessOpportunityState>(builder: (context, state) {
-                  if (state is GetBNCLoadSuccess) {
-                    LeadList = state.getBNCLeadList!;
-                    // data = LeadList[0];
-                    // companyData = state.companyProfileData;
-                    // setData(companyData!);
-                    // setData(LeadList);
-                  }
-
-                  // if(state is CompanyProfileListLoadFail){
-                  //   // companyData=[];
-                  //   // setData(companyData!);
-                  //   // setData();
-                  // }
-
-                  return
+                child:  ListView(
+                  children: [
+                    // For Lead 1
                     InkWell(
                         onTap: () {
                           setState((){
-                            rowid1= "1";
+                            rowId= "1";
                           });
+                          _businessOpprtunityBloc!.add(OnLoadingBNC(
+                            userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
+                          ));
 
-                          Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
+                          // Navigator.push(
+                          //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
 
                         },
                         child: Padding(
@@ -185,39 +163,21 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   ),
                                 ),
                               ),
-                            )));
-                }
-                ),
+                            ))),
 
 
 
-                // For Lead 2
-                BlocBuilder<BusinessOpprtunityBloc, BusinessOpportunityState>(builder: (context, state) {
-                  if (state is GetBNCLoadSuccess) {
-                    LeadList = state.getBNCLeadList!;
-                    // data = LeadList[0];
-                    // companyData = state.companyProfileData;
-                    // setData(companyData!);
-                    // setData(LeadList);
-                  }
-
-                  // if(state is CompanyProfileListLoadFail){
-                  //   // companyData=[];
-                  //   // setData(companyData!);
-                  //   // setData();
-                  // }
-
-                  return
+                    // For Lead 2
                     InkWell(
                         onTap: () {
-                          // setState((){
-                          //   rowid1 = "2";
-                          // });
+                          setState((){
+                            rowId = "2";
+                          });
                           _businessOpprtunityBloc!.add(OnLoadingBNC(
-                            userid: Application.vendorLogin!.userId.toString(), rowid: rowid2,
+                            userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
                           ));
-                          Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
+                          // Navigator.push(
+                          //     context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
 
 
                         },
@@ -275,213 +235,223 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   ),
                                 ),
                               ),
-                            )));
-                }
+                            ))),
+
+
+                    // For Lead 3
+                    InkWell(
+                        onTap: () {
+                          setState((){
+                            rowId= "3";
+                          });
+                          _businessOpprtunityBloc!.add(OnLoadingBNC(
+                            userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
+                          ));
+
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(width: 2, color: Colors.blue),
+                                // color: Colors.black12,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                                  // leading: nameIcon(),
+                                  leading:  Text(
+                                    "Lead 3",
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.0,
+                                      //color: Theme.of(context).accentColor
+                                    ),
+                                  ),
+                                  //dense: true,
+                                  trailing:  // For Edit Icon
+                                  Container(
+                                    width: 40,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:  BorderRadius.circular(5.0),
+                                      //color: Color(0xffc32c37),
+                                      color: Colors.indigo,
+                                      // border: Border.all(color: Colors.black, width: 1)
+                                    ),
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      alignment: Alignment.center,
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
+                                              size: 21,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ))),
+
+                    // For Lead 4
+                    InkWell(
+                        onTap: () {
+
+                          setState((){
+                            rowId= "4";
+                          });
+                          _businessOpprtunityBloc!.add(OnLoadingBNC(
+                            userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
+                          ));
+
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(width: 2, color: Colors.blue),
+                                // color: Colors.black12,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                                  // leading: nameIcon(),
+                                  leading:  Text(
+                                    "Lead 4",
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.0,
+                                      //color: Theme.of(context).accentColor
+                                    ),
+                                  ),
+                                  //dense: true,
+                                  trailing:  // For Edit Icon
+                                  Container(
+                                    width: 40,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:  BorderRadius.circular(5.0),
+                                      //color: Color(0xffc32c37),
+                                      color: Colors.indigo,
+                                      // border: Border.all(color: Colors.black, width: 1)
+                                    ),
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      alignment: Alignment.center,
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
+                                              size: 21,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ))),
+
+                    // For Lead 5
+                    InkWell(
+                        onTap: () {
+                          setState((){
+                            rowId= "5";
+                          });
+                          _businessOpprtunityBloc!.add(OnLoadingBNC(
+                            userid: Application.vendorLogin!.userId.toString(), rowid: rowId,
+                          ));
+
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(width: 2, color: Colors.blue),
+                                // color: Colors.black12,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                                  // leading: nameIcon(),
+                                  leading:  Text(
+                                    "Lead 5",
+                                    overflow: TextOverflow.clip,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.0,
+                                      //color: Theme.of(context).accentColor
+                                    ),
+                                  ),
+                                  //dense: true,
+                                  trailing:  // For Edit Icon
+                                  Container(
+                                    width: 40,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius:  BorderRadius.circular(5.0),
+                                      //color: Color(0xffc32c37),
+                                      color: Colors.indigo,
+                                      // border: Border.all(color: Colors.black, width: 1)
+                                    ),
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      alignment: Alignment.center,
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
+                                              size: 21,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ))),
+                  ],
                 ),
-
-
-                // For Lead 3
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0],)));
-
-
-                    },
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(width: 2, color: Colors.blue),
-                            // color: Colors.black12,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                              // leading: nameIcon(),
-                              leading:  Text(
-                                "Lead 3",
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
-                                  //color: Theme.of(context).accentColor
-                                ),
-                              ),
-                              //dense: true,
-                              trailing:  // For Edit Icon
-                              Container(
-                                width: 40,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  borderRadius:  BorderRadius.circular(5.0),
-                                  //color: Color(0xffc32c37),
-                                  color: Colors.indigo,
-                                  // border: Border.all(color: Colors.black, width: 1)
-                                ),
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  alignment: Alignment.center,
-                                  child: Stack(
-                                    children: [
-                                      Center(
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: Colors.white,
-                                          size: 21,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ))),
-
-                // For Lead 4
-                InkWell(
-                    onTap: () {
-
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
-
-
-                    },
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(width: 2, color: Colors.blue),
-                            // color: Colors.black12,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                              // leading: nameIcon(),
-                              leading:  Text(
-                                "Lead 4",
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
-                                  //color: Theme.of(context).accentColor
-                                ),
-                              ),
-                              //dense: true,
-                              trailing:  // For Edit Icon
-                              Container(
-                                width: 40,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  borderRadius:  BorderRadius.circular(5.0),
-                                  //color: Color(0xffc32c37),
-                                  color: Colors.indigo,
-                                  // border: Border.all(color: Colors.black, width: 1)
-                                ),
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  alignment: Alignment.center,
-                                  child: Stack(
-                                    children: [
-                                      Center(
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: Colors.white,
-                                          size: 21,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ))),
-
-                // For Lead 5
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => BusinessNetworkingContact(LeadList: LeadList[0])));
-
-
-                    },
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(width: 2, color: Colors.blue),
-                            // color: Colors.black12,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                              // leading: nameIcon(),
-                              leading:  Text(
-                                "Lead 5",
-                                overflow: TextOverflow.clip,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
-                                  //color: Theme.of(context).accentColor
-                                ),
-                              ),
-                              //dense: true,
-                              trailing:  // For Edit Icon
-                              Container(
-                                width: 40,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  borderRadius:  BorderRadius.circular(5.0),
-                                  //color: Color(0xffc32c37),
-                                  color: Colors.indigo,
-                                  // border: Border.all(color: Colors.black, width: 1)
-                                ),
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  alignment: Alignment.center,
-                                  child: Stack(
-                                    children: [
-                                      Center(
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: Colors.white,
-                                          size: 21,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ))),
-              ],
-            ),
 
 
 
               ),
 
 
-        ),
-      ),
+            ),
+          );
+      }
+      )
+
     );
   }
 

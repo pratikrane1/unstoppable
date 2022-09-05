@@ -23,9 +23,9 @@ Future<UserProfileModel> getUserProfile() async {
     data = responseJson;
     list = data[0];
     print(list);
-    listdata = list[0];
+    // listdata = list[0];
     // userId = listdata["3"];
-    print(listdata);
+    // print(listdata);
     // print("DATA $data");
     // print("DATA ${userData}");
     // final Iterable refactorProduct = data ?? [];
