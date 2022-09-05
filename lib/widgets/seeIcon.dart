@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../Screens/add_product.dart';
 
 Widget eyeIcon(){
   return Container(
@@ -208,7 +207,7 @@ Widget nameIcon(){
   );
 }
 
-Widget imageIcon(){
+Widget imageBox(){
   return Container(
     width: 55,
     height: 55,
@@ -242,7 +241,7 @@ Widget imageIcon(){
 Widget addIcon(BuildContext context){
   return InkWell(
     onTap: (){
-      AddProduct(context);
+      //AddProduct(context);
     },
     child: Container(
       width: 35,

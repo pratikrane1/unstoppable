@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:unstoppable/Screens/buying_req.dart';
 import 'package:unstoppable/Screens/dashboard.dart';
-import 'package:unstoppable/Screens/unstoppableProducts.dart';
+import 'package:unstoppable/Screens/Products/unstoppableProducts.dart';
+import 'package:unstoppable/widgets/drawer.dart';
 
 import 'businessNetworking.dart';
 import 'buyingRequirmentSubmit.dart';
 import 'customerEnquiries.dart';
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({Key? key}) : super(key: key);
+  int index;
+   BottomNavigation({Key? key, required this.index}) : super(key: key);
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
@@ -27,9 +29,22 @@ class _BottomNavigationState extends State<BottomNavigation> {
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+
+      setState(() {
+        _selectedIndex = index;
+      });
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(widget.index!=null){
+      setState(() {
+        _selectedIndex = widget.index;
+      });
+    }
   }
 
   @override
@@ -38,6 +53,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       // appBar: AppBar(
       //   title: const Text('BottomNavigationBar Sample'),
       // ),
+      // drawer: DrawerWidget(context),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

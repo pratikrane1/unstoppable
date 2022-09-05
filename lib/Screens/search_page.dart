@@ -52,7 +52,7 @@ class _SearchPageState extends State<SearchPage> {
                           padding: new EdgeInsets.all(0.0),
                           color: ThemeColors.darkFont,
                           icon: new Icon(Icons.arrow_back, size: 25.0),
-                          onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNavigation())),
+                          onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNavigation(index: 0,))),
 
                         )),
                     SizedBox(
