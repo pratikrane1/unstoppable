@@ -414,11 +414,16 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                               items: typeList
                                   .map(
                                     (String item) => DropdownMenuItem<String>(
-                                  child: Text(item),
+                                  child: Text(item,
+                                    style: TextStyle(
+                                        color: Colors.black),),
                                   value: item,
                                 ),
                               )
                                   .toList(),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
                               onChanged: (String? value) {
                                 setState(() {
                                   typeValue = value!;

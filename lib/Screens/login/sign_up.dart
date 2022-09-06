@@ -129,42 +129,25 @@ class _SignUpPageState extends State<SignUpPage>{
           );
         },
         errorWidget: (context, url, error) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+          return Shimmer.fromColors(
+            baseColor: Theme
+                .of(context)
+                .hoverColor,
+            highlightColor: Theme
+                .of(context)
+                .highlightColor,
+            enabled: true,
+            child: Container(
+              width: 110,
+              height: 110,
+              // decoration: BoxDecoration(
+              //   shape: BoxShape.rectangle,
+              //   color: Colors.white,
+              // ),
+            child: Icon(Icons.error),
 
-              Icon(
-                CupertinoIcons.arrow_down_doc,
-                color: ThemeColors.textFieldHintColor,
-              ),
-              Text(
-                "Browse & Upload",
-                style: TextStyle(
-                    fontSize: FontSize.medium,
-                    color: ThemeColors.textFieldHintColor),
-              )
-            ],
+            ),
           );
-          // return Shimmer.fromColors(
-          //   baseColor: Theme
-          //       .of(context)
-          //       .hoverColor,
-          //   highlightColor: Theme
-          //       .of(context)
-          //       .highlightColor,
-          //   enabled: true,
-          //   child: Container(
-          //     width: 110,
-          //     height: 110,
-          //     // decoration: BoxDecoration(
-          //     //   shape: BoxShape.rectangle,
-          //     //   color: Colors.white,
-          //     // ),
-          //   child: Icon(Icons.error),
-          //
-          //   ),
-          // );
         },
       );
 
@@ -246,8 +229,9 @@ class _SignUpPageState extends State<SignUpPage>{
 
   void initState(){
     super.initState();
-    _userLoginBloc = BlocProvider.of<LoginBloc>(context);
     imageFile=new ImageFile();
+
+    _userLoginBloc = BlocProvider.of<LoginBloc>(context);
 
 
 
@@ -283,7 +267,7 @@ class _SignUpPageState extends State<SignUpPage>{
             }
             if(state is VendorRegistrationSuccess)
             {
-              // Fluttertoast.showToast(msg: "Registered Successfully");
+              Fluttertoast.showToast(msg: "Registered Successfully");
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SignInPage()));
 
             }
@@ -1367,8 +1351,40 @@ class _SignUpPageState extends State<SignUpPage>{
                                   isconnectedToInternet = await ConnectivityCheck
                                       .checkInternetConnectivity();
                                   if (isconnectedToInternet == true) {
+                                    if(_nameController==null){
+                                      Fluttertoast.showToast(msg: "Please enter name");
+                                    }
+                                    else if(categoryModelselected==null){
+                                      Fluttertoast.showToast(msg: "Please select category");
+                                    }else if(subcategoryModelselected==null){
+                                      Fluttertoast.showToast(msg: "Please select sub category");
+                                    }else if(subsubcategoryModelselected==null){
+                                      Fluttertoast.showToast(msg: "Please select sub sub category");
+                                    }else if(_businessController==null){
+                                      Fluttertoast.showToast(msg: "Please enter business name");
+                                    }else if(_ownershipController==null){
+                                      Fluttertoast.showToast(msg: "Please enter ownership type");
+                                    }else if(_establishmentController==null){
+                                      Fluttertoast.showToast(msg: "Please enter year of establishment");
+                                    }else if(_totalEmpController==null){
+                                      Fluttertoast.showToast(msg: "Please enter total number of employees");
+                                    }else if(_annualTurnController==null){
+                                      Fluttertoast.showToast(msg: "Please enter annual turnover");
+                                    }else if(_gSTNController==null){
+                                      Fluttertoast.showToast(msg: "Please enter GSTN Number");
+                                    }else if(_BusinessAddressController==null){
+                                      Fluttertoast.showToast(msg: "Please enter business address");
+                                    }else if(_pinController==null){
+                                      Fluttertoast.showToast(msg: "Please enter pin code");
+                                    }
+                                    else if(_mobNoController==null){
+                                      Fluttertoast.showToast(msg: "Please enter mobile number");
+                                    }else if(_emailController==null){
+                                      Fluttertoast.showToast(msg: "Please enter email");
+                                    }
+                                    else
                                     if (_formKey.currentState!.validate()) {
-                                      Fluttertoast.showToast(msg: "Registered Successfully");
+                                      // Fluttertoast.showToast(msg: "Registered Successfully");
 
                                       _userLoginBloc!.add(OnRegistration(
                                           userType: _value,
