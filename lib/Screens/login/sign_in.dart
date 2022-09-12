@@ -319,7 +319,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
                       },
                       child: Text(
                         "Register Here",

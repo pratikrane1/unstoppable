@@ -24,9 +24,14 @@ class LoginSuccess extends LoginState {
 class VendorRegistrationLoading extends LoginState {}
 
 class VendorRegistrationSuccess extends LoginState {
-  VendorRegistrationSuccess();
+  String msg;
+  VendorRegistrationSuccess({required this.msg});
 }
 
+class VendorRegistrationFail extends LoginState {
+  String msg;
+  VendorRegistrationFail({required this.msg});
+}
 
 class LogoutLoading extends LoginState {}
 

@@ -61,6 +61,7 @@ class Api {
   static const String CSR=HOST_URL+"get_csr_details";
   static const String GetBNC=HOST_URL+"get_bnc";
   static const String Getorders=HOST_URL+"my_unstoppable_orders";
+  static const String GENERATE_TOKEN="https://unstoppabletrade.in/Paytmtoken/";
 
 
   ///Login api

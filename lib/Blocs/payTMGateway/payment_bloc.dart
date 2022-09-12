@@ -87,12 +87,15 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
+import 'package:unstoppable/Api/api.dart';
+import 'package:unstoppable/Utils/application.dart';
 
 class PaytmConfig {
-  final String _mid = "ctqcfC52960494856707";
-  final String _mKey = "IE3XtJ4BGHcSo167";
+  final String _mid = "ctqcfC52960494856707"; //live mid=GXytVC30838085377757
+  final String _mKey = "IE3XtJ4BGHcSo167"; //live mKey=IE3XtJ4BGHcSo167
   final String _website = "WEBSTAGING";
   // final String _url =
   //     'https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid={mid}&orderId={order-id}';
@@ -102,34 +105,31 @@ class PaytmConfig {
   String get website => _website;
   // String get url => _url;
 
-  String getMap(double amount, String callbackUrl, String orderId) {
+  String getMap(double amount) {
     return json.encode({
-      "mid": mid,
-      "key_secret": mKey,
-      "website": website,
-      "orderId": orderId,
-      "amount": amount.toString(),
-      "callbackUrl": callbackUrl,
-      "custId": "122",
+      "amount": amount,
+      "customer_id": Application.vendorLogin!.userId.toString(),
     });
   }
 
-  Future<void> generateTxnToken(double amount, String orderId) async {
-    final callBackUrl =
-        'https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=$orderId';
-    final body = getMap(amount, callBackUrl, orderId);
-    final String url =
-        'https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=$mid&orderId=$orderId';
+  Future<void> generateTxnToken(double amount) async {
+
+    Map<String,String> params={
+      "amount": amount.toString(),
+      "customer_id": Application.vendorLogin!.userId.toString(),
+    };
 
     try {
       final response = await http.post(
-        Uri.parse(url),
-        body: body,
-        headers: {'Content-type': "application/json"},
+        Uri.parse(Api.GENERATE_TOKEN),
+        body: params,
+        // headers: {'Content-type': "application/json"},
       );
-      String txnToken = response.body;
+      var resp=jsonDecode(response.body);
 
-      await initiateTransaction(orderId, amount, txnToken, callBackUrl);
+      final callBackUrl =
+          'https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID='+resp['order_id'].toString();
+      await initiateTransaction(resp['order_id'], amount, resp['txnToken'], callBackUrl);
     } catch (e) {
       print(e);
     }
@@ -151,9 +151,14 @@ class PaytmConfig {
       response.then((value) {
         // Transaction successfull
         print(value);
+        Fluttertoast.showToast(msg: "Payment done successfully");
+
+
       }).catchError((onError) {
         if (onError is PlatformException) {
+          // result = onError.message! + " \n  " + onError.details.toString();
           result = onError.message! + " \n  " + onError.details.toString();
+          Fluttertoast.showToast(msg: "Payment cancelled successfully");
           print(result);
         } else {
           result = onError.toString();

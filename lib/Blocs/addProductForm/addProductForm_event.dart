@@ -14,6 +14,7 @@ class AddProductForm extends AddProductFormEvent{
   required this.desc,required this.image,required this.price
   });
 }
+
 class UpdateProduct extends AddProductFormEvent{
   String catid;
   String subcatid;

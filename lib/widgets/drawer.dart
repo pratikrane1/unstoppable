@@ -28,6 +28,8 @@ import '../Screens/company_profile.dart';
 import '../Screens/product_I_am_buying.dart';
 import '../constant/theme_colors.dart';
 import 'app_button.dart';
+import 'package:flutter_share/flutter_share.dart';
+
 
 class DrawerWidget extends StatefulWidget {
 
@@ -114,7 +116,8 @@ class _DrawerWidgetState extends State<DrawerWidget>{
                   //     fit: BoxFit.cover,
                   //   ),
                   // ),
-                  child:(snapshot.hasData)
+                  child:
+                  (snapshot.hasData)
                       ?
                   ListView(
                     // Important: Remove any padding from the ListView.
@@ -556,9 +559,20 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProf
     ),
   );
 }
+Future<void> shareReferralCode() async {
+  await FlutterShare.share(
+      title: 'Example share',
+      text: 'Referral code: 205678',
+      // linkUrl: 'https://flutter.dev/',
+      // chooserTitle: 'Example Chooser Title'
+  );
+}
 
 Widget _ShareUrl(BuildContext context) {
   return InkWell(
+    onTap:(){
+
+    },
     child: Card(
       elevation: 1,
       margin: EdgeInsets.all(10),
@@ -580,7 +594,9 @@ Widget _ShareUrl(BuildContext context) {
               style:
                   TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
             ),
-            onTap: () {},
+            onTap: () {
+              shareReferralCode();
+            },
           )
         ],
       ),
