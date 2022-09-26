@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unstoppable/Screens/Leads.dart';
 import 'package:unstoppable/Screens/Payment%20History/payment_history_updated/payment_history_updated.dart';
@@ -93,10 +94,10 @@ class _DrawerWidgetState extends State<DrawerWidget>{
           }
 
           //
-          if(state is UserProfileLoadFail){
-            userProfileData=[];
-            // setData(companyData!);
-          }
+          // if(state is UserProfileLoadFail){
+          //   userProfileData=[];
+          //   // setData(companyData!);
+          // }
 
           return (companyData!=null)
             ?
@@ -107,6 +108,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
 
                     }
                     else if (snapshot.hasError){
+                      Fluttertoast.showToast(msg: "${snapshot.error}");
                       return Text("${snapshot.error}");
                     }
                     return Container(

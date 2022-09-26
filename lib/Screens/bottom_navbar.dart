@@ -69,27 +69,27 @@ class _BottomNavigationState extends State<BottomNavigation> {
         child: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                backgroundColor: Colors.green,
+                backgroundColor: Color(0xff389B4B),
                 icon: Icon(Icons.home),
                 label: 'Dashboard',
               ),
               BottomNavigationBarItem(
-                backgroundColor: Colors.green,
+                backgroundColor: Color(0xff389B4B),
                 icon: Icon(Icons.business),
                 label: 'Products',
               ),
               BottomNavigationBarItem(
-                backgroundColor: Colors.green,
+                backgroundColor: Color(0xff389B4B),
                 icon: Icon(Icons.school),
                 label: 'Networking',
               ),
               BottomNavigationBarItem(
-                backgroundColor: Colors.green,
+                backgroundColor: Color(0xff389B4B),
                 icon: Icon(Icons.business),
                 label: 'Buying Req',
               ),
               BottomNavigationBarItem(
-                backgroundColor: Colors.green,
+                backgroundColor: Color(0xff389B4B),
                 icon: Icon(Icons.school),
                 label: 'Enquires',
               ),

@@ -24,8 +24,8 @@ import '../Models/product_model.dart';
 class Api {
 
   // static const String HOST_URL="http://93.188.162.210:3000/";//updated on 23/12/2020
-  //static const String HOST_URL="https://unstoppabletrade.in/App_details/";
-  static const String HOST_URL="http://unstoppabletrade.ezii.live/App_details/";
+  static const String HOST_URL="https://unstoppabletrade.in/App_details/";
+  // static const String HOST_URL="http://unstoppabletrade.ezii.live/App_details/";
   static const String VENDOR_LOGIN="app_login";
   static const String VENDOR_Registration=HOST_URL+"register_vendor";
   static const String Vendor_Dashboard_Count ="get_dashboard_data";
@@ -61,6 +61,7 @@ class Api {
   static const String CSR=HOST_URL+"get_csr_details";
   static const String GetBNC=HOST_URL+"get_bnc";
   static const String Getorders=HOST_URL+"my_unstoppable_orders";
+  static const String UPDATE_LEAD_STATUS=HOST_URL+"vendor_update_lead_status";
   static const String GENERATE_TOKEN="https://unstoppabletrade.in/Paytmtoken/";
 
 

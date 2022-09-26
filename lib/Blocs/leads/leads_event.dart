@@ -10,6 +10,13 @@ class OnLoadingLeadsList extends LeadsEvent {
   OnLoadingLeadsList({required this.userid});
 }
 
+class UpdateLead extends LeadsEvent {
+  String userid;
+  String leadId;
+  String status;
+  UpdateLead({required this.userid,required this.status, required this.leadId});
+}
+
 // class OnUpdatePageCnt extends LeadsEvent {
 //   List<ProductModel> productList;
 //   int rowsPerPage;
