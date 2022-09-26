@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/leads/leads_event.dart';
 import 'package:unstoppable/Blocs/leads/leads_state.dart';
 import 'package:unstoppable/Screens/Leads.dart';
@@ -22,6 +23,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
   LeadsBloc? _leadsBloc;
   List<LeadModel> leadList = [];
   LeadModel? leadData;
+  int statusID = 2;
 
   void initState() {
     // TODO: implement initState
@@ -31,31 +33,132 @@ class _LeadsDetailsState extends State<LeadsDetails> {
         OnLoadingLeadsList(userid: Application.vendorLogin!.userId.toString()));
   }
 
+   getStatus(){
+    if(statusID ==2){
+      Container(
+        decoration: BoxDecoration(
+            border: Border(
+                top: BorderSide(
+                  width: 0.4,
+                ),
+                bottom: BorderSide(
+                  width: 0.4,
+                ))),
+        child: ListTile(
+          onTap: () {
+            statusID = 3;
+          },
+          title: const Text(
+            'Viewed',
+            style:
+            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+          ),
+        ),
+      );
+
+    }
+    else if(statusID == 3){
+      Container(
+        decoration: BoxDecoration(
+            border: Border(
+                top: BorderSide(
+                  width: 0.4,
+                ),
+                bottom: BorderSide(
+                  width: 0.4,
+                ))),
+        child: ListTile(
+          onTap: () {
+            statusID = 4;
+          },
+          title: const Text(
+            'Not-Interested',
+            style:
+            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+          ),
+        ),
+      );
+      Container(
+        decoration: BoxDecoration(
+            border: Border(
+                top: BorderSide(
+                  width: 0.4,
+                ),
+                bottom: BorderSide(
+                  width: 0.4,
+                ))),
+        child: ListTile(
+          onTap: () {
+            statusID = 5;
+          },
+          title: const Text(
+            'Completed',
+            style:
+            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+          ),
+        ),
+      );
+      Container(
+        decoration: BoxDecoration(
+            border: Border(
+                top: BorderSide(
+                  width: 0.4,
+                ),
+                bottom: BorderSide(
+                  width: 0.4,
+                ))),
+        child: ListTile(
+          onTap: () {
+            statusID = 6;
+          },
+          title: const Text(
+            'Cancelled',
+            style:
+            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+          ),
+        ),
+      );
+    }
+    else if(statusID == 5){
+      Container(
+        decoration: BoxDecoration(
+            border: Border(
+                top: BorderSide(
+                  width: 0.4,
+                ),
+                bottom: BorderSide(
+                  width: 0.4,
+                ))),
+        child: ListTile(
+          onTap: () {
+            statusID = 5;
+          },
+          title: const Text(
+            'Completed',
+            style:
+            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Leads()));
-            //Navigator.of(context).pop();
+            // Navigator.push(
+            //     context, MaterialPageRoute(builder: (context) => Leads()));
+            Navigator.of(context).pop();
           },
           child: Icon(Icons.arrow_back_ios),
         ),
         backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
         centerTitle: false,
-        title: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Choose Business Network Contacts"),
-              ],
-            ),
-          ],
-        ),
+        title: Text("Choose Business Network Contacts"),
       ),
       body: BlocBuilder<LeadsBloc, LeadsState>(builder: (context, state) {
         if (state is LeadsListSuccess) {
@@ -508,76 +611,148 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       SizedBox(
                         height: 20,
                       ),
-                      Card(
-                        elevation: 1,
-                        margin: EdgeInsets.all(10),
-                        color: Colors.white,
-                        shadowColor: Colors.blueGrey,
-                        shape: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: ThemeColors.buttonColor, width: 1)),
-                        child: ExpansionTile(
-                          // leading: Icon(
-                          //   CupertinoIcons.pencil_ellipsis_rectangle,
-                          //   color: ThemeColors.drawerTextColor,
-                          // ),
-                          title: Text(
-                            'Update Status',
-                            style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
-                          ),
-                          children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                    top: BorderSide(
-                                      width: 0.4,
-                                    ),
-                                      bottom: BorderSide(
-                                        width: 0.4,
-                                      ))),
-                              child: ListTile(
-                                onTap: () {
-                                  Navigator.pushReplacement(context,
-                                      MaterialPageRoute(builder: (context) => Leads()));
-                                },
-                                title: const Text(
-                                  'Not Interested',
-                                  style:
-                                  TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
-                                ),
-                              ),
-                            ),
-                            // Container(
-                            //   decoration: BoxDecoration(
-                            //       border: Border(
-                            //           bottom: BorderSide(
-                            //     width: 0.1,
-                            //   ))),
-                            //   child: ListTile(
-                            //     onTap: () {
-                            //       Navigator.pushReplacement(context,
-                            //           MaterialPageRoute(builder: (context) => BusinessNetworking()));
-                            //     },
-                            //     title: const Text(
-                            //       'Business Networking',
-                            //       style:
-                            //           TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
-                            //     ),
-                            //   ),
-                            // ),
-                            ListTile(
-                              onTap: () {
-                                // Navigator.pushReplacement(context,
-                                //     MaterialPageRoute(builder: (context) => BusinessNetworkingContact()));
-                              },
-                              title: const Text(
-                                'Completed',
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text("Status",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15)),
+                      ),
+                      BlocBuilder<LeadsBloc, LeadsState>(builder: (context, state) {
+                        if (state is UpdateLeadSuccess) {
+                          Fluttertoast.showToast(msg: state.message.toString());
+                        }
+                        if (state is LeadsListLoading) {
+                          CircularProgressIndicator();
+                        }
+
+                        if (state is UpdateLeadFail) {
+                          Fluttertoast.showToast(msg: state.message.toString());
+                        }
+                        return
+                          Card(
+                            elevation: 1,
+                            margin: EdgeInsets.all(10),
+                            color: Colors.white,
+                            shadowColor: Colors.blueGrey,
+                            shape: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(color: ThemeColors.buttonColor, width: 1)),
+                            child: ExpansionTile(
+                              // leading: Icon(
+                              //   CupertinoIcons.pencil_ellipsis_rectangle,
+                              //   color: ThemeColors.drawerTextColor,
+                              // ),
+                              title: Text(
+                               widget.leadData.status.toString(),
                                 style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
                               ),
+                              children:
+                              [
+
+                                // Container(
+                                //   decoration: BoxDecoration(
+                                //       border: Border(
+                                //           top: BorderSide(
+                                //             width: 0.4,
+                                //           ),
+                                //           bottom: BorderSide(
+                                //             width: 0.4,
+                                //           ))),
+                                //   child: ListTile(
+                                //     onTap: () {
+                                //
+                                //     },
+                                //     title: const Text(
+                                //       'In-Progress',
+                                //       style:
+                                //       TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+                                //     ),
+                                //   ),
+                                // ),
+                                // Container(
+                                //   decoration: BoxDecoration(
+                                //       border: Border(
+                                //           top: BorderSide(
+                                //             width: 0.4,
+                                //           ),
+                                //           bottom: BorderSide(
+                                //             width: 0.4,
+                                //           ))),
+                                //   child: ListTile(
+                                //     onTap: () {
+                                //
+                                //     },
+                                //     title: const Text(
+                                //       'Viewed',
+                                //       style:
+                                //       TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+                                //     ),
+                                //   ),
+                                // ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          top: BorderSide(
+                                            width: 0.4,
+                                          ),
+                                          bottom: BorderSide(
+                                            width: 0.4,
+                                          ))),
+                                  child: ListTile(
+                                    onTap: () {
+                                      _leadsBloc!.add(UpdateLead(
+                                          userid: Application.vendorLogin!.userId.toString(),
+                                          status: 4.toString(),
+                                          leadId: widget.leadData.id.toString()));
+                                    },
+                                    title: const Text(
+                                      'Not Interested',
+                                      style:
+                                      TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+
+                                ListTile(
+                                  onTap: () {
+                                    _leadsBloc!.add(UpdateLead(
+                                        userid: Application.vendorLogin!.userId.toString(),
+                                        status: 5.toString(),
+                                        leadId: widget.leadData.id.toString()));
+                                  },
+                                  title: const Text(
+                                    'Completed',
+                                    style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+                                  ),
+                                ),
+                                // Container(
+                                //   decoration: BoxDecoration(
+                                //       border: Border(
+                                //           top: BorderSide(
+                                //             width: 0.4,
+                                //           ),
+                                //           bottom: BorderSide(
+                                //             width: 0.4,
+                                //           ))),
+                                //   child: ListTile(
+                                //     onTap: () {
+                                //
+                                //     },
+                                //     title: const Text(
+                                //       'Cancelled',
+                                //       style:
+                                //       TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+                                //     ),
+                                //   ),
+                                // ),
+                              ],
                             ),
-                          ],
-                        ),
-                      )
+                          );
+                      }
+                      ),
+                      
                     ],
                   ),
                 ),

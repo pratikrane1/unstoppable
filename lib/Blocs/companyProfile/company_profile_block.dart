@@ -104,31 +104,31 @@ class CompanyProfileBloc extends Bloc<CompanyProfileEvent, CompanyProfileState> 
 
 
     //User Profile
-    if (event is OnLoadingUserProfile) {
-      ///Notify loading to UI
-      yield UserProfileLoading();
-
-      ///Fetch API via repository
-      final UserProfileRepo response = await companyProfileRepo!
-          .fetchUserProfile(
-        userId: event.userid,
-        // userId: "874",
-      );
-
-      final Iterable refactorProduct = response.data ?? [];
-      final userProfileData = refactorProduct.map((item) {
-        return UserProfileModel.fromJson(item);
-      }).toList();
-      if(refactorProduct.length>0){
-        yield UserProfileSuccess(userProfileData: userProfileData);
-
-      }else{
-        yield UserProfileLoadFail();
-
-      }
-
-
-    }
+    // if (event is OnLoadingUserProfile) {
+    //   ///Notify loading to UI
+    //   yield UserProfileLoading();
+    //
+    //   ///Fetch API via repository
+    //   final UserProfileRepo response = await companyProfileRepo!
+    //       .fetchUserProfile(
+    //     userId: event.userid,
+    //     // userId: "874",
+    //   );
+    //
+    //   final Iterable refactorProduct = response.data ?? [];
+    //   final userProfileData = refactorProduct.map((item) {
+    //     return UserProfileModel.fromJson(item);
+    //   }).toList();
+    //   if(refactorProduct.length>0){
+    //     yield UserProfileSuccess(userProfileData: userProfileData);
+    //
+    //   }else{
+    //     yield UserProfileLoadFail();
+    //
+    //   }
+    //
+    //
+    // }
 
 
   }

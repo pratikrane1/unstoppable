@@ -13,7 +13,8 @@ class ThemeColors {
   static const Color greyTextColor = Color(0xFF595959);
   static const Color customTextColor = Color(0xFF045207);
   // static const Color baseThemeColor = Color(0xffEE1D48);
-  static const Color baseThemeColor = Color(0xffff6b17);
+  static const Color baseThemeColor = Color(0xffEF8642);
+  static const Color bottomNavColor = Color(0xff389B4B);
   static const Color drawerTextColor = Color(0xff00008c);
   static const Color buttonColor = Color(0xff00008c);
   static const Color cardColor = Color(0xfffcf8f8);

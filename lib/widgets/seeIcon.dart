@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../Screens/add_product.dart';
 
 Widget eyeIcon(){
   return Container(

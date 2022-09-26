@@ -426,7 +426,12 @@ class _BusinessNetworkingState extends State<BusinessNetworking> {
                                 ?
                             buildBusinessNetworkingList(context, searchResult)
                                 :
+                            (businessNetworkingList.length != 0)
+                            ?
                             buildBusinessNetworkingList(context, businessNetworkingList)
+                                :
+                                Center(child: Text("No Data Available",
+                                style: TextStyle(fontSize: 20),),)
 
                         ))
                             :

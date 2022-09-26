@@ -6,16 +6,17 @@ import 'package:unstoppable/Blocs/products/bloc.dart';
 import 'package:unstoppable/Blocs/products/product_bloc.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 import 'package:unstoppable/Models/product_model.dart';
-import 'package:unstoppable/Screens/add_product.dart';
+import 'package:unstoppable/Screens/Products/add_product.dart';
 import 'package:unstoppable/Screens/productDetail.dart';
 import 'package:unstoppable/Utils/application.dart';
-import '../Constant/font_size.dart';
-import '../constant/theme_colors.dart';
-import '../widgets/bell_icon.dart';
-import '../widgets/drawer.dart';
-import '../widgets/dropdown.dart';
-import '../widgets/seeIcon.dart';
+import '../../Constant/font_size.dart';
+import '../../constant/theme_colors.dart';
+import '../../widgets/bell_icon.dart';
+import '../../widgets/drawer.dart';
+import '../../widgets/dropdown.dart';
+import '../../widgets/seeIcon.dart';
 import 'package:shimmer/shimmer.dart';
+import '../latest_add_product.dart';
 import 'UnstoppableProductsDetails.dart';
 
 class UnstoppableProducts extends StatefulWidget {
@@ -358,7 +359,10 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
                 topRight: Radius.circular(35.0))),
         context: context,
         builder: (BuildContext context) {
-          return SingleChildScrollView(child: AddProductScreen(productDetail:new ProductDetail(),));
+          return SingleChildScrollView(child: Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: AddProductScreen(productDetail:new ProductDetail(),),
+          ));
         });
   }
 
@@ -367,16 +371,16 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            onTap: (){
-              Navigator.pop(context);
-            },
-            child: Icon(
-              CupertinoIcons.chevron_left,
-              color: Colors.white,
-              size: 18,
-            ),
-          ),
+          // leading: InkWell(
+          //   onTap: (){
+          //     Navigator.pop(context);
+          //   },
+          //   child: Icon(
+          //     CupertinoIcons.chevron_left,
+          //     color: Colors.white,
+          //     size: 18,
+          //   ),
+          // ),
           backgroundColor: ThemeColors.baseThemeColor,
           elevation: 0.0,
           centerTitle: false,
@@ -392,7 +396,7 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
             ],
           ),
         ),
-       // drawer: DrawerWidget(),
+       drawer: DrawerWidget(),
         body: BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
           if (state is ProductListSuccess) {
             productList = state.productList!;
@@ -530,7 +534,13 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
                                     ?
                                 buildProductList(context,searchResult)
                                     :
-                                buildProductList(context,productList))
+                                (productList.length != 0)
+                                ?
+                                buildProductList(context,productList)
+                            :
+                                    Center(child: Text("No Data Available",
+                                    style: TextStyle(fontSize: 20),),)
+                            )
                             )
                                 :
                             Container(

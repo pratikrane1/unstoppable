@@ -8,7 +8,6 @@ import 'package:unstoppable/Blocs/products/product_bloc.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 import 'package:unstoppable/Models/product_model.dart';
 import 'package:unstoppable/Models/untoppable_order_model.dart';
-import 'package:unstoppable/Screens/add_product.dart';
 import 'package:unstoppable/Screens/productDetail.dart';
 import 'package:unstoppable/Screens/updateOrder.dart';
 import 'package:unstoppable/Utils/application.dart';
@@ -20,7 +19,8 @@ import '../widgets/drawer.dart';
 import '../widgets/dropdown.dart';
 import '../widgets/seeIcon.dart';
 import 'package:shimmer/shimmer.dart';
-import 'UnstoppableProductsDetails.dart';
+import 'My Unstoppable Orders/my_unstoppable_order_details.dart';
+import 'Products/UnstoppableProductsDetails.dart';
 
 class UnstoppableOrders extends StatefulWidget {
   @override
@@ -248,29 +248,17 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            onTap: (){
-              Navigator.pop(context);
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => DrawerWidget()));
             },
-            child: Icon(
-              CupertinoIcons.chevron_left,
-              color: Colors.white,
-              size: 18,
-            ),
+            child: Icon(Icons.arrow_back_ios),
           ),
           backgroundColor: ThemeColors.baseThemeColor,
           elevation: 0.0,
-          centerTitle: false,
-          title: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("My Unstoppable Orders"),
-                ],
-              ),
-            ],
-          ),
+          centerTitle: true,
+          title: Text('My Unstoppable Orders'),
         ),
         // drawer: DrawerWidget(),
         body: BlocBuilder<MytoolsBloc, MytoolsState>(builder: (context, state) {
@@ -372,32 +360,32 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
                                     ), // InputDecoration
                                   ),
                                 ),
-                                trailing: InkWell(
-                                  onTap: () {
-                                    UpdateOrder(context);
-                                  },
-                                  child: Container(
-                                    width: 35,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        //color: Color(0xffc32c37),
-                                        color: Colors.indigo,
-                                        border: Border.all(color: Colors.black, width: 1)),
-                                    child: Container(
-                                      width: 30,
-                                      height: 30,
-                                      alignment: Alignment.center,
-                                      child: Stack(
-                                        children: [
-                                          Center(
-                                              child:Icon(Icons.edit,color: Colors.white,)
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                )
+                                // trailing: InkWell(
+                                //   onTap: () {
+                                //     UpdateOrder(context);
+                                //   },
+                                //   child: Container(
+                                //     width: 35,
+                                //     height: 35,
+                                //     decoration: BoxDecoration(
+                                //         shape: BoxShape.circle,
+                                //         //color: Color(0xffc32c37),
+                                //         color: Colors.indigo,
+                                //         border: Border.all(color: Colors.black, width: 1)),
+                                //     child: Container(
+                                //       width: 30,
+                                //       height: 30,
+                                //       alignment: Alignment.center,
+                                //       child: Stack(
+                                //         children: [
+                                //           Center(
+                                //               child:Icon(Icons.edit,color: Colors.white,)
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ),
+                                // )
                             ),
                             // info(),
                             //for product ListView
@@ -625,77 +613,151 @@ Widget unstoppableProductCard(BuildContext context, UnstoppableOrderModel orderD
                 // leading: nameIcon(),
                 title: Column(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        orderData.businessName.toString(),
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
+                    Row(
+                      children: [
+                        Text("Business Name:",style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15.0,
                           //color: Theme.of(context).accentColor
+                        ),),
+                        SizedBox(
+                          width: 10,
                         ),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          orderData.customerName.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black87,
-                            fontSize: 14.0,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            orderData.businessName.toString(),
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              //color: Theme.of(context).accentColor
+                            ),
                           ),
                         ),
-                         SizedBox(height: 10,),
-                        Text(
-                          orderData.customerContact.toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10.0,
-                              color: Colors.orange),
-                        ),
-                        SizedBox(height: 10,),
-                        Text(
-                          orderData.customerMail.toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10.0,
-                              color: Colors.orange),
-                        ),
-                        SizedBox(height: 10,),
-                        Text(
-                          orderData.prodName.toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10.0,
-                              color: Colors.orange),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
 
-                            Text(
-                              orderData.unitType.toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10.0,
-                                  color: Colors.orange),
-                            ),
-
-                            Text(
-                              orderData.qty.toString(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10.0,
-                                  color: Colors.orange),
-                            ),
-                          ],
-                        )
                       ],
                     ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text("Customer Name:",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                          //color: Theme.of(context).accentColor
+                        ),),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            orderData.customerName.toString(),
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              //color: Theme.of(context).accentColor
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text("Product Name:",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                          //color: Theme.of(context).accentColor
+                        ),),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            orderData.prodName.toString(),
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              //color: Theme.of(context).accentColor
+                            ),
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        Text("Status:",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                          //color: Theme.of(context).accentColor
+                        ),),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            orderData.status.toString(),
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                              color: Colors.orange,
+                              fontSize: 15.0,
+                              //color: Theme.of(context).accentColor
+                            ),
+                          ),
+                        ),
+
+
+
+                      ],
+                    ),
+                    InkWell(
+                        onTap: (){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MyUnstoppableOrdersDetail(ordersData: orderData)));
+                        },
+                        child:Center(
+                          child: Container(
+                            width: 40,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius:  BorderRadius.circular(5.0),
+                              //color: Color(0xffc32c37),
+                              color: Colors.indigo,
+                              // border: Border.all(color: Colors.black, width: 1)
+                            ),
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              alignment: Alignment.center,
+                              child: Stack(
+                                children: [
+                                  Center(
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                      size: 21,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )),
+
+
+
                   ],
                 ),
 

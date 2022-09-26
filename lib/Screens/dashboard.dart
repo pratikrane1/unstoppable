@@ -1,16 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:unstoppable/Blocs/home/bloc.dart';
+import 'package:unstoppable/Screens/PayTM%20Screen/paytm_gateway.dart';
 import 'package:unstoppable/Screens/search_page.dart';
-import 'package:unstoppable/Screens/unstoppableProducts.dart';
+import 'package:unstoppable/Screens/Products/unstoppableProducts.dart';
 import 'package:unstoppable/Utils/application.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
 import 'package:unstoppable/widgets/drawer.dart';
-
+import 'package:http/http.dart' as http;
+import '../Api/api.dart';
+import '../Blocs/payTMGateway/payment_bloc.dart';
 import '../widgets/bell_icon.dart';
-import 'CustUnstoppable/dashboardCust.dart';
 import 'Leads.dart';
-import 'business_networking_lead.dart';
+import 'YourBNC/business_networking_lead.dart';
+import 'bottom_navbar.dart';
 import 'customerEnquiries.dart';
 
 
@@ -27,6 +35,81 @@ class _DashBoardState extends State<DashBoard> {
   String? totalProd;
   int? totalInquiries,
       totalLeads,cancelledLeads,monthlyTarget,achievements;
+  bool? isStaging;
+  bool? restrictAppInvoke;
+  String _mid = "ctqcfC52960494856707"; //live mid=GXytVC30838085377757
+  String _mKey = "IE3XtJ4BGHcSo167"; //live mKey=IE3XtJ4BGHcSo167
+  String _website = "WEBSTAGING";
+  // String? orderId = Application.vendorLogin!.userId.toString();
+  double? amount = 100;
+  String orderId = DateTime
+        .now()
+        .millisecondsSinceEpoch
+        .toString();
+  String? txnToken;
+  String? callbackUrl;
+  String? result;
+
+  Future<void> generateTxnToken(double amount) async {
+
+    Map<String,String> params={
+      "amount": amount.toString(),
+      "customer_id": Application.vendorLogin!.userId.toString(),
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(Api.GENERATE_TOKEN),
+        body: params,
+        // headers: {'Content-type': "application/json"},
+      );
+      var resp=jsonDecode(response.body);
+
+      final callBackUrl =
+          'https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID='+resp['order_id'].toString();
+      await initiateTransaction(resp['order_id'], amount, resp['txnToken'], callBackUrl);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> initiateTransaction(String orderId, double amount,
+      String txnToken, String callBackUrl) async {
+    String result = '';
+    try {
+      var response = AllInOneSdk.startTransaction(
+        _mid,
+        orderId,
+        amount.toString(),
+        txnToken,
+        callBackUrl,
+        true,
+        true,
+      );
+      response.then((value) {
+        // Transaction successfull
+        print(value);
+        Fluttertoast.showToast(msg: "Payment done successfully");
+        Navigator.pop(context);
+
+      }).catchError((onError) {
+        if (onError is PlatformException) {
+          // result = onError.message! + " \n  " + onError.details.toString();
+          result = onError.message! + " \n  " + onError.details.toString();
+          Fluttertoast.showToast(msg: "Payment cancelled successfully");
+
+          print(result);
+        } else {
+          result = onError.toString();
+          print(result);
+        }
+      });
+    } catch (err) {
+      // Transaction failed
+      result = err.toString();
+      print(result);
+    }
+  }
 
 
   void initState() {
@@ -39,6 +122,7 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar:
       AppBar(
         backgroundColor: ThemeColors.baseThemeColor,
@@ -136,48 +220,51 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children: [
-                              (totalProd!=null)
-                                  ?
-                              Text(
-                                totalProd.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                              :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children: [
+                                (totalProd!=null)
+                                    ?
+                                Text(
+                                  totalProd.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
 
-                              Text(
-                                'Total Products',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                                Text(
+                                  'Total Products',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
                         InkWell(
                           onTap: (){
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => UnstoppableProducts()));
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DashBoardCust()));
+                            if(totalProd != 0){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => BottomNavigation(index: 1,)));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any products");
+                            }
 
                           },
                           child: Container(
@@ -215,43 +302,51 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children: [
-                              (totalInquiries!=null)
-                                  ?
-                              Text(
-                                totalInquiries.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Text(
-                                'Total Enquiries',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children: [
+                                (totalInquiries!=null)
+                                    ?
+                                Text(
+                                  totalInquiries.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  'Total Enquiries',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CustomerEnquiries()));
+                            if(totalInquiries != 0){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => BottomNavigation(index: 4,)));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any enquiry");
+                            }
+
                           },
                           child: Container(
                             height: 60,
@@ -288,43 +383,52 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children:  [
-                              (totalLeads!=null)
-                                  ?
-                              Text(
-                                totalLeads.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Text(
-                                'Total Leads',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children:  [
+                                (totalLeads!=null)
+                                    ?
+                                Text(
+                                  totalLeads.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  'Total Leads',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Leads()));
+                            if(totalLeads != 0){
+                              // Fluttertoast.showToast(
+                              //     msg: "monthly target");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Leads()));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any total leads");
+                            }
                           },
                           child: Container(
                             height: 60,
@@ -361,45 +465,56 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children:  [
-                              (cancelledLeads!=null)
-                                  ?
-                              Text(
-                                cancelledLeads.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Center(
-                                child: Text(
-                                  'Cancelled Leads',
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children:  [
+                                (cancelledLeads!=null)
+                                    ?
+                                Text(
+                                  cancelledLeads.toString(),
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 18),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
                                 ),
-                              ),
-                            ],
+                                Center(
+                                  child: Text(
+                                    'Cancelled Leads',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Leads()));
+                            if(cancelledLeads != 0){
+                              // Fluttertoast.showToast(
+                              //     msg: "monthly target");
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Leads()));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any cancelled leads");
+                            }
+
                           },
                           child: Container(
                             height: 60,
@@ -436,43 +551,53 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children:  [
-                              (monthlyTarget!=null)
-                                  ?
-                              Text(
-                                monthlyTarget.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Text(
-                                'Monthly Target',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children:  [
+                                (monthlyTarget!=null)
+                                    ?
+                                Text(
+                                  monthlyTarget.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  'Monthly Target',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
                         InkWell(
                           onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BusinessNetworkingLead()));
+                            if(monthlyTarget != 0){
+                              Fluttertoast.showToast(
+                                  msg: "monthly target");
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => BusinessNetworkingLead()));
+                            }else {
+                              Fluttertoast.showToast(
+                                  msg: "Don't have any monthly target");
+                            }
+
                           },
                           child: Container(
                             height: 60,
@@ -509,43 +634,53 @@ class _DashBoardState extends State<DashBoard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: Column(
-                            children:  [
-                              (achievements!=null)
-                                  ?
-                              Text(
-                                achievements.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              )
-                                  :
-                              Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                              Text(
-                                'Achievements',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ],
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(25.0),
+                            child: Column(
+                              children:  [
+                                (achievements!=null)
+                                    ?
+                                Text(
+                                  achievements.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                )
+                                    :
+                                Text(
+                                  "0",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  'Achievements',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
                         InkWell(
                             onTap: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BusinessNetworkingLead()));
+                              if(achievements != 0){
+                                Fluttertoast.showToast(
+                                    msg: " achievements");
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => BusinessNetworkingLead()));
+                              }else {
+                                Fluttertoast.showToast(
+                                    msg: "Do not have any achievements");
+                              }
+
                             },
                             child: Container(
                               height: 60,
@@ -572,6 +707,31 @@ class _DashBoardState extends State<DashBoard> {
                       ],
                     ),
                   ),
+                  // Center(
+                  //   child: ClipRRect(
+                  //     borderRadius: BorderRadius.circular(0),
+                  //     child: SizedBox(
+                  //       width: MediaQuery.of(context).size.width,
+                  //       height: 40,
+                  //       child: ElevatedButton(
+                  //         style: ElevatedButton.styleFrom(
+                  //           primary: ThemeColors.drawerTextColor,
+                  //         ),
+                  //         onPressed: ()  {
+                  //            // PaytmConfig().generateTxnToken(amount!);
+                  //           generateTxnToken(amount!);
+                  //         },
+                  //         child: Text(
+                  //           'PayTM',
+                  //           style: TextStyle(
+                  //             fontSize: 18,
+                  //             fontWeight: FontWeight.w400,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             );

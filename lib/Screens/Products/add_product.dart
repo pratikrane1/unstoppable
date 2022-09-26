@@ -14,18 +14,18 @@ import 'package:unstoppable/Models/product_detail_model.dart';
 import 'package:unstoppable/Models/subCategory_model.dart';
 import 'package:unstoppable/NetworkFunction/fetchSubCategory.dart';
 import 'package:unstoppable/Screens/image_file.dart';
-import 'package:unstoppable/Screens/unstoppableProducts.dart';
+import 'package:unstoppable/Screens/Products/unstoppableProducts.dart';
 import 'package:unstoppable/constant/font_size.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
 import 'package:image_picker/image_picker.dart';
-import '../Blocs/addProductForm/addProductForm_bloc.dart';
-import '../Blocs/addProductForm/addProductForm_state.dart';
-import '../Models/category_model.dart';
-import '../Models/subSubCategory_model.dart';
-import '../NetworkFunction/fetchCategory.dart';
-import '../NetworkFunction/fetchSubSubCategory.dart';
-import '../config/image.dart';
-import 'image_upload.dart';
+import '../../Blocs/addProductForm/addProductForm_bloc.dart';
+import '../../Blocs/addProductForm/addProductForm_state.dart';
+import '../../Config/image.dart';
+import '../../Models/category_model.dart';
+import '../../Models/subSubCategory_model.dart';
+import '../../NetworkFunction/fetchCategory.dart';
+import '../../NetworkFunction/fetchSubSubCategory.dart';
+
 
 class AddProductScreen extends StatefulWidget {
   int? status;

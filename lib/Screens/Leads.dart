@@ -221,9 +221,9 @@ class _LeadsState extends State<Leads> {
         AppBar(
           leading: GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DrawerWidget()));
-              // Navigator.of(context).pop();
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => DrawerWidget()));
+              Navigator.of(context).pop();
             },
             child: Icon(Icons.arrow_back_ios),
           ),
@@ -340,7 +340,7 @@ class _LeadsState extends State<Leads> {
                                   ), // InputDecoration
                                 ),
                               ),
-                              trailing: Icon(Icons.more_vert),
+                              // trailing: Icon(Icons.more_vert),
                             ),
                             // info(),
                             //for product ListView
@@ -781,7 +781,7 @@ Widget leadsCard(BuildContext context, LeadModel leadData){
               ),
               child: InkWell(
                 onTap: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LeadsDetails(leadData: leadData)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> LeadsDetails(leadData: leadData)));
                 },
                 child: Container(
                   width: 30,

@@ -50,10 +50,13 @@ class _SignInPageState extends State<SignInPage> {
           return BlocListener<LoginBloc,LoginState>(listener: (context,state){
             if(state is LoginSuccess)
               {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNavigation()));
+
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavigation(index: 0,)));
+                Fluttertoast.showToast(msg: "Login Successfull");
 
               }
             if(state is LoginFail){
+              Fluttertoast.showToast(msg: "Login Failed");
             }
           },
           child:Container(
@@ -244,62 +247,64 @@ class _SignInPageState extends State<SignInPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child:
-    //                 AppButton(
-    //                   onPressed: () async {
-    //                     isconnectedToInternet = await ConnectivityCheck
-    //                         .checkInternetConnectivity();
-    //                     if (isconnectedToInternet == true) {
-    // // if (_formKey.currentState!.validate()) {
-    //   _userLoginBloc!.add(OnLogin(email: _textEmailController.text,password: _textPasswordController.text));
-    // // }
-    //                     } else {
-    //                       CustomDialogs.showDialogCustom(
-    //                           "Internet",
-    //                           "Please check your Internet Connection!",
-    //                           context);
-    //                     }
-    //                   },
-    //                   shape: const RoundedRectangleBorder(
-    //                       borderRadius:
-    //                       BorderRadius.all(Radius.circular(50))),
-    //                   text: 'Login',
-    //                   loading: login is LoginLoading,
-    //                   disableTouchWhenLoading: true,
-    //                 )
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 40,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: ThemeColors.drawerTextColor,
-                          ),
-                          onPressed: () async {
-                            // _userLoginBloc!.add(OnLogin(email: ));
-                            isconnectedToInternet = await ConnectivityCheck
-                                                    .checkInternetConnectivity();
-                                                if (isconnectedToInternet == true) {
-                            if (_formKey.currentState!.validate()) {
-                              _userLoginBloc!.add(OnLogin(email: _textEmailController.text,password: _textPasswordController.text));
-                            }
-                                                } else {
-                                                  CustomDialogs.showDialogCustom(
-                                                      "Internet",
-                                                      "Please check your Internet Connection!",
-                                                      context);
-                                                 }
-                          },
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    AppButton(
+                      onPressed: () async {
+                        isconnectedToInternet = await ConnectivityCheck
+                            .checkInternetConnectivity();
+                        if (isconnectedToInternet == true) {
+    if (_formKey.currentState!.validate()) {
+      _userLoginBloc!.add(OnLogin(email: _textEmailController.text,password: _textPasswordController.text));
+    }
+                        } else {
+                          CustomDialogs.showDialogCustom(
+                              "Internet",
+                              "Please check your Internet Connection!",
+                              context);
+                        }
+                      },
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(50))),
+                      text: 'Login',
+                      loading: login is LoginLoading,
+                      // disableTouchWhenLoading: true,
+                    )
+                    // ClipRRect(
+                    //   borderRadius: BorderRadius.circular(0),
+                    //   child: SizedBox(
+                    //     width: MediaQuery.of(context).size.width,
+                    //     height: 40,
+                    //     child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //         primary: ThemeColors.drawerTextColor,
+                    //       ),
+                    //       onPressed: () async {
+                    //         // _userLoginBloc!.add(OnLogin(email: ));
+                    //         isconnectedToInternet = await ConnectivityCheck
+                    //                                 .checkInternetConnectivity();
+                    //                             if (isconnectedToInternet == true) {
+                    //         if (_formKey.currentState!.validate()) {
+                    //           _userLoginBloc!.add(OnLogin(email: _textEmailController.text,password: _textPasswordController.text));
+                    //         }
+                    //                             } else {
+                    //                               Fluttertoast.showToast(msg: "Login Failed");
+                    //
+                    //                               CustomDialogs.showDialogCustom(
+                    //                                   "Internet",
+                    //                                   "Please check your Internet Connection!",
+                    //                                   context);
+                    //                              }
+                    //       },
+                    //       child: const Text(
+                    //         'Login',
+                    //         style: TextStyle(
+                    //           fontSize: 18,
+                    //           fontWeight: FontWeight.w400,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                 ),
                 Row(
@@ -314,7 +319,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
                       },
                       child: Text(
                         "Register Here",

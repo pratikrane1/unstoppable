@@ -145,6 +145,7 @@ class AddProductFormBloc extends Bloc<AddProductFormEvent, AddProductFormState> 
       request.fields['price'] = event.price;
       request.fields['description'] = event.description;
       request.fields['user_id'] = Application.vendorLogin!.userId.toString();
+      request.fields['product_id'] = event.productid;
 
       List<MultipartFile> imageUpload = <MultipartFile>[];
       if(event.imgFlag=="0"){//0 cropped file,1=existing image

@@ -9,7 +9,6 @@ import 'package:unstoppable/Blocs/products/product_bloc.dart';
 import 'package:unstoppable/Models/productIamBuying_model.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
 import 'package:unstoppable/Models/product_model.dart';
-import 'package:unstoppable/Screens/add_product.dart';
 import 'package:unstoppable/Screens/productDetail.dart';
 import 'package:unstoppable/Utils/application.dart';
 import '../constant/theme_colors.dart';
@@ -18,7 +17,7 @@ import '../widgets/drawer.dart';
 import '../widgets/dropdown.dart';
 import '../widgets/seeIcon.dart';
 import 'package:shimmer/shimmer.dart';
-import 'UnstoppableProductsDetails.dart';
+import 'Products/UnstoppableProductsDetails.dart';
 import 'addProductIamBuying.dart';
 
 class ProductIamBuying extends StatefulWidget {
@@ -314,30 +313,17 @@ class _ProductIamBuyingState extends State<ProductIamBuying> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            onTap: (){
-              Navigator.pop(context);
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => DrawerWidget()));
             },
-            child: Icon(
-              CupertinoIcons.chevron_left,
-              color: Colors.white,
-              size: 18,
-            ),
+            child: Icon(Icons.arrow_back_ios),
           ),
           backgroundColor: ThemeColors.baseThemeColor,
           elevation: 0.0,
-          centerTitle: false,
-          title: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("My Buying Products"),
-                  //myAppBarIcon(),
-                ],
-              ),
-            ],
-          ),
+          centerTitle: true,
+          title: Text('My Buying Products'),
         ),
         body: BlocBuilder<MytoolsBloc, MytoolsState>(builder: (context, state) {
           if (state is ProductIamBuyingListSuccess) {

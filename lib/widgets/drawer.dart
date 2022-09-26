@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:unstoppable/Screens/Leads.dart';
 import 'package:unstoppable/Screens/Payment%20History/payment_history_updated/payment_history_updated.dart';
 import 'package:unstoppable/Screens/change_password.dart';
+import 'package:unstoppable/Screens/dashboard.dart';
 import 'package:unstoppable/Screens/login/sign_in.dart';
 import 'package:unstoppable/Screens/manageAllBuyingRequirement.dart';
 import 'package:unstoppable/Screens/profile_screen.dart';
@@ -12,6 +14,7 @@ import 'package:unstoppable/Screens/reward.dart';
 import 'package:unstoppable/Screens/unstoppableOrders.dart';
 import 'package:unstoppable/Screens/unstoppable_orders.dart';
 import 'package:unstoppable/Utils/application.dart';
+import '../Blocs/User Profile/User_profile_api.dart';
 import '../Blocs/companyProfile/comapny_profile_state.dart';
 import '../Blocs/companyProfile/company_profile_block.dart';
 import '../Blocs/companyProfile/company_profile_event.dart';
@@ -21,11 +24,13 @@ import '../Models/user_profile_model.dart';
 import '../Screens/CSR/csr_screen.dart';
 import '../Screens/bottom_navbar.dart';
 import '../Screens/businessNetworking.dart';
-import '../Screens/business_networking_lead.dart';
+import '../Screens/YourBNC/business_networking_lead.dart';
 import '../Screens/company_profile.dart';
 import '../Screens/product_I_am_buying.dart';
 import '../constant/theme_colors.dart';
 import 'app_button.dart';
+import 'package:flutter_share/flutter_share.dart';
+
 
 class DrawerWidget extends StatefulWidget {
 
@@ -41,6 +46,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
   List<CompanyProfileModel>? companyData;
   List<UserProfileModel>? userProfileData;
 
+  late Future<UserProfileModel> profileData;
 
 
   @override
@@ -50,9 +56,8 @@ class _DrawerWidgetState extends State<DrawerWidget>{
     // _companyProbileBloc!.add(OnLoadingUserProfile(userid: Application.vendorLogin!.userId.toString()));
     _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: Application.vendorLogin!.userId.toString()));
 
-    // _userProfileBloc = BlocProvider.of<CompanyProfileBloc>(context);
-    // _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: "874"));
-    // final _nameController = TextEditingController(text: companyData![0].name.toString());
+    profileData = getUserProfile();
+
   }
 
   @override
@@ -65,7 +70,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
           leading: GestureDetector(
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => BottomNavigation()));
+                  MaterialPageRoute(builder: (context) => BottomNavigation(index: 0,)));
               // Navigator.of(context).pop();
             },
             child: Icon(Icons.arrow_back_ios),
@@ -73,7 +78,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
           backgroundColor: ThemeColors.baseThemeColor,
           elevation: 0.0,
           centerTitle: true,
-          title: Text('Profile'),
+          title: Text('Unstoppable Trade'),
         ),
         body:
         BlocBuilder<CompanyProfileBloc, CompanyProfileState>(builder: (context, state) {
@@ -89,75 +94,106 @@ class _DrawerWidgetState extends State<DrawerWidget>{
           }
 
           //
-          if(state is UserProfileLoadFail){
-            userProfileData=[];
-            // setData(companyData!);
-          }
+          // if(state is UserProfileLoadFail){
+          //   userProfileData=[];
+          //   // setData(companyData!);
+          // }
 
           return (companyData!=null)
             ?
-            Container(
-              // decoration: const BoxDecoration(
-              //   image: DecorationImage(
-              //     image: AssetImage(Images.bg),
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
-              child:
-              ListView(
-                // Important: Remove any padding from the ListView.
-                padding: EdgeInsets.zero,
-                children: [
-                  // SizedBox(
-                  //   height: 50,
-                  // ),
-                  // Container(
-                  //   height: 50,
-                  //   width: MediaQuery.of(context).size.width,
-                  //   color: ThemeColors.baseThemeColor,
-                  //   child: Row(
-                  //     children: [
-                  //       SizedBox(width: 20,),
-                  //       InkWell(
-                  //         onTap: (){
-                  //           // Navigator.popAndPushNamed(context, MaterialPageRoute(builder: (context) => BottomNavigation()))
-                  //           Navigator.of(context).pop();
-                  //         },
-                  //         child: Icon(Icons.arrow_back_ios,color: ThemeColors.whiteTextColor,),
-                  //
-                  //       ),
-                  //       SizedBox(
-                  //         width: 20,
-                  //       ),
-                  //       Text("More", style: TextStyle(fontSize: FontSize.large, color: ThemeColors.whiteTextColor),)
-                  //     ],
+              FutureBuilder<UserProfileModel>(
+                  future: profileData,
+                  builder: (context, snapshot){
+                    if(snapshot.hasData){
+
+                    }
+                    else if (snapshot.hasError){
+                      Fluttertoast.showToast(msg: "${snapshot.error}");
+                      return Text("${snapshot.error}");
+                    }
+                    return Container(
+                  // decoration: const BoxDecoration(
+                  //   image: DecorationImage(
+                  //     image: AssetImage(Images.bg),
+                  //     fit: BoxFit.cover,
                   //   ),
                   // ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  CircleAvatar(
-                    radius: 70,
-                    backgroundColor: Colors.orange,
-                    child: Text(
-                      "A",
-                      style: TextStyle(fontSize: 40),
-                    ),
-                  ),
+                  child:
+                  (snapshot.hasData)
+                      ?
+                  ListView(
+                    // Important: Remove any padding from the ListView.
+                    padding: EdgeInsets.zero,
+                    children: [
+                      // SizedBox(
+                      //   height: 50,
+                      // ),
+                      // Container(
+                      //   height: 50,
+                      //   width: MediaQuery.of(context).size.width,
+                      //   color: ThemeColors.baseThemeColor,
+                      //   child: Row(
+                      //     children: [
+                      //       SizedBox(width: 20,),
+                      //       InkWell(
+                      //         onTap: (){
+                      //           // Navigator.popAndPushNamed(context, MaterialPageRoute(builder: (context) => BottomNavigation()))
+                      //           Navigator.of(context).pop();
+                      //         },
+                      //         child: Icon(Icons.arrow_back_ios,color: ThemeColors.whiteTextColor,),
+                      //
+                      //       ),
+                      //       SizedBox(
+                      //         width: 20,
+                      //       ),
+                      //       Text("More", style: TextStyle(fontSize: FontSize.large, color: ThemeColors.whiteTextColor),)
+                      //     ],
+                      //   ),
+                      // ),
+                      SizedBox(
+                        height: 0,
+                      ),
 
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _Rewards(context),
-                  _BussinessOpp(context),
-                  _MyTools(context),
-                  _Settings(context, companyData![0]),
-                  _CSR(context),
-                  _ShareUrl(context),
-                  _LogOutButton(context)
-                ],
-              ),
-            )
+                      SizedBox(
+                          height: 200,
+                          width: 300,
+                          child: Center(
+                            child: Image.asset('assets/images/Logo.png'),
+                            // Text(
+                            //   "Unstoppable",
+                            //   style: TextStyle(fontSize: FontSize.xxLarge),
+                            // ),
+                          )),
+
+                      // CircleAvatar(
+                      //   radius: 70,
+                      //   backgroundColor: Colors.orange,
+                      //   child: Text(
+                      //     "A",
+                      //     style: TextStyle(fontSize: 40),
+                      //   ),
+                      // ),
+
+                      SizedBox(
+                        height: 0,
+                      ),
+                      _Home(context),
+                      _Rewards(context),
+                      _BussinessOpp(context),
+                      _MyTools(context),
+                      _Settings(context, companyData![0], snapshot.data!),
+                      _CSR(context),
+                      _ShareUrl(context),
+                      _LogOutButton(context)
+                    ],
+                  )
+                      :
+                      Center(
+                        child: CircularProgressIndicator(),
+                      )
+                );
+              })
+
               :
               Center(child: CircularProgressIndicator());
         }
@@ -168,6 +204,40 @@ class _DrawerWidgetState extends State<DrawerWidget>{
   }
 }
 
+
+Widget _Home(BuildContext context) {
+  return InkWell(
+    onTap: () {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => BottomNavigation(index: 0,)));
+    },
+    child: Card(
+      elevation: 1,
+      margin: EdgeInsets.all(10),
+      color: Colors.white,
+      shadowColor: Colors.blueGrey,
+      shape: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white, width: 1)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            leading: Icon(
+              Icons.home,
+              color: ThemeColors.drawerTextColor,
+            ),
+            title: const Text(
+              'Home',
+              style:
+              TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+            ),
+          )
+        ],
+      ),
+    ),
+  );
+}
 
 
 Widget _Rewards(BuildContext context) {
@@ -309,7 +379,7 @@ Widget _BussinessOpp(BuildContext context) {
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => BusinessNetworking()));
+                MaterialPageRoute(builder: (context) => BottomNavigation(index: 2,)));
           },
           title: const Text(
             'Business Networking',
@@ -318,7 +388,7 @@ Widget _BussinessOpp(BuildContext context) {
         ),
         ListTile(
           onTap: () {
-            Navigator.pushReplacement(context,
+            Navigator.push(context,
                 MaterialPageRoute(builder: (context) => BusinessNetworkingLead()));
           },
           title: const Text(
@@ -416,7 +486,7 @@ Widget _MyTools(BuildContext context) {
   );
 }
 
-Widget _Settings(BuildContext context, CompanyProfileModel companyData) {
+Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProfileModel data) {
   return Card(
     elevation: 1,
     margin: EdgeInsets.all(10),
@@ -444,7 +514,7 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData) {
           child: ListTile(
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()));
+                  MaterialPageRoute(builder: (context) => ProfileScreen(profileData: data)));
             },
             title: const Text(
               'My Profile',
@@ -456,12 +526,13 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData) {
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => EditPasswordPage()));
+                MaterialPageRoute(builder: (context) => CompanyProfileEditPage(companyData: companyData,)));
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => CompanyProfileUpdate()));
           },
           title: const Text(
-            'Change Password',
-            style:
-            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+            'Company Profile',
+            style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
           ),
         ),
         ListTile(
@@ -477,22 +548,33 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData) {
         ListTile(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => CompanyProfileEditPage(companyData: companyData,)));
-            // Navigator.pushReplacement(context,
-            //     MaterialPageRoute(builder: (context) => CompanyProfileUpdate()));
+                MaterialPageRoute(builder: (context) => EditPasswordPage()));
           },
           title: const Text(
-            'Company Profile',
-            style: TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
+            'Change Password',
+            style:
+            TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
           ),
         ),
+
       ],
     ),
+  );
+}
+Future<void> shareReferralCode() async {
+  await FlutterShare.share(
+      title: 'Example share',
+      text: 'Referral code: 205678',
+      // linkUrl: 'https://flutter.dev/',
+      // chooserTitle: 'Example Chooser Title'
   );
 }
 
 Widget _ShareUrl(BuildContext context) {
   return InkWell(
+    onTap:(){
+
+    },
     child: Card(
       elevation: 1,
       margin: EdgeInsets.all(10),
@@ -514,7 +596,9 @@ Widget _ShareUrl(BuildContext context) {
               style:
                   TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
             ),
-            onTap: () {},
+            onTap: () {
+              shareReferralCode();
+            },
           )
         ],
       ),

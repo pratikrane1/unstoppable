@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/products/bloc.dart';
+import 'package:unstoppable/Constant/theme_colors.dart';
 import 'package:unstoppable/Models/product_detail_model.dart';
-import 'package:unstoppable/Screens/add_product.dart';
+import 'package:unstoppable/Screens/Products/add_product.dart';
 import 'package:unstoppable/Screens/product_Images.dart';
-import 'package:unstoppable/Screens/unstoppableProducts.dart';
-import '../Utils/application.dart';
-import '../config/image.dart';
-import '../widgets/seeIcon.dart';
+import 'package:unstoppable/Screens/Products/unstoppableProducts.dart';
+import '../../Utils/application.dart';
+import '../../config/image.dart';
+import '../../widgets/seeIcon.dart';
 import 'package:flutter_html/flutter_html.dart';
+
+import '../bottom_navbar.dart';
+import '../latest_add_product.dart';
 
 
 
@@ -40,24 +44,18 @@ class _UnstoppableProductsDetailsState
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 45.10,
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-          backgroundColor: Colors.deepOrange[500],
-          leading: InkWell(
-            onTap: (){
-              Navigator.pop(context);
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => BottomNavigation(index: 1,)));
+              // Navigator.pop(context);
             },
-            child: Icon(
-              CupertinoIcons.chevron_left,
-              color: Colors.white,
-              size: 18,
-            ),
+            child: Icon(Icons.arrow_back_ios),
           ),
-          title: Text(
-            "Products Details",
-            style: TextStyle(fontSize: 15),
-          ),
+          backgroundColor: ThemeColors.baseThemeColor,
+          elevation: 0.0,
+          centerTitle: true,
+          title: Text('Products Details'),
         ),
         body: BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
           if (state is ProductDetailSuccess) {

@@ -55,7 +55,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         leading: GestureDetector(
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => BottomNavigation()));
+                MaterialPageRoute(builder: (context) => BottomNavigation(index: 0,)));
           },
           child: Icon(Icons.arrow_back_ios),
         ),

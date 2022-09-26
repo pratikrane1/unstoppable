@@ -13,12 +13,26 @@ class InitialLeadsListState extends LeadsState {}
 
 class LeadsListLoading extends LeadsState {}
 
+class UpdateLeadLoading extends LeadsState {}
+
 
 
 class LeadsListSuccess extends LeadsState {
   List<LeadModel>? leadList;
   LeadsListSuccess({this.leadList});
 }
+
+class UpdateLeadSuccess extends LeadsState {
+  String message;
+  UpdateLeadSuccess({required this.message});
+}
+
+class UpdateLeadFail extends LeadsState {
+  String message;
+  UpdateLeadFail({required this.message});
+}
+
+
 
 class LeadsListLoadFail extends LeadsState {}
 

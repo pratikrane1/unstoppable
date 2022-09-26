@@ -7,6 +7,7 @@ import 'package:unstoppable/Blocs/csr/csr_bloc.dart';
 import 'package:unstoppable/Blocs/home/home_bloc.dart';
 import 'package:unstoppable/Blocs/login/login_bloc.dart';
 import 'package:unstoppable/Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_block.dart';
+import 'package:unstoppable/Blocs/payTMGateway/payment_bloc.dart';
 import 'package:unstoppable/Blocs/settings/settings_bloc.dart';
 import 'package:unstoppable/Blocs/theme/theme_bloc.dart';
 import 'package:unstoppable/Repository/UserRepository.dart';
@@ -39,6 +40,7 @@ class AppBloc {
   static final paymentHistoryBloc = PaymentHistoryBloc(paymentHistoryRepo: userRepository);
   // static final userProfileBloc = UserProfileBloc(userProfileRepo: userRepository);
   static final csrBloc = CSRBloc(csrRepo: userRepository);
+  // static final paymentBloc = PaymentBloc(paymentRepo: userRepository);
 
 
 
@@ -99,6 +101,9 @@ class AppBloc {
     BlocProvider<CSRBloc>(
       create: (context) => csrBloc,
     ),
+    // BlocProvider<PaymentBloc>(
+    //   create: (context) => paymentBloc,
+    // ),
 
   ];
 
@@ -120,6 +125,7 @@ class AppBloc {
     managingAllBuyingRequirementBloc.close();
     paymentHistoryBloc.close();
     csrBloc.close();
+    // paymentBloc.close();
   }
 
   ///Singleton factory
