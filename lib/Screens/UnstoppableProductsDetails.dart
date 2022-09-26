@@ -224,7 +224,8 @@ class _UnstoppableProductsDetailsState
               ),
             ),
           );
-        }));
+        })
+    );
   }
 }
 
