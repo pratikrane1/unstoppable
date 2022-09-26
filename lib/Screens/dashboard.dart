@@ -707,31 +707,31 @@ class _DashBoardState extends State<DashBoard> {
                       ],
                     ),
                   ),
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 40,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: ThemeColors.drawerTextColor,
-                          ),
-                          onPressed: ()  {
-                             // PaytmConfig().generateTxnToken(amount!);
-                            generateTxnToken(amount!);
-                          },
-                          child: Text(
-                            'PayTM',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
+                  // Center(
+                  //   child: ClipRRect(
+                  //     borderRadius: BorderRadius.circular(0),
+                  //     child: SizedBox(
+                  //       width: MediaQuery.of(context).size.width,
+                  //       height: 40,
+                  //       child: ElevatedButton(
+                  //         style: ElevatedButton.styleFrom(
+                  //           primary: ThemeColors.drawerTextColor,
+                  //         ),
+                  //         onPressed: ()  {
+                  //            // PaytmConfig().generateTxnToken(amount!);
+                  //           generateTxnToken(amount!);
+                  //         },
+                  //         child: Text(
+                  //           'PayTM',
+                  //           style: TextStyle(
+                  //             fontSize: 18,
+                  //             fontWeight: FontWeight.w400,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             );
