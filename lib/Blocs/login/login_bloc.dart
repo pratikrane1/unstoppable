@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:unstoppable/Api/api.dart';
 import 'package:unstoppable/Blocs/authentication/authentication_event.dart';
 import 'package:unstoppable/Blocs/login/login_event.dart';
@@ -14,6 +13,11 @@ import 'package:unstoppable/app_bloc.dart';
 
 import '../../Utils/application.dart';
 
+//for multipart
+import 'package:http_parser/http_parser.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:mime/mime.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({this.userRepository}) : super(InitialLoginState());
@@ -85,39 +89,48 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     if (event is OnRegistration) {
       yield VendorRegistrationLoading();
-      Map<String, String> params;
-      params = {
-        'user_type': event.userType,
-        'full_name':event.fullName,
-        'cat_id':event.catId,
-        'subcat_id':event.subId,
-        'subsubcat_id':event.subSubId,
-        'bussiness_name':event.businessName,
-        'ownership_type':event.ownershipType,
-        'est_year': event.estYear,
-        'tot_employee':event.totalEmp,
-        'annual_turnover':event.annualTurnover,
-        'gst_no':event.gSTIN,
-        'address':event.address,
-        'pin_code':event.pinCode,
-        'mobile_no':event.mobile,
-        'email':event.email,
-        'refer_by':event.referby,
-        'com_logo ':event.comLogo,
-      };
 
-      var response = await http.post(
-          Uri.parse(Api.VENDOR_Registration),
-          body: params
+
+      MultipartRequest request = new MultipartRequest(
+          'POST', Uri.parse(Api.VENDOR_Registration));
+      request.fields['user_type'] = event.userType;
+      request.fields['full_name'] = event.fullName;
+      request.fields['cat_id'] = event.catId;
+      request.fields['subcat_id'] = event.subId;
+      request.fields['subsubcat_id'] = event.subSubId;
+      request.fields['bussiness_name'] = event.businessName;
+      request.fields['ownership_type'] = event.ownershipType;
+      request.fields['est_year'] = event.estYear;
+      request.fields['tot_employee'] = event.totalEmp;
+      request.fields['annual_turnover'] = event.annualTurnover;
+      request.fields['gst_no'] = event.gSTIN;
+      request.fields['address'] = event.address;
+      request.fields['pin_code'] = event.pinCode;
+      request.fields['mobile_no'] = event.mobile;
+      request.fields['email'] = event.email;
+      request.fields['refer_by'] = event.referby;
+
+      List<MultipartFile> imageUpload = <MultipartFile>[];
+
+      final multipartFile = await http.MultipartFile.fromPath(
+        'com_logo', event.comLogo!.imagePath.toString(),
+        // contentType: MediaType(mimeTypeData[0], mimeTypeData[1])
       );
 
+      imageUpload.add(multipartFile);
+      request.files.addAll(imageUpload);
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      var resp = json.decode(response.body);
       try {
-        final resp = json.decode(response.body);
         if (resp['result'] == 'Success') {
-          yield VendorRegistrationSuccess();
+          yield VendorRegistrationSuccess(msg: resp['Message']);
+        }else{
+          yield VendorRegistrationFail(msg: resp['Message']);
+
         }
       } catch (e) {
-        print(e);
+        yield VendorRegistrationFail(msg: resp['Message']);
         rethrow;
       }
     }

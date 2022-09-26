@@ -1,3 +1,5 @@
+import 'package:unstoppable/Screens/image_file.dart';
+
 abstract class LoginEvent {}
 
 class OnLogin extends LoginEvent {
@@ -11,7 +13,8 @@ class OnLogin extends LoginEvent {
 class OnRegistration extends LoginEvent {
 
   var userType,fullName,catId,subId,subSubId,businessName,ownershipType,estYear, totalEmp,annualTurnover,gSTIN,address,pinCode,mobile,email,
-  referby,comLogo;
+  referby;
+  ImageFile? comLogo;
 
   OnRegistration({this.userType,this.fullName,this.catId,this.subId,this.subSubId,this.businessName,this.ownershipType,this.estYear, this.totalEmp,this.annualTurnover,this.gSTIN,this.
   address,this.pinCode,this.mobile,this.email,

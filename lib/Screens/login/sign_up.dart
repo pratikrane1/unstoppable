@@ -16,6 +16,7 @@ import 'package:unstoppable/Screens/login/sign_in.dart';
 import 'package:unstoppable/Utils/connectivity_check.dart';
 import 'package:unstoppable/constant/font_size.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
+import 'package:unstoppable/widgets/app_button.dart';
 import '../../Config/image.dart';
 import '../../Models/category_model.dart';
 import '../../Models/subCategory_model.dart';
@@ -129,28 +130,43 @@ class _SignUpPageState extends State<SignUpPage>{
           );
         },
         errorWidget: (context, url, error) {
-          return Shimmer.fromColors(
-            baseColor: Theme
-                .of(context)
-                .hoverColor,
-            highlightColor: Theme
-                .of(context)
-                .highlightColor,
-            enabled: true,
-            child: Container(
-              width: 110,
-              height: 110,
-              // decoration: BoxDecoration(
-              //   shape: BoxShape.rectangle,
-              //   color: Colors.white,
-              // ),
-            child: Icon(Icons.error),
-
-            ),
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                CupertinoIcons.arrow_down_doc,
+                color: ThemeColors.textFieldHintColor,
+              ),
+              Text(
+                "Browse & Upload",
+                style: TextStyle(
+                    fontSize: FontSize.medium,
+                    color: ThemeColors.textFieldHintColor),
+              )
+            ],
           );
+          // return Shimmer.fromColors(
+          //   baseColor: Theme
+          //       .of(context)
+          //       .hoverColor,
+          //   highlightColor: Theme
+          //       .of(context)
+          //       .highlightColor,
+          //   enabled: true,
+          //   child: Container(
+          //     width: 110,
+          //     height: 110,
+          //     // decoration: BoxDecoration(
+          //     //   shape: BoxShape.rectangle,
+          //     //   color: Colors.white,
+          //     // ),
+          //   child: Icon(Icons.error),
+          //
+          //   ),
+          // );
         },
       );
-
     }
     //updated on 30/11/2020
     return Container(
@@ -229,9 +245,8 @@ class _SignUpPageState extends State<SignUpPage>{
 
   void initState(){
     super.initState();
-    imageFile=new ImageFile();
-
     _userLoginBloc = BlocProvider.of<LoginBloc>(context);
+    imageFile=new ImageFile();
 
 
 
@@ -260,63 +275,54 @@ class _SignUpPageState extends State<SignUpPage>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: SingleChildScrollView(
-        child: BlocBuilder<LoginBloc,LoginState>(builder: (context,login){
-          return BlocListener<LoginBloc,LoginState>(listener: (context,state){
-            if(state is VendorRegistrationLoading){
-            }
-            if(state is VendorRegistrationSuccess)
-            {
-              Fluttertoast.showToast(msg: "Registered Successfully");
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SignInPage()));
-
-            }
-          },
-            child: Form(
-              key: _formKey,
-              child: Container(
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(
-                      height: 50,
+        body: SingleChildScrollView(
+      child: Form(
+        key: _formKey,
+        child: Container(
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(
+                height: 50,
+              ),
+              SizedBox(
+                height: 150,
+                width: 300,
+                child: Image.asset('assets/images/Logo.png'),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Container(
+                  margin: EdgeInsets.all(15.0),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Card(
+                    color: ThemeColors.cardColor,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15.0),
+                      ),
                     ),
-                    SizedBox(
-                      height:150,
-                      width: 300,
-                      child: Image.asset('assets/images/Logo.png'),
-
-                    ),
-                    const SizedBox(height: 10,),
-                    Center(
-                      child: Container(
-                        width: 325,
-                        // height: 270,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child:
-                        Card(
-                          color: ThemeColors.cardColor,
-                          shape:  const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(15.0),
+                    elevation: 35,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          const Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              "Register Here",
+                              style: TextStyle(
+                                  fontSize: 28, fontWeight: FontWeight.bold),
                             ),
                           ),
-                          elevation: 35,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              children: [
-                                const Align(alignment: Alignment.bottomLeft,
-                                  child: Text("Register Here",
-                                    style: TextStyle(
-                                        fontSize: 28,
-                                        fontWeight:FontWeight.bold
-                                    ),),
-                                ),
-                                const SizedBox(height: 15,),
+                          const SizedBox(
+                            height: 15,
+                          ),
 
                                 // Supplier DropDown
                                 Container(
@@ -1318,95 +1324,71 @@ class _SignUpPageState extends State<SignUpPage>{
                                                     color: ThemeColors.textFieldHintColor),
                                               )
                                             ],
-                                          ):
-                                          _buildAvatar()
-
-
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                    const SizedBox(height: 15,),
-                              ],
+                                          )
+                                        : _buildAvatar()),
+                              ),
                             ),
                           ),
-                        ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                        ],
                       ),
                     ),
+                  ),
+                ),
+              ),
+              BlocBuilder<LoginBloc, LoginState>(builder: (context, signup) {
+                return BlocListener<LoginBloc, LoginState>(
+                  listener: (context, state) {
+                    if (state is VendorRegistrationSuccess) {
+                      Fluttertoast.showToast(msg: state.msg);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignInPage()));
+                    }
 
-
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(0),
-                          child: SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: 40,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: ThemeColors.drawerTextColor,
-                                ),
-                                onPressed: () async{
-                                  isconnectedToInternet = await ConnectivityCheck
-                                      .checkInternetConnectivity();
-                                  if (isconnectedToInternet == true) {
-                                    if(_nameController==null){
-                                      Fluttertoast.showToast(msg: "Please enter name");
-                                    }
-                                    else if(categoryModelselected==null){
-                                      Fluttertoast.showToast(msg: "Please select category");
-                                    }else if(subcategoryModelselected==null){
-                                      Fluttertoast.showToast(msg: "Please select sub category");
-                                    }else if(subsubcategoryModelselected==null){
-                                      Fluttertoast.showToast(msg: "Please select sub sub category");
-                                    }else if(_businessController==null){
-                                      Fluttertoast.showToast(msg: "Please enter business name");
-                                    }else if(_ownershipController==null){
-                                      Fluttertoast.showToast(msg: "Please enter ownership type");
-                                    }else if(_establishmentController==null){
-                                      Fluttertoast.showToast(msg: "Please enter year of establishment");
-                                    }else if(_totalEmpController==null){
-                                      Fluttertoast.showToast(msg: "Please enter total number of employees");
-                                    }else if(_annualTurnController==null){
-                                      Fluttertoast.showToast(msg: "Please enter annual turnover");
-                                    }else if(_gSTNController==null){
-                                      Fluttertoast.showToast(msg: "Please enter GSTN Number");
-                                    }else if(_BusinessAddressController==null){
-                                      Fluttertoast.showToast(msg: "Please enter business address");
-                                    }else if(_pinController==null){
-                                      Fluttertoast.showToast(msg: "Please enter pin code");
-                                    }
-                                    else if(_mobNoController==null){
-                                      Fluttertoast.showToast(msg: "Please enter mobile number");
-                                    }else if(_emailController==null){
-                                      Fluttertoast.showToast(msg: "Please enter email");
-                                    }
-                                    else
-                                    if (_formKey.currentState!.validate()) {
-                                      // Fluttertoast.showToast(msg: "Registered Successfully");
-
-                                      _userLoginBloc!.add(OnRegistration(
-                                          userType: _value,
-                                          fullName: _nameController.text,
-                                        businessName: _businessController.text,
-                                        catId: categoryModelselected!.catId.toString(),
-                                        subId: subcategoryModelselected!.subcatId.toString(),
-                                        subSubId: subsubcategoryModelselected!.sscatId.toString(),
-                                        ownershipType: _ownershipController.text,
-                                        estYear: _establishmentController.text,
-                                        totalEmp: _totalEmpController.text,
-                                        annualTurnover: _annualTurnController.text,
-                                        gSTIN: _gSTNController.text,
-                                        address: _BusinessAddressController.text,
-                                        pinCode: _pinController.text,
-                                        mobile: _mobNoController.text,
-                                        email: _emailController.text,
-                                        comLogo: _image!.path,
-                                        referby: _referBy.text,
-                                      ));
-                                    }
-                                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNavigation()));
+                    if (state is VendorRegistrationFail) {
+                      Fluttertoast.showToast(msg: state.msg);
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: AppButton(
+                      onPressed: () async {
+                        isconnectedToInternet =
+                            await ConnectivityCheck.checkInternetConnectivity();
+                        if (isconnectedToInternet == true) {
+                          if (_image == null) {
+                            Fluttertoast.showToast(msg: "Please upload image");
+                          } else if(categoryModelselected==null){
+                            Fluttertoast.showToast(msg: "Please select category");
+                          }else if(subcategoryModelselected==null){
+                            Fluttertoast.showToast(msg: "Please select Sub Category");
+                          }else if(subsubcategoryModelselected==null){
+                            Fluttertoast.showToast(msg: "Please select SubSub Category");
+                          }else if (_formKey.currentState!.validate()) {
+                            _userLoginBloc!.add(OnRegistration(
+                              userType: _value,
+                              fullName: _nameController.text,
+                              businessName: _businessController.text,
+                              catId: categoryModelselected!.catId.toString(),
+                              subId: subcategoryModelselected!.subcatId.toString(),
+                              subSubId: subsubcategoryModelselected!.sscatId.toString(),
+                              ownershipType: _ownershipController.text,
+                              estYear: _establishmentController.text,
+                              totalEmp: _totalEmpController.text,
+                              annualTurnover: _annualTurnController.text,
+                              gSTIN: _gSTNController.text,
+                              address: _BusinessAddressController.text,
+                              pinCode: _pinController.text,
+                              mobile: _mobNoController.text,
+                              email: _emailController.text,
+                              comLogo: imageFile,
+                              referby: _referBy.text,
+                            ));
+                          }
 
                                   } else {
                                     CustomDialogs.showDialogCustom(

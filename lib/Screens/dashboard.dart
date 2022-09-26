@@ -10,7 +10,7 @@ import 'package:unstoppable/Screens/Products/unstoppableProducts.dart';
 import 'package:unstoppable/Utils/application.dart';
 import 'package:unstoppable/constant/theme_colors.dart';
 import 'package:unstoppable/widgets/drawer.dart';
-
+import 'package:http/http.dart' as http;
 import '../Blocs/payTMGateway/payment_bloc.dart';
 import '../widgets/bell_icon.dart';
 import 'Leads.dart';
@@ -34,7 +34,9 @@ class _DashBoardState extends State<DashBoard> {
       totalLeads,cancelledLeads,monthlyTarget,achievements;
   bool? isStaging;
   bool? restrictAppInvoke;
-  String? mid = "DIY12386817555501617";
+  String _mid = "ctqcfC52960494856707"; //live mid=GXytVC30838085377757
+  String _mKey = "IE3XtJ4BGHcSo167"; //live mKey=IE3XtJ4BGHcSo167
+  String _website = "WEBSTAGING";
   // String? orderId = Application.vendorLogin!.userId.toString();
   double? amount = 100;
   String orderId = DateTime
@@ -45,27 +47,66 @@ class _DashBoardState extends State<DashBoard> {
   String? callbackUrl;
   String? result;
 
-  // paytm(){
-  //   var response = AllInOneSdk.startTransaction(
-  //       mid!, orderId!, amount!, txnToken!, callbackUrl!, isStaging!, restrictAppInvoke!);
-  //   response.then((value) {
-  //     print(value);
-  //     setState(() {
-  //       result = value.toString();
-  //     });
-  //   }).catchError((onError) {
-  //     if (onError is PlatformException) {
-  //       setState(() {
-  //         result = onError.message! + " \n  " + onError.details.toString();
-  //       });
-  //     } else {
-  //       setState(() {
-  //         result = onError.toString();
-  //       });
-  //     }
-  //   });
-  //
-  // }
+  Future<void> generateTxnToken(double amount) async {
+
+    Map<String,String> params={
+      "amount": amount.toString(),
+      "customer_id": Application.vendorLogin!.userId.toString(),
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(Api.GENERATE_TOKEN),
+        body: params,
+        // headers: {'Content-type': "application/json"},
+      );
+      var resp=jsonDecode(response.body);
+
+      final callBackUrl =
+          'https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID='+resp['order_id'].toString();
+      await initiateTransaction(resp['order_id'], amount, resp['txnToken'], callBackUrl);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> initiateTransaction(String orderId, double amount,
+      String txnToken, String callBackUrl) async {
+    String result = '';
+    try {
+      var response = AllInOneSdk.startTransaction(
+        _mid,
+        orderId,
+        amount.toString(),
+        txnToken,
+        callBackUrl,
+        true,
+        true,
+      );
+      response.then((value) {
+        // Transaction successfull
+        print(value);
+        Fluttertoast.showToast(msg: "Payment done successfully");
+        Navigator.pop(context);
+
+      }).catchError((onError) {
+        if (onError is PlatformException) {
+          // result = onError.message! + " \n  " + onError.details.toString();
+          result = onError.message! + " \n  " + onError.details.toString();
+          Fluttertoast.showToast(msg: "Payment cancelled successfully");
+
+          print(result);
+        } else {
+          result = onError.toString();
+          print(result);
+        }
+      });
+    } catch (err) {
+      // Transaction failed
+      result = err.toString();
+      print(result);
+    }
+  }
 
 
   void initState() {
@@ -663,30 +704,31 @@ class _DashBoardState extends State<DashBoard> {
                       ],
                     ),
                   ),
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 40,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: ThemeColors.drawerTextColor,
-                          ),
-                          onPressed: ()  {
-                             PaytmConfig().generateTxnToken(amount!, orderId);
-                          },
-                          child: Text(
-                            'PayTM',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
+                  // Center(
+                  //   child: ClipRRect(
+                  //     borderRadius: BorderRadius.circular(0),
+                  //     child: SizedBox(
+                  //       width: MediaQuery.of(context).size.width,
+                  //       height: 40,
+                  //       child: ElevatedButton(
+                  //         style: ElevatedButton.styleFrom(
+                  //           primary: ThemeColors.drawerTextColor,
+                  //         ),
+                  //         onPressed: ()  {
+                  //            // PaytmConfig().generateTxnToken(amount!);
+                  //           generateTxnToken(amount!);
+                  //         },
+                  //         child: Text(
+                  //           'PayTM',
+                  //           style: TextStyle(
+                  //             fontSize: 18,
+                  //             fontWeight: FontWeight.w400,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             );

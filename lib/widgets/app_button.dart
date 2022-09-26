@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unstoppable/Constant/theme_colors.dart';
 
 
 class AppButton extends StatelessWidget {
@@ -17,17 +18,17 @@ class AppButton extends StatelessWidget {
     this.shape,
   }) : super(key: key);
 
-  // Widget _buildLoading() {
-  //   if (loading!) {
-  //     return Container();
-  //   }
-  //   return Container(
-  //     margin: EdgeInsets.only(left: 10, right: 10),
-  //     width: 14,
-  //     height: 14,
-  //     child: CircularProgressIndicator(strokeWidth: 2),
-  //   );
-  // }
+  Widget _buildLoading() {
+    if (loading!) {
+      return Container();
+    }
+    return Container(
+      margin: EdgeInsets.only(left: 10, right: 10),
+      width: 14,
+      height: 14,
+      child: CircularProgressIndicator(strokeWidth: 2,color: Colors.white,),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +40,8 @@ class AppButton extends StatelessWidget {
 
       ElevatedButton(
         style: ElevatedButton.styleFrom(
-            side: BorderSide(color: Theme.of(context).primaryColor, width: 1),
-          primary: Theme.of(context).primaryColor,
+            side: BorderSide(color: ThemeColors.drawerTextColor, width: 1),
+          primary: ThemeColors.drawerTextColor,
 
           shape: shape,
         ),
@@ -57,7 +58,7 @@ class AppButton extends StatelessWidget {
                 .button!
                 .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
           ),
-          // _buildLoading()
+          _buildLoading()
         ],
       ),
     )
