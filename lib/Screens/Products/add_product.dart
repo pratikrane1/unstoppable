@@ -123,42 +123,43 @@ class _AddProductScreenState extends State<AddProductScreen> {
           );
         },
         errorWidget: (context, url, error) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-
-              Icon(
-                CupertinoIcons.arrow_down_doc,
-                color: ThemeColors.textFieldHintColor,
-              ),
-              Text(
-                "Browse & Upload",
-                style: TextStyle(
-                    fontSize: FontSize.medium,
-                    color: ThemeColors.textFieldHintColor),
-              )
-            ],
-          );
-          // return Shimmer.fromColors(
-          //   baseColor: Theme
-          //       .of(context)
-          //       .hoverColor,
-          //   highlightColor: Theme
-          //       .of(context)
-          //       .highlightColor,
-          //   enabled: true,
-          //   child: Container(
-          //     width: 110,
-          //     height: 110,
-          //     // decoration: BoxDecoration(
-          //     //   shape: BoxShape.rectangle,
-          //     //   color: Colors.white,
-          //     // ),
-          //   child: Icon(Icons.error),
+          // return
+          //   Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
           //
-          //   ),
+          //     Icon(
+          //       CupertinoIcons.arrow_down_doc,
+          //       color: ThemeColors.textFieldHintColor,
+          //     ),
+          //     Text(
+          //       "Browse & Upload",
+          //       style: TextStyle(
+          //           fontSize: FontSize.medium,
+          //           color: ThemeColors.textFieldHintColor),
+          //     )
+          //   ],
           // );
+          return Shimmer.fromColors(
+            baseColor: Theme
+                .of(context)
+                .hoverColor,
+            highlightColor: Theme
+                .of(context)
+                .highlightColor,
+            enabled: true,
+            child: Container(
+              width: 110,
+              height: 110,
+              // decoration: BoxDecoration(
+              //   shape: BoxShape.rectangle,
+              //   color: Colors.white,
+              // ),
+            child: Icon(Icons.error),
+
+            ),
+          );
         },
       );
 
@@ -231,6 +232,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         // mImageFile.image = croppedFile;
         // print(mImageFile.image.path);
         // state = AppState.cropped;
+
         _image = croppedFile;
         imageFile!.imagePath=_image!.path;
       });

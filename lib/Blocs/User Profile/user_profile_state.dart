@@ -1,29 +1,30 @@
-// import 'package:meta/meta.dart';
-// import 'package:unstoppable/Models/user_profile_model.dart';
-// import '../../Models/company_profile_model.dart';
-//
-// @immutable
-// abstract class UserProfileState {}
-//
-//
-// class InitialUserProfileState extends UserProfileState {}
-//
-//
-// class UserProfileLoading extends UserProfileState {}
-//
-// // class UpdateCompanyProfileLoading extends UserProfileState {}
-//
-//
-// class UserProfileSuccess extends UserProfileState {
-//   List<UserProfileModel>? userProfileData;
-//   UserProfileSuccess({this.userProfileData});
-// }
-//
-// // class UpdateCompanyProfileSuccess extends UserProfileState {
-// //   UpdateCompanyProfileSuccess();
-// // }
-//
-//
-//
-//
-// class UserProfileLoadFail extends UserProfileState {}
+import 'package:meta/meta.dart';
+import 'package:unstoppable/Models/user_profile_model.dart';
+import '../../Models/company_profile_model.dart';
+
+@immutable
+abstract class UserProfileState {}
+
+
+class InitialUserProfileState extends UserProfileState {}
+
+
+class UserProfileUpdateLoading extends UserProfileState {}
+
+
+
+class UserProfileUpdateSuccess extends UserProfileState {
+String message;
+UserProfileUpdateSuccess({required this.message});
+}
+
+
+class UserProfileUpdatefail extends UserProfileState {
+  String message;
+  UserProfileUpdatefail({required this.message});
+}
+
+
+
+
+class UserProfileLoadFail extends UserProfileState {}

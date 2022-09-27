@@ -1591,11 +1591,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         return BlocListener<LoginBloc, LoginState>(
                           listener: (context, state) {
                             if (state is VendorRegistrationSuccess) {
-                              Fluttertoast.showToast(msg: state.msg);
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => SignInPage()));
+                              Fluttertoast.showToast(msg: state.msg);
+
                             }
 
                             if (state is VendorRegistrationFail) {

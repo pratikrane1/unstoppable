@@ -4,22 +4,37 @@ class VendorLoginResp {
   dynamic data;
 
   VendorLoginResp({this.result, this.message, this.data});
-
-  VendorLoginResp.fromJson(Map<String, dynamic> json) {
-    result = json['result'];
-    message = json['Message'];
-    data = json['data'] != null ? new VendorLogin.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['result'] = this.result;
-    data['Message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
+  factory VendorLoginResp.fromJson(Map<dynamic, dynamic> json) {
+    try {
+      return VendorLoginResp(
+        result: json['result'],
+        message: json['Message'],
+        data: json['data'] != null ? new VendorLogin.fromJson(json['data']) : null,
+      );
+    } catch (error) {
+      return VendorLoginResp(
+        result: json['result'],
+        message: json['Message'],
+        data: null,
+      );
     }
-    return data;
   }
+
+  // VendorLoginResp.fromJson(Map<String, dynamic> json) {
+  //   result = json['result'];
+  //   message = json['Message'];
+  //   data = json['data'] != null ? new VendorLogin.fromJson(json['data']) : null;
+  // }
+  //
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = new Map<String, dynamic>();
+  //   data['result'] = this.result;
+  //   data['Message'] = this.message;
+  //   if (this.data != null) {
+  //     data['data'] = this.data!.toJson();
+  //   }
+  //   return data;
+  // }
 }
 
 class VendorLogin {

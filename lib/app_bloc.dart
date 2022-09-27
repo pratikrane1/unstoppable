@@ -38,7 +38,7 @@ class AppBloc {
   static final mytoolsBloc = MytoolsBloc(productBuyingRepo: userRepository);
   static final settingsBloc = SettingsBloc(settingsRepo: userRepository);
   static final paymentHistoryBloc = PaymentHistoryBloc(paymentHistoryRepo: userRepository);
-  // static final userProfileBloc = UserProfileBloc(userProfileRepo: userRepository);
+  static final userProfileBloc = UserProfileBloc(userProfileRepo: userRepository);
   static final csrBloc = CSRBloc(csrRepo: userRepository);
   // static final paymentBloc = PaymentBloc(paymentRepo: userRepository);
 
@@ -95,9 +95,9 @@ class AppBloc {
     BlocProvider<PaymentHistoryBloc>(
       create: (context) => paymentHistoryBloc,
     ),
-    // BlocProvider<UserProfileBloc>(
-    //   create: (context) => userProfileBloc,
-    // ),
+    BlocProvider<UserProfileBloc>(
+      create: (context) => userProfileBloc,
+    ),
     BlocProvider<CSRBloc>(
       create: (context) => csrBloc,
     ),
@@ -125,6 +125,7 @@ class AppBloc {
     managingAllBuyingRequirementBloc.close();
     paymentHistoryBloc.close();
     csrBloc.close();
+    userProfileBloc.close();
     // paymentBloc.close();
   }
 

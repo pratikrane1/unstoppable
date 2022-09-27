@@ -621,11 +621,12 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       ),
                       BlocBuilder<LeadsBloc, LeadsState>(builder: (context, state) {
                         if (state is UpdateLeadSuccess) {
+                          Navigator.of(context).pop();
                           Fluttertoast.showToast(msg: state.message.toString());
                         }
-                        if (state is LeadsListLoading) {
-                          CircularProgressIndicator();
-                        }
+                        // if (state is LeadsListLoading) {
+                        //   CircularProgressIndicator();
+                        // }
 
                         if (state is UpdateLeadFail) {
                           Fluttertoast.showToast(msg: state.message.toString());

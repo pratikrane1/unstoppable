@@ -54,6 +54,7 @@ class Api {
   static const String delAllBuyingRequirement = HOST_URL+"delete_buying_requirement";
   static const String COMPANY_PROFILE ="get_company_profile";
   static const String USER_PROFILE =HOST_URL+"get_user_profile";
+  static const String USER_PROFILE_UPDATE =HOST_URL+"update_vendor_profile";
   static const String updateCompanyProfile =HOST_URL+"update_company_profile";
   static const String updateOrderData =HOST_URL+"update_leads";
   static const String BUSI_NET_LIST =HOST_URL+"get_business_networking_leads";

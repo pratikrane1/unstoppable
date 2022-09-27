@@ -39,6 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         email: event.email,
           password: event.password,
       );
+      print(result);
       ///Case API fail but not have token
       if (result.result=="Success") {
         ///Login API success
@@ -49,7 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         try {
           ///Begin start AuthBloc Event AuthenticationSave
           AppBloc.authBloc.add(OnSaveUser(user));
-          yield LoginSuccess(userModel: user);
+          yield LoginSuccess(userModel: user, message: result.message.toString());
         } catch (error) {
           ///Notify loading to UI
           yield LoginFail(msg: result.message.toString());
