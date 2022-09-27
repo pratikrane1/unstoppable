@@ -6,10 +6,10 @@ import 'package:unstoppable/Blocs/companyProfile/comapny_profile_state.dart';
 import 'package:unstoppable/Blocs/companyProfile/company_profile_event.dart';
 import 'package:unstoppable/Models/company_profile_model.dart';
 import 'package:unstoppable/widgets/drawer.dart';
-import '../Blocs/companyProfile/company_profile_block.dart';
-import '../Utils/application.dart';
-import '../constant/theme_colors.dart';
-import 'bottom_navbar.dart';
+import '../../Blocs/companyProfile/company_profile_block.dart';
+import '../../Utils/application.dart';
+import '../../constant/theme_colors.dart';
+import '../bottom_navbar.dart';
 
 class CompanyProfileEditPage extends StatefulWidget {
   CompanyProfileModel? companyData;
@@ -238,8 +238,9 @@ class _CompanyProfileEditPageState extends State<CompanyProfileEditPage> {
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DrawerWidget()));
+              Navigator.of(context).pop();
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (context) => DrawerWidget()));
             },
             child: Icon(Icons.arrow_back_ios),
           ),

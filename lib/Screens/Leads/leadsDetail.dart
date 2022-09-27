@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/leads/leads_event.dart';
 import 'package:unstoppable/Blocs/leads/leads_state.dart';
-import 'package:unstoppable/Screens/Leads.dart';
+import 'package:unstoppable/Screens/Leads/Leads.dart';
 import 'package:unstoppable/Utils/application.dart';
 
-import '../Blocs/leads/leads_block.dart';
-import '../Models/leads_model.dart';
-import '../widgets/seeIcon.dart';
-import '../constant/theme_colors.dart';
+import '../../Blocs/leads/leads_block.dart';
+import '../../Models/leads_model.dart';
+import '../../widgets/seeIcon.dart';
+import '../../constant/theme_colors.dart';
 
 class LeadsDetails extends StatefulWidget {
   LeadModel leadData;
@@ -158,7 +158,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
         backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
         centerTitle: false,
-        title: Text("Choose Business Network Contacts"),
+        title: Text("Product Details"),
       ),
       body: BlocBuilder<LeadsBloc, LeadsState>(builder: (context, state) {
         if (state is LeadsListSuccess) {

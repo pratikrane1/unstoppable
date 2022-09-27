@@ -171,8 +171,9 @@ class _PaymentHistoryUpdatedState extends State<PaymentHistoryUpdated> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget()));
+            Navigator.of(context).pop();
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => DrawerWidget()));
           },
           child: Icon(Icons.arrow_back_ios),
         ),
@@ -392,14 +393,14 @@ Widget SubInfoCard(BuildContext context, PaymentHistoryModel subscriptionData) {
         // color: Colors.black12,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left: 15.0,top: 8,bottom: 8),
         child: ListTile(
           contentPadding: EdgeInsets.zero,
           //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-          leading: CircleAvatar(
-            radius: 25,
-            backgroundColor: Colors.blue,
-          ),
+          // leading: CircleAvatar(
+          //   radius: 25,
+          //   backgroundColor: Colors.blue,
+          // ),
           title: Column(
             children: [
               Align(

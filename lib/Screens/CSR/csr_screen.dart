@@ -65,8 +65,9 @@ class _CSRScreenState extends State<CSRScreen>{
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget()));
+            Navigator.of(context).pop();
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => DrawerWidget()));
           },
           child: Icon(Icons.arrow_back_ios),
         ),

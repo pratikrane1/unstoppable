@@ -11,16 +11,16 @@ import 'package:unstoppable/Models/untoppable_order_model.dart';
 import 'package:unstoppable/Screens/productDetail.dart';
 import 'package:unstoppable/Screens/updateOrder.dart';
 import 'package:unstoppable/Utils/application.dart';
-import '../Blocs/myTools/myTools_bloc.dart';
-import '../Constant/font_size.dart';
-import '../constant/theme_colors.dart';
-import '../widgets/bell_icon.dart';
-import '../widgets/drawer.dart';
-import '../widgets/dropdown.dart';
-import '../widgets/seeIcon.dart';
+import '../../Blocs/myTools/myTools_bloc.dart';
+import '../../Constant/font_size.dart';
+import '../../constant/theme_colors.dart';
+import '../../widgets/bell_icon.dart';
+import '../../widgets/drawer.dart';
+import '../../widgets/dropdown.dart';
+import '../../widgets/seeIcon.dart';
 import 'package:shimmer/shimmer.dart';
-import 'My Unstoppable Orders/my_unstoppable_order_details.dart';
-import 'Products/UnstoppableProductsDetails.dart';
+import 'my_unstoppable_order_details.dart';
+import '../Products/UnstoppableProductsDetails.dart';
 
 class UnstoppableOrders extends StatefulWidget {
   @override
@@ -250,8 +250,9 @@ class _UnstoppableOrdersState extends State<UnstoppableOrders> {
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DrawerWidget()));
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (context) => DrawerWidget()));
+              Navigator.of(context).pop();
             },
             child: Icon(Icons.arrow_back_ios),
           ),
@@ -724,7 +725,7 @@ Widget unstoppableProductCard(BuildContext context, UnstoppableOrderModel orderD
                     ),
                     InkWell(
                         onTap: (){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MyUnstoppableOrdersDetail(ordersData: orderData)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> MyUnstoppableOrdersDetail(ordersData: orderData)));
                         },
                         child:Center(
                           child: Container(
@@ -734,7 +735,7 @@ Widget unstoppableProductCard(BuildContext context, UnstoppableOrderModel orderD
                               shape: BoxShape.rectangle,
                               borderRadius:  BorderRadius.circular(5.0),
                               //color: Color(0xffc32c37),
-                              color: Colors.indigo,
+                              color: ThemeColors.buttonColor,
                               // border: Border.all(color: Colors.black, width: 1)
                             ),
                             child: Container(

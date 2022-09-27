@@ -17,15 +17,16 @@ class _RewardsState extends State<Rewards>{
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget()));
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => DrawerWidget()));
+            Navigator.of(context).pop();
           },
           child: Icon(Icons.arrow_back_ios),
         ),
         backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
         centerTitle: true,
-        title: Text('Reward'),
+        title: Text('Rewards'),
       ),
       body: SingleChildScrollView(
         child: Container(

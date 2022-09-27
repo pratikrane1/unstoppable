@@ -200,7 +200,12 @@ class _ProductIamBuyingState extends State<ProductIamBuying> {
                 topRight: Radius.circular(35.0))),
         context: context,
         builder: (BuildContext context) {
-          return SingleChildScrollView(child: AddProductIamBuyingScreen());
+
+          return SingleChildScrollView(
+              child: Padding(
+                padding: MediaQuery.of(context).viewInsets,
+                child: AddProductIamBuyingScreen(),
+              ));
         });
   }
 
@@ -282,7 +287,7 @@ class _ProductIamBuyingState extends State<ProductIamBuying> {
                       shape: BoxShape.rectangle,
                       borderRadius:  BorderRadius.circular(5.0),
                       //color: Color(0xffc32c37),
-                      color: Colors.indigo,
+                      color: ThemeColors.buttonColor,
                       // border: Border.all(color: Colors.black, width: 1)
                     ),
                     child: Container(
@@ -315,8 +320,9 @@ class _ProductIamBuyingState extends State<ProductIamBuying> {
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DrawerWidget()));
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (context) => DrawerWidget()));
+              Navigator.of(context).pop();
             },
             child: Icon(Icons.arrow_back_ios),
           ),
@@ -445,7 +451,7 @@ class _ProductIamBuyingState extends State<ProductIamBuying> {
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         //color: Color(0xffc32c37),
-                                        color: Colors.indigo,
+                                        color: ThemeColors.buttonColor,
                                         border: Border.all(color: Colors.black, width: 1)),
                                     child: Container(
                                       width: 30,

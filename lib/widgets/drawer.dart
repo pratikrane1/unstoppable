@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:unstoppable/Screens/Leads.dart';
+import 'package:unstoppable/Screens/Leads/Leads.dart';
 import 'package:unstoppable/Screens/Payment%20History/payment_history_updated/payment_history_updated.dart';
-import 'package:unstoppable/Screens/change_password.dart';
+import 'package:unstoppable/Screens/Change%20Password/change_password.dart';
 import 'package:unstoppable/Screens/dashboard.dart';
 import 'package:unstoppable/Screens/login/sign_in.dart';
-import 'package:unstoppable/Screens/manageAllBuyingRequirement.dart';
+import 'package:unstoppable/Screens/Manage%20all%20buying%20requirements/manageAllBuyingRequirement.dart';
 import 'package:unstoppable/Screens/profile_screen.dart';
 import 'package:unstoppable/Screens/reward.dart';
 import 'package:unstoppable/Screens/unstoppableOrders.dart';
-import 'package:unstoppable/Screens/unstoppable_orders.dart';
+import 'package:unstoppable/Screens/My%20Unstoppable%20Orders/unstoppable_orders.dart';
 import 'package:unstoppable/Utils/application.dart';
 import '../Blocs/User Profile/User_profile_api.dart';
 import '../Blocs/companyProfile/comapny_profile_state.dart';
@@ -25,7 +25,7 @@ import '../Screens/CSR/csr_screen.dart';
 import '../Screens/bottom_navbar.dart';
 import '../Screens/businessNetworking.dart';
 import '../Screens/YourBNC/business_networking_lead.dart';
-import '../Screens/company_profile.dart';
+import '../Screens/Company Profile/company_profile.dart';
 import '../Screens/product_I_am_buying.dart';
 import '../constant/theme_colors.dart';
 import 'app_button.dart';
@@ -69,9 +69,9 @@ class _DrawerWidgetState extends State<DrawerWidget>{
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => BottomNavigation(index: 0,)));
-              // Navigator.of(context).pop();
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (context) => BottomNavigation(index: 0,)));
+              Navigator.of(context).pop();
             },
             child: Icon(Icons.arrow_back_ios),
           ),
@@ -208,7 +208,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
 Widget _Home(BuildContext context) {
   return InkWell(
     onTap: () {
-      Navigator.pushReplacement(
+      Navigator.push(
           context, MaterialPageRoute(builder: (context) => BottomNavigation(index: 0,)));
     },
     child: Card(
@@ -243,7 +243,7 @@ Widget _Home(BuildContext context) {
 Widget _Rewards(BuildContext context) {
   return InkWell(
     onTap: () {
-      Navigator.pushReplacement(
+      Navigator.push(
           context, MaterialPageRoute(builder: (context) => Rewards()));
     },
     child: Card(
@@ -348,7 +348,7 @@ Widget _BussinessOpp(BuildContext context) {
           ))),
           child: ListTile(
             onTap: () {
-              Navigator.pushReplacement(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (context) => Leads()));
             },
             title: const Text(
@@ -378,7 +378,7 @@ Widget _BussinessOpp(BuildContext context) {
         // ),
         ListTile(
           onTap: () {
-            Navigator.pushReplacement(context,
+            Navigator.push(context,
                 MaterialPageRoute(builder: (context) => BottomNavigation(index: 2,)));
           },
           title: const Text(
@@ -443,7 +443,7 @@ Widget _MyTools(BuildContext context) {
           ))),
           child: ListTile(
             onTap: () {
-              Navigator.pushReplacement(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ManageAllBuyingRequirement()));
             },
             title: const Text(
@@ -461,7 +461,7 @@ Widget _MyTools(BuildContext context) {
           ))),
           child: ListTile(
             onTap: () {
-              Navigator.pushReplacement(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ProductIamBuying()));
 
             },
@@ -474,7 +474,7 @@ Widget _MyTools(BuildContext context) {
         ),
         ListTile(
           onTap: () {
-            Navigator.pushReplacement(context,
+            Navigator.push(context,
                 MaterialPageRoute(builder: (context) => UnstoppableOrders()));
           },
           title: const Text('My Unstoppable Orders',
@@ -513,7 +513,7 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProf
           ))),
           child: ListTile(
             onTap: () {
-              Navigator.pushReplacement(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ProfileScreen(profileData: data)));
             },
             title: const Text(
@@ -525,7 +525,7 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProf
         ),
         ListTile(
           onTap: () {
-            Navigator.pushReplacement(context,
+            Navigator.push(context,
                 MaterialPageRoute(builder: (context) => CompanyProfileEditPage(companyData: companyData,)));
             // Navigator.pushReplacement(context,
             //     MaterialPageRoute(builder: (context) => CompanyProfileUpdate()));
@@ -537,7 +537,7 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProf
         ),
         ListTile(
           onTap: () {
-            Navigator.pushReplacement(context,
+            Navigator.push(context,
                 MaterialPageRoute(builder: (context) => PaymentHistoryUpdated()));
           },
           title: const Text(
@@ -547,7 +547,7 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProf
         ),
         ListTile(
           onTap: () {
-            Navigator.pushReplacement(context,
+            Navigator.push(context,
                 MaterialPageRoute(builder: (context) => EditPasswordPage()));
           },
           title: const Text(
@@ -610,7 +610,7 @@ Widget _ShareUrl(BuildContext context) {
 Widget _CSR(BuildContext context) {
   return InkWell(
     onTap: () {
-      Navigator.pushReplacement(
+      Navigator.push(
           context, MaterialPageRoute(builder: (context) => CSRScreen()));
     },
     child: Card(

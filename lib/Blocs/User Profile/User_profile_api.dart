@@ -8,15 +8,18 @@ import 'package:unstoppable/Models/user_profile_model.dart';
 import '../../Utils/application.dart';
 
 Future<UserProfileModel> getUserProfile() async {
-  var data =[];
   var list;
-  var listdata={};
-  String? userId;
+
 
   final  response = await http.post(
     Uri.parse(Api.USER_PROFILE),
     body: {"user_id":Application.vendorLogin!.userId.toString()},
   );
+  // if(response.statusCode == 200){
+  //   final responseJson = json.decode(response.body);
+  //   print(responseJson);
+  //   return UserProfileRepo.fromJson(responseJson);
+  // }
 
   try{
     String respBody = response.body;
@@ -24,6 +27,9 @@ Future<UserProfileModel> getUserProfile() async {
     if(resp['result'] == 'Success'){
       list = resp['data'][0];
     }
+    // else{
+    //   list = resp['data'][0];
+    // }
   }catch(e){
     print(e);
     rethrow;

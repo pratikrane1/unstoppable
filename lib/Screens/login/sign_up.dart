@@ -1727,7 +1727,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       SizedBox(width: 8,),
                       InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(
+                          Navigator.push(context, MaterialPageRoute(
                               builder: (context) => SignInPage()));
                         },
                         child: Text("Login", style: TextStyle(

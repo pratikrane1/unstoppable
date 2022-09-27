@@ -333,8 +333,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DrawerWidget()));
+              Navigator.of(context).pop();
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => DrawerWidget()));
             },
             child: Icon(Icons.arrow_back_ios),
           ),
