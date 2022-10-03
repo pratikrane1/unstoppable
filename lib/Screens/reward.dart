@@ -28,13 +28,9 @@ class _RewardsState extends State<Rewards>{
         centerTitle: true,
         title: Text('Rewards'),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-              children: <Widget>[
-              ]
-          ),
-        ),
+      body: Center(
+        child: Text("Coming Soon...",
+        style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
       ),
     );
   }

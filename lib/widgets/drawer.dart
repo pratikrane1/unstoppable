@@ -563,9 +563,9 @@ Widget _Settings(BuildContext context, CompanyProfileModel companyData, UserProf
 }
 Future<void> shareReferralCode() async {
   await FlutterShare.share(
-      title: 'Example share',
-      text: 'Referral code: 205678',
-      // linkUrl: 'https://flutter.dev/',
+      title: 'Share URL',
+      // text: 'Referral code: 205678',
+      linkUrl: 'https://unstoppabletrade.in/',
       // chooserTitle: 'Example Chooser Title'
   );
 }
