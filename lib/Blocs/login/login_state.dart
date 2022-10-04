@@ -16,8 +16,9 @@ class LoginFail extends LoginState {
 }
 
 class LoginSuccess extends LoginState {
-  VendorLogin? userModel;
-  LoginSuccess({this.userModel});
+  VendorLogin userModel;
+  String message;
+  LoginSuccess({required this.userModel,required this.message});
 
 }
 

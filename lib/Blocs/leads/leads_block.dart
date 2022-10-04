@@ -62,12 +62,14 @@ class LeadsBloc extends Bloc<LeadsEvent, LeadsState> {
       );
 
       try {
-        final resp = json.decode(response.body);
-        if (resp["result"] == "S") {
-          yield UpdateLeadSuccess(message: resp['msg']);
+        String respBody = response.body;
+        final resp = json.decode(respBody);
+        if (resp[0]['result'] == 'S') {
+          yield UpdateLeadSuccess(message: resp[0]['msg']);
+          print(resp[0]['msg']);
         }
         else{
-          UpdateLeadFail(message: resp['msg']);
+          UpdateLeadFail(message: resp[0]['msg']);
         }
       } catch (e) {
         print(e);

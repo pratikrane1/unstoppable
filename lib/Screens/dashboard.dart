@@ -16,7 +16,7 @@ import 'package:http/http.dart' as http;
 import '../Api/api.dart';
 import '../Blocs/payTMGateway/payment_bloc.dart';
 import '../widgets/bell_icon.dart';
-import 'Leads.dart';
+import 'Leads/Leads.dart';
 import 'YourBNC/business_networking_lead.dart';
 import 'bottom_navbar.dart';
 import 'customerEnquiries.dart';

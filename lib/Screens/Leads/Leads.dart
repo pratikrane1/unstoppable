@@ -8,15 +8,15 @@ import 'package:unstoppable/Blocs/leads/leads_block.dart';
 import 'package:unstoppable/Blocs/leads/leads_event.dart';
 import 'package:unstoppable/Blocs/leads/leads_state.dart';
 import 'package:unstoppable/Models/leads_model.dart';
-import 'package:unstoppable/Screens/leadsDetail.dart';
+import 'package:unstoppable/Screens/Leads/leadsDetail.dart';
 import 'package:unstoppable/widgets/drawer.dart';
-import '../Utils/application.dart';
-import '../constant/theme_colors.dart';
-import '../widgets/bell_icon.dart';
-import '../widgets/dropdown.dart';
-import '../widgets/icons_buttons.dart';
-import '../widgets/seeIcon.dart';
-import 'bottom_navbar.dart';
+import '../../Utils/application.dart';
+import '../../constant/theme_colors.dart';
+import '../../widgets/bell_icon.dart';
+import '../../widgets/dropdown.dart';
+import '../../widgets/icons_buttons.dart';
+import '../../widgets/seeIcon.dart';
+import '../bottom_navbar.dart';
 
 
 
@@ -235,7 +235,7 @@ class _LeadsState extends State<Leads> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Business Opportunity"),
+                  Text("Leads"),
                   myAppBarIcon(),
                 ],
               ),

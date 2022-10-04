@@ -42,12 +42,13 @@ class ManageAllBuyingRequirementRepo {
 class ManageAllBuyingRequirementModel {
   String? id;
   String? userId;
-  String? description;
-  String? createdAt;
-  String? prodName;
-  String? isLead;
   String? catId;
+  String? catName;
   String? subcatId;
+  String? subCatName;
+  String? prodName;
+  String? description;
+  String? isLead;
   String? useCase;
   String? type;
   String? approx;
@@ -61,12 +62,13 @@ class ManageAllBuyingRequirementModel {
   ManageAllBuyingRequirementModel(
       {this.id,
         this.userId,
-        this.description,
-        this.createdAt,
-        this.prodName,
-        this.isLead,
         this.catId,
+        this.catName,
         this.subcatId,
+        this.subCatName,
+        this.prodName,
+        this.description,
+        this.isLead,
         this.useCase,
         this.type,
         this.approx,
@@ -80,12 +82,13 @@ class ManageAllBuyingRequirementModel {
   ManageAllBuyingRequirementModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    description = json['description'];
-    createdAt = json['created_at'];
-    prodName = json['prod_name'];
-    isLead = json['is_lead'];
     catId = json['cat_id'];
+    catName = json['cat_name'];
     subcatId = json['subcat_id'];
+    subCatName = json['sub_cat_name'];
+    prodName = json['prod_name'];
+    description = json['description'];
+    isLead = json['is_lead'];
     useCase = json['use_case'];
     type = json['type'];
     approx = json['approx'];
@@ -101,12 +104,13 @@ class ManageAllBuyingRequirementModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.userId;
-    data['description'] = this.description;
-    data['created_at'] = this.createdAt;
-    data['prod_name'] = this.prodName;
-    data['is_lead'] = this.isLead;
     data['cat_id'] = this.catId;
+    data['cat_name'] = this.catName;
     data['subcat_id'] = this.subcatId;
+    data['sub_cat_name'] = this.subCatName;
+    data['prod_name'] = this.prodName;
+    data['description'] = this.description;
+    data['is_lead'] = this.isLead;
     data['use_case'] = this.useCase;
     data['type'] = this.type;
     data['approx'] = this.approx;

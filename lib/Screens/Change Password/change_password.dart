@@ -4,12 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/settings/settings_bloc.dart';
 import 'package:unstoppable/Blocs/settings/settings_event.dart';
 import 'package:unstoppable/Blocs/settings/settings_state.dart';
-import '../Utils/connectivity_check.dart';
-import '../config/image.dart';
-import '../constant/theme_colors.dart';
-import '../widgets/app_dialogs.dart';
-import '../widgets/drawer.dart';
-import 'bottom_navbar.dart';
+import '../../Utils/connectivity_check.dart';
+import '../../config/image.dart';
+import '../../constant/theme_colors.dart';
+import '../../widgets/app_dialogs.dart';
+import '../../widgets/drawer.dart';
+import '../bottom_navbar.dart';
 
 
 class EditPasswordPage extends StatefulWidget {
@@ -45,8 +45,9 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget()));
+            Navigator.of(context).pop();
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => DrawerWidget()));
           },
           child: Icon(Icons.arrow_back_ios),
         ),

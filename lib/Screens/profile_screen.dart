@@ -6,6 +6,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +19,8 @@ import 'package:unstoppable/Models/user_profile_model.dart';
 import 'package:unstoppable/widgets/drawer.dart';
 import '../Api/api.dart';
 import '../Blocs/User Profile/user_profile_bloc.dart';
+import '../Blocs/User Profile/user_profile_event.dart';
+import '../Blocs/User Profile/user_profile_state.dart';
 import '../Blocs/companyProfile/company_profile_block.dart';
 import '../Constant/font_size.dart';
 import '../Models/category_model.dart';
@@ -30,6 +33,7 @@ import '../Utils/application.dart';
 import '../constant/theme_colors.dart';
 import 'package:http/http.dart' as http;
 
+import '../widgets/app_button.dart';
 import 'image_file.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -59,7 +63,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   SubCategoryModel? subcategoryModelselected;
 
 
-  CompanyProfileBloc? _userProfileBloc;
+
+  UserProfileBloc? _userProfileBloc;
   List<UserProfileModel>? userProfileData;
   var userData;
   // late Future<UserProfileModel> profileData;
@@ -68,6 +73,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ImageFile? imageFile;
   final picker = ImagePicker();
   String flagImage="";
+  bool flagLoading=false;
+
 
 
 
@@ -221,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             lockAspectRatio: false),
         iosUiSettings: IOSUiSettings(
           title: 'Cropper',
-        )) as File?;
+        )) ;
     if (croppedFile != null) {
 
       setState(() {
@@ -230,6 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // state = AppState.cropped;
         _image = croppedFile;
         imageFile!.imagePath=_image!.path;
+        flagImage="0";
       });
       // Navigator.pop(context);
     }
@@ -240,8 +248,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     imageFile=new ImageFile();
 
-    _userProfileBloc = BlocProvider.of<CompanyProfileBloc>(context);
-    _userProfileBloc!.add(OnLoadingUserProfile(userid: Application.vendorLogin!.userId.toString()));
+    _userProfileBloc = BlocProvider.of<UserProfileBloc>(context);
+    // _userProfileBloc!.add(OnLoadingUserProfile(userid: Application.vendorLogin!.userId.toString()));
     // _companyProbileBloc!.add(OnLoadingCompanyProfileList(userid: "874"));
     // final _nameController = TextEditingController(text: companyData![0].name.toString());
     if(widget.profileData!=null){
@@ -271,6 +279,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     SubSubCategoryModel subsubCategoryModel=SubSubCategoryModel();
     subsubCategoryModel.ssCatName=widget.profileData!.ssCatName;
+    subsubCategoryModel.sscatId=widget.profileData!.subsubCatId;
     subsubcategoryModelselected=subsubCategoryModel;
   }
 
@@ -278,7 +287,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState((){
 
       _nameController.text = widget.profileData!.name.toString();
-      _businessController.text = widget.profileData!.businessTyp.toString();
+      _businessController.text = widget.profileData!.bussinessName.toString();
       _ownershipController.text = widget.profileData!.ownershipTyp.toString();
       _establishmentController.text = widget.profileData!.estYear.toString();
       _totalEmpController.text = widget.profileData!.totEmployee.toString();
@@ -324,8 +333,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => DrawerWidget()));
+              Navigator.of(context).pop();
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => DrawerWidget()));
             },
             child: Icon(Icons.arrow_back_ios),
           ),
@@ -1317,65 +1327,129 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                   ),
                   SizedBox(height: 10,),
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(0),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 40,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: ThemeColors.drawerTextColor,
-                          ),
-                          onPressed: () {
-                            // if(_formKey.currentState!.validate()){
-                            //   Fluttertoast.showToast(msg: "Save Successfully");
-                            //   _companyProbileBloc!.add(UpdateCompanyProfile(
-                            //       userid: widget.companyData!.userId.toString(),
-                            //       name: _nameController.text,
-                            //       managingdirector: _managingDirector.text,
-                            //       ceo: _ceo.text,
-                            //       companyname: _companyName.text,
-                            //       operatordesignation: _operatorDesignation.text,
-                            //       operatorname: _operatorName.text,
-                            //       businessaddress: _businessAddress.text,
-                            //       country: _country.text,
-                            //       state: _state.text,
-                            //       city: _city.text,
-                            //       zipcode: _zipCode.text,
-                            //       gstin: _gstin.text,
-                            //       website: _companyWebsite.text,
-                            //       mobileno: _mobileNumber.text,
-                            //       altmobile: _alternateNumber.text,
-                            //       email: _primaryEmail.text,
-                            //       altemail: _alternateEmail.text,
-                            //       landline: _landlineNumber.text,
-                            //       estyear: _yearOfEstablishment.text,
-                            //       businesstype: _businessType.text,
-                            //       ownershiptype: _OwnershipType.text,
-                            //       totemp: _numberOfEmployees.text,
-                            //       anualturnover: _annualTurnover.text,
-                            //       panno: _panNo.text,
-                            //       tanno: _tanNo.text,
-                            //       cinno: _cinNo.text,
-                            //       dfgt: _dfgt.text
-                            //
-                            //   ));
-                            // }else {
-                            //   Fluttertoast.showToast(msg: "Please fill the data");
-                            // }
-                          },
-                          child: Text(
-                            'Save',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
+                  BlocBuilder<UserProfileBloc, UserProfileState>(builder: (context, state) {
+                    if (state is UserProfileUpdateSuccess) {
+                      // Navigator.of(context).pop();
+                      Fluttertoast.showToast(msg: state.message.toString());
+                      flagLoading=false;
+
+                    }
+                    if (state is UserProfileUpdateLoading) {
+                      flagLoading=true;
+                    }
+
+                    if (state is UserProfileUpdatefail) {
+                      Fluttertoast.showToast(msg: state.message.toString());
+                      flagLoading=false;
+                    }
+                    return
+                      Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 40,
+                            child:  AppButton(
+                              onPressed: () async {
+                                if(_formKey.currentState!.validate()) {
+                                  if (_nameController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter name");
+                                  }
+                                  else if (_businessController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter bussiness name");
+                                  }
+                                  else if (categoryModelselected == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please select category");
+                                  } else if (subcategoryModelselected == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please select sub category");
+                                  } else
+                                  if (subsubcategoryModelselected == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please select sub sub category");
+                                  } else if (_ownershipController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter ownership type");
+                                  } else if (_establishmentController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter year of establishment");
+                                  } else if (_totalEmpController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter total number of employees");
+                                  } else if (_annualTurnController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter annual turnover");
+                                  } else if (_gSTNController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter GSTN Number");
+                                  } else
+                                  if (_BusinessAddressController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter business address");
+                                  } else if (_pinController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter pin code");
+                                  }
+                                  else if (_mobNoController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter mobile number");
+                                  } else if (_emailController == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Please enter email");
+                                  }
+                                   else
+                                  if (_formKey.currentState!.validate()) {
+                                    _userProfileBloc!.add(UserProfileUpdate(
+                                      userid: Application.vendorLogin!.userId.toString(),
+                                      name: _nameController.text,
+                                      businessName: _businessController.text,
+                                      catId: categoryModelselected!.catId
+                                          .toString(),
+                                      subCatId: subcategoryModelselected!
+                                          .subcatId
+                                          .toString(),
+                                      subSubCatId: subsubcategoryModelselected!
+                                          .sscatId
+                                          .toString(),
+                                      ownershipType: _ownershipController
+                                          .text,
+                                      estYear: _establishmentController.text,
+                                      totEmp: _totalEmpController.text,
+                                      annualTurnover: _annualTurnController
+                                          .text,
+                                      gstNo: _gSTNController.text,
+                                      address: _BusinessAddressController
+                                          .text,
+                                      pinCode: _pinController.text,
+                                      mobileNo: _mobNoController.text,
+                                      // email: _emailController.text,
+                                      comLogo: imageFile,
+                                      imgFlag: flagImage,
+                                      // referby: _referBy.text,
+                                    ));
+                                  }
+                                }else {
+                                  Fluttertoast.showToast(msg: "Please fill the data");
+                                }
+
+                              },
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(50))),
+                              text: 'Save',
+                              // loading: login is LoginLoading,
+                              // disableTouchWhenLoading: true,
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  )
+                      );
+                  }
+                  ),
+
+
                 ],
               ),
             ),

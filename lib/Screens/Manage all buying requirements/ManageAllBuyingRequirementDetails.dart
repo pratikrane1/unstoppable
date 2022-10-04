@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unstoppable/Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_state.dart';
 import 'package:unstoppable/Models/manageAllBuyingRequirements_model.dart';
-import 'package:unstoppable/Screens/manageAllBuyingRequirement.dart';
+import 'package:unstoppable/Screens/Manage%20all%20buying%20requirements/manageAllBuyingRequirement.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_block.dart';
-import '../Blocs/manageAllBuyingRequirement/manageAllBuyingRequirements_event.dart';
-import '../Constant/theme_colors.dart';
-import '../Utils/translate.dart';
-import '../widgets/seeIcon.dart';
+import '../../Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_block.dart';
+import '../../Blocs/manageAllBuyingRequirement/manageAllBuyingRequirements_event.dart';
+import '../../Constant/theme_colors.dart';
+import '../../Utils/translate.dart';
+import '../../widgets/seeIcon.dart';
 
 class ManageAllBuyingRequirementDetails  extends StatefulWidget{
   ManageAllBuyingRequirementModel? allBuyingRequirementData;
@@ -81,7 +81,7 @@ class _ManageAllBuyingRequirementDetailsState extends State<ManageAllBuyingRequi
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement(context,
+            Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ManageAllBuyingRequirement()));
             // Navigator.of(context).pop();
           },
@@ -114,7 +114,7 @@ class _ManageAllBuyingRequirementDetailsState extends State<ManageAllBuyingRequi
                 child: ListView(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 8.0,),
+                      padding: const EdgeInsets.only(left:10.0,right: 8.0,top: 10.0,),
                       child: Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,12 +127,12 @@ class _ManageAllBuyingRequirementDetailsState extends State<ManageAllBuyingRequi
                                   children: [
                                     Icon(Icons.account_tree,color: Colors.black54,size: 15,),
                                     SizedBox(width: 7,),
-                                    Text(widget.allBuyingRequirementData!.catId.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                                    Text(widget.allBuyingRequirementData!.catName.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
                                   ],
                                 ),
                               ],
                             ),
-                            nameIcon(),
+                            // nameIcon(),
                           ],
                         ),
                       ),
@@ -146,9 +146,9 @@ class _ManageAllBuyingRequirementDetailsState extends State<ManageAllBuyingRequi
                             Text("Sub Category",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize:15),),
                             Row(
                               children: [
-                                Icon(Icons.account_circle_outlined,color: Colors.black54,size: 15,),
+                                Icon(Icons.account_tree,color: Colors.black54,size: 15,),
                                 SizedBox(width: 7,),
-                                Text(widget.allBuyingRequirementData!.subcatId.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
+                                Text(widget.allBuyingRequirementData!.subCatName.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
                               ],
                             ),
                           ],
@@ -365,7 +365,7 @@ class _ManageAllBuyingRequirementDetailsState extends State<ManageAllBuyingRequi
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 //color: Color(0xffc32c37),
-                                color: Colors.blue,
+                                color: ThemeColors.buttonColor,
                                 border: Border.all(color: Colors.black, width: 1)),
                             child: Container(
                               width: 30,

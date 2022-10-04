@@ -6,15 +6,15 @@ import 'package:shimmer/shimmer.dart';
 import 'package:unstoppable/Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_block.dart';
 import 'package:unstoppable/Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_state.dart';
 import 'package:unstoppable/Blocs/manageAllBuyingRequirement/manageAllBuyingRequirements_event.dart';
-import '../Models/manageAllBuyingRequirements_model.dart';
-import '../Utils/application.dart';
-import '../constant/theme_colors.dart';
-import '../widgets/bell_icon.dart';
-import '../widgets/drawer.dart';
-import '../widgets/dropdown.dart';
-import '../widgets/icons_buttons.dart';
+import '../../Models/manageAllBuyingRequirements_model.dart';
+import '../../Utils/application.dart';
+import '../../constant/theme_colors.dart';
+import '../../widgets/bell_icon.dart';
+import '../../widgets/drawer.dart';
+import '../../widgets/dropdown.dart';
+import '../../widgets/icons_buttons.dart';
 import 'ManageAllBuyingRequirementDetails.dart';
-import 'bottom_navbar.dart';
+import '../bottom_navbar.dart';
 
 
 
@@ -223,9 +223,9 @@ class _ManageAllBuyingRequirementState extends State<ManageAllBuyingRequirement>
       AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DrawerWidget()));
-            // Navigator.of(context).pop();
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => DrawerWidget()));
+            Navigator.of(context).pop();
           },
           child: Icon(Icons.arrow_back_ios),
         ),
@@ -333,7 +333,7 @@ class _ManageAllBuyingRequirementState extends State<ManageAllBuyingRequirement>
                                 ), // InputDecoration
                               ),
                             ),
-                            trailing: Icon(Icons.more_vert),
+                            // trailing: Icon(Icons.more_vert),
                           ),
                           // info(),
                           //for product ListView
@@ -826,7 +826,7 @@ Widget infoManage(BuildContext context, ManageAllBuyingRequirementModel allBuyin
                       ],
                     ),
                     Text(
-                      allBuyingRequirementData.createdAt.toString(),
+                      allBuyingRequirementData.catName.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 10.0,
@@ -850,7 +850,7 @@ Widget infoManage(BuildContext context, ManageAllBuyingRequirementModel allBuyin
               ),
               child: InkWell(
                 onTap: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> ManageAllBuyingRequirementDetails(allBuyingRequirementData: allBuyingRequirementData)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ManageAllBuyingRequirementDetails(allBuyingRequirementData: allBuyingRequirementData)));
                 },
                 child: Container(
                   width: 30,

@@ -52,13 +52,14 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        // leading: GestureDetector(
-        //   onTap: () {
-        //     Navigator.pushReplacement(context,
-        //         MaterialPageRoute(builder: (context) => DrawerWidget()));
-        //   },
-        //   child: Icon(Icons.arrow_back_ios),
-        // ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => DrawerWidget()));
+          },
+          child: Icon(Icons.arrow_back_ios),
+        ),
         backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
         centerTitle: true,
@@ -138,7 +139,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   shape: BoxShape.rectangle,
                                   borderRadius:  BorderRadius.circular(5.0),
                                   //color: Color(0xffc32c37),
-                                  color: Colors.indigo,
+                                  color: ThemeColors.buttonColor,
                                   // border: Border.all(color: Colors.black, width: 1)
                                 ),
                                 child: Container(
@@ -210,7 +211,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                       shape: BoxShape.rectangle,
                                       borderRadius:  BorderRadius.circular(5.0),
                                       //color: Color(0xffc32c37),
-                                      color: Colors.indigo,
+                                      color: ThemeColors.buttonColor,
                                       // border: Border.all(color: Colors.black, width: 1)
                                     ),
                                     child: Container(
@@ -278,7 +279,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                       shape: BoxShape.rectangle,
                                       borderRadius:  BorderRadius.circular(5.0),
                                       //color: Color(0xffc32c37),
-                                      color: Colors.indigo,
+                                      color: ThemeColors.buttonColor,
                                       // border: Border.all(color: Colors.black, width: 1)
                                     ),
                                     child: Container(
@@ -346,7 +347,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                       shape: BoxShape.rectangle,
                                       borderRadius:  BorderRadius.circular(5.0),
                                       //color: Color(0xffc32c37),
-                                      color: Colors.indigo,
+                                      color: ThemeColors.buttonColor,
                                       // border: Border.all(color: Colors.black, width: 1)
                                     ),
                                     child: Container(
@@ -413,7 +414,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                       shape: BoxShape.rectangle,
                                       borderRadius:  BorderRadius.circular(5.0),
                                       //color: Color(0xffc32c37),
-                                      color: Colors.indigo,
+                                      color: ThemeColors.buttonColor,
                                       // border: Border.all(color: Colors.black, width: 1)
                                     ),
                                     child: Container(

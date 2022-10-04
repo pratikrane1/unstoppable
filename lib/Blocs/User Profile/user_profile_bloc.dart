@@ -1,106 +1,116 @@
-// import 'dart:async';
-// import 'dart:convert';
-// import 'package:bloc/bloc.dart';
-// import 'package:unstoppable/Blocs/User%20Profile/user_profile_event.dart';
-// import 'package:unstoppable/Blocs/User%20Profile/user_profile_state.dart';
-// import 'package:unstoppable/Models/user_profile_model.dart';
-// import 'package:unstoppable/Repository/UserRepository.dart';
-// import 'package:http/http.dart' as http;
-// import '../../Api/api.dart';
-// import '../../Models/company_profile_model.dart';
-//
-//
-//
-// class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
-//   UserProfileBloc({this.userProfileRepo}) : super(InitialUserProfileState());
-//   final UserRepository? userProfileRepo;
-//
-//
-//   @override
-//   Stream<UserProfileState> mapEventToState(event) async* {
-//
-//
-//
-//     if (event is OnLoadingUserProfile) {
-//       ///Notify loading to UI
-//       yield UserProfileLoading();
-//
-//       ///Fetch API via repository
-//       final UserProfileRepo response = await userProfileRepo!
-//           .fetchUserProfile(
-//         userId: event.userid,
-//         // userId: "874",
-//       );
-//
-//       final Iterable refactorProduct = response.data ?? [];
-//       final userProfileData = refactorProduct.map((item) {
-//         return UserProfileModel.fromJson(item);
-//       }).toList();
-//       if(refactorProduct.length>0){
-//         yield UserProfileSuccess(userProfileData: userProfileData);
-//
-//       }else{
-//         yield UserProfileLoadFail();
-//
-//       }
-//
-//
-//     }
-//
-//
-//     //For Company Profile Update
-//     // if (event is UpdateCompanyProfile) {
-//     //   yield UpdateCompanyProfileLoading();
-//     //   Map<String, String> params;
-//     //   params = {
-//     //     'user_id': event.userid,
-//     //     'name':event.name,
-//     //     'managing_director':event.managingdirector,
-//     //     'ceo':event.ceo,
-//     //     'company_name':event.companyname,
-//     //     'operator_designation':event.operatordesignation,
-//     //     'operator_name':event.operatorname,
-//     //     'business_address': event.businessaddress,
-//     //     'country':event.country,
-//     //     'state':event.state,
-//     //     'city':event.city,
-//     //     'zip_code':event.zipcode,
-//     //     'gstin':event.gstin,
-//     //     'website':event.website,
-//     //     'mobile_no':event.mobileno,
-//     //     'alt_mobile_no':event.altmobile,
-//     //     'email':event.email,
-//     //     'alt_email':event.altemail,
-//     //     'landline_no':event.landline,
-//     //     'est_year': event.estyear,
-//     //     'business_typ':event.businesstype,
-//     //     'ownership_typ':event.ownershiptype,
-//     //     'tot_employee':event.totemp,
-//     //     'annual_turnover':event.anualturnover,
-//     //     'pan_no':event.panno,
-//     //     'tan_no':event.tanno,
-//     //     'cin_no':event.cinno,
-//     //     'dfgt':event.dfgt,
-//     //   };
-//     //
-//     //   var response = await http.post(
-//     //       Uri.parse(Api.updateCompanyProfile),
-//     //       body: params
-//     //   );
-//     //
-//     //   try {
-//     //     final resp = json.decode(response.body);
-//     //     if (resp['result'] == 'Success') {
-//     //       yield UpdateCompanyProfileSuccess();
-//     //     }
-//     //   } catch (e) {
-//     //     print(e);
-//     //     rethrow;
-//     //   }
-//     // }
-//
-//   }
-//
-//
-//
-// }
+import 'dart:async';
+import 'dart:convert';
+import 'package:bloc/bloc.dart';
+import 'package:http/http.dart';
+import 'package:unstoppable/Blocs/User%20Profile/user_profile_event.dart';
+import 'package:unstoppable/Blocs/User%20Profile/user_profile_state.dart';
+import 'package:unstoppable/Models/user_profile_model.dart';
+import 'package:unstoppable/Repository/UserRepository.dart';
+import 'package:http/http.dart' as http;
+import '../../Api/api.dart';
+import '../../Models/company_profile_model.dart';
+
+
+
+class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
+  UserProfileBloc({this.userProfileRepo}) : super(InitialUserProfileState());
+  final UserRepository? userProfileRepo;
+
+
+  @override
+  Stream<UserProfileState> mapEventToState(event) async* {
+
+
+
+    // if (event is OnLoadingUserProfile) {
+    //   ///Notify loading to UI
+    //   yield UserProfileLoading();
+    //
+    //   ///Fetch API via repository
+    //   final UserProfileRepo response = await userProfileRepo!
+    //       .fetchUserProfile(
+    //     userId: event.userid,
+    //     // userId: "874",
+    //   );
+    //
+    //   final Iterable refactorProduct = response.data ?? [];
+    //   final userProfileData = refactorProduct.map((item) {
+    //     return UserProfileModel.fromJson(item);
+    //   }).toList();
+    //   if(refactorProduct.length>0){
+    //     yield UserProfileSuccess(userProfileData: userProfileData);
+    //
+    //   }else{
+    //     yield UserProfileLoadFail();
+    //
+    //   }
+    //
+    //
+    // }
+
+    if (event is UserProfileUpdate) {
+      yield UserProfileUpdateLoading();
+
+
+      MultipartRequest request = new MultipartRequest(
+          'POST', Uri.parse(Api.USER_PROFILE_UPDATE));
+      request.fields['vendor_user_id'] = event.userid;
+      request.fields['full_name'] = event.name;
+      request.fields['bussiness_name'] = event.businessName;
+      request.fields['cat_id'] = event.catId;
+      request.fields['subcat_id'] = event.subCatId;
+      request.fields['subsub_cat_id'] = event.subSubCatId;
+      request.fields['ownership_typ'] = event.ownershipType;
+      request.fields['est_year'] = event.estYear;
+      request.fields['tot_employee'] = event.totEmp;
+      request.fields['annual_turnover'] = event.annualTurnover;
+      request.fields['gst_no'] = event.gstNo;
+      request.fields['address'] = event.address;
+      request.fields['pin_code'] = event.pinCode;
+      request.fields['mobile_no'] = event.mobileNo;
+
+      List<MultipartFile> imageUpload = <MultipartFile>[];
+
+      // final multipartFile = await http.MultipartFile.fromPath(
+      //   'com_logo', event.comLogo!.imagePath.toString(),
+      //   // contentType: MediaType(mimeTypeData[0], mimeTypeData[1])
+      // );
+
+      if(event.imgFlag=="0"){//0 cropped file,1=existing image
+        final multipartFile = await http.MultipartFile.fromPath(
+          'com_logo', event.comLogo!.imagePath.toString(),
+          // contentType: MediaType(mimeTypeData[0], mimeTypeData[1])
+        );
+        imageUpload.add(multipartFile);
+        request.files.addAll(imageUpload);
+
+      }else{
+        request.fields['com_logo'] = "";
+
+      }
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+      var resp = json.decode(response.body);
+      try {
+        if (resp[0]['result'] == 'S') {
+          yield UserProfileUpdateSuccess( message: resp[0]['msg']);
+        }else{
+          yield UserProfileUpdatefail(message: resp[0]['msg']);
+
+        }
+      } catch (e) {
+        yield UserProfileUpdatefail(message: resp[0]['msg']);
+        rethrow;
+      }
+    }
+
+
+
+
+
+  }
+
+
+
+}
