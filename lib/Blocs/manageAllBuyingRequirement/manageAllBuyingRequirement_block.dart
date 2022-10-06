@@ -72,7 +72,10 @@ class ManageAllBuyingRequirementBloc extends Bloc<ManageAllBuyingRequirementEven
       try {
         final resp = json.decode(response.body);
         if (resp['result'] == 'Success') {
-          yield SaveBuyingRequiementFormSuccess();
+          yield SaveBuyingRequiementFormSuccess(message: resp['msg']);
+        }
+        else{
+          yield SaveBuyingRequiementFormFailed(message: resp['msg']);
         }
       } catch (e) {
         print(e);

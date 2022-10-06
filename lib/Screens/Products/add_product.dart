@@ -759,7 +759,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 child: Container(
                                     height: _image==null?100:110,
                                     width: MediaQuery.of(context).size.width * 0.9,
-                                    child: imageFile!.image!=null?
+                                    child: imageFile!.imagePath==null?
                                     Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,

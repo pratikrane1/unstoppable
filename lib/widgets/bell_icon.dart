@@ -23,7 +23,7 @@ class _myAppBarIconState extends State<myAppBarIcon> {
           border: Border.all(color: Colors.black, width: 1)),
       child: InkWell(
         onTap: (){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> NotificationPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> NotificationPage()));
 
         },
         child: Container(

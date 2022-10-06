@@ -38,7 +38,7 @@ class _ManageAllBuyingRequirementState extends State<ManageAllBuyingRequirement>
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    allBuyingRequirementList=[];
     _allBuyingRequirementBloc = BlocProvider.of<ManageAllBuyingRequirementBloc>(context);
     _allBuyingRequirementBloc!.add(OnLoadingManageAllBuyingRequirementList(userid: Application.vendorLogin!.userId.toString()));
     _isSearching = false;
@@ -447,118 +447,118 @@ class _ManageAllBuyingRequirementState extends State<ManageAllBuyingRequirement>
                       ),
 
                       //for bottom pagination Ui
-                      Positioned(
-                          bottom: 15.0,
-                          right: 5.0,
-                          left: 5.0,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 8.0,
-                                right: 15,
-                                left: 15,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  // Column(
-                                  //   children: [
-                                  //     Text(
-                                  //       "Items per page:",
-                                  //       style: TextStyle(fontSize: 10, color: Colors.black),
-                                  //     ),
-                                  //     DropdownButtonWidget(),
-                                  //   ],
-                                  // ),
-                                  Row(
-                                    children: [
-                                      //back icon
-                                      if(offset!=0)
-                                        InkWell(
-                                            onTap: (){
-                                              allBuyingRequirementList=[];
-                                              if(offset==0){
-                                                _allBuyingRequirementBloc!.add(OnLoadingManageAllBuyingRequirementList(userid: Application.vendorLogin!.userId.toString()));
-
-                                              }else {
-                                                offset -= 10;
-                                                _allBuyingRequirementBloc!.add(OnLoadingManageAllBuyingRequirementList(
-                                                    userid: Application.vendorLogin!
-                                                        .userId.toString()
-                                                ));
-                                              }
-                                            },
-                                            child:Container(
-                                              width: 40,
-                                              height: 25,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.rectangle,
-                                                borderRadius:  BorderRadius.circular(5.0),
-                                                //color: Color(0xffc32c37),
-                                                color: ThemeColors.buttonColor,
-                                                // border: Border.all(color: Colors.black, width: 1)
-                                              ),
-                                              child: Container(
-                                                width: 30,
-                                                height: 30,
-                                                alignment: Alignment.center,
-                                                child: Stack(
-                                                  children: [
-                                                    Center(
-                                                      child: Icon(
-                                                        CupertinoIcons.arrow_left,
-                                                        color: Colors.white,
-                                                        size: 21,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            )),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      //fwd icon
-                                      InkWell(
-                                          onTap: (){
-                                            allBuyingRequirementList=[];
-                                            offset+=10;
-                                            _allBuyingRequirementBloc!.add(OnLoadingManageAllBuyingRequirementList(userid: Application.vendorLogin!.userId.toString(),));
-                                          },
-                                          child:Container(
-                                            width: 40,
-                                            height: 25,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              borderRadius:  BorderRadius.circular(5.0),
-                                              //color: Color(0xffc32c37),
-                                              color: ThemeColors.buttonColor,
-                                              // border: Border.all(color: Colors.black, width: 1)
-                                            ),
-                                            child: Container(
-                                              width: 30,
-                                              height: 30,
-                                              alignment: Alignment.center,
-                                              child: Stack(
-                                                children: [
-                                                  Center(
-                                                    child: Icon(
-                                                      CupertinoIcons.arrow_right,
-                                                      color: Colors.white,
-                                                      size: 21,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          )),
+                      // Positioned(
+                      //     bottom: 15.0,
+                      //     right: 5.0,
+                      //     left: 5.0,
+                      //     child: Container(
+                      //       width: MediaQuery.of(context).size.width,
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.only(
+                      //           top: 8.0,
+                      //           right: 15,
+                      //           left: 15,
+                      //         ),
+                      //         child: Row(
+                      //           mainAxisAlignment: MainAxisAlignment.end,
+                      //           children: [
+                      //             // Column(
+                      //             //   children: [
+                      //             //     Text(
+                      //             //       "Items per page:",
+                      //             //       style: TextStyle(fontSize: 10, color: Colors.black),
+                      //             //     ),
+                      //             //     DropdownButtonWidget(),
+                      //             //   ],
+                      //             // ),
+                      //             Row(
+                      //               children: [
+                      //                 //back icon
+                      //                 if(offset!=0)
+                      //                   InkWell(
+                      //                       onTap: (){
+                      //                         allBuyingRequirementList=[];
+                      //                         if(offset==0){
+                      //                           _allBuyingRequirementBloc!.add(OnLoadingManageAllBuyingRequirementList(userid: Application.vendorLogin!.userId.toString()));
+                      //
+                      //                         }else {
+                      //                           offset -= 10;
+                      //                           _allBuyingRequirementBloc!.add(OnLoadingManageAllBuyingRequirementList(
+                      //                               userid: Application.vendorLogin!
+                      //                                   .userId.toString()
+                      //                           ));
+                      //                         }
+                      //                       },
+                      //                       child:Container(
+                      //                         width: 40,
+                      //                         height: 25,
+                      //                         decoration: BoxDecoration(
+                      //                           shape: BoxShape.rectangle,
+                      //                           borderRadius:  BorderRadius.circular(5.0),
+                      //                           //color: Color(0xffc32c37),
+                      //                           color: ThemeColors.buttonColor,
+                      //                           // border: Border.all(color: Colors.black, width: 1)
+                      //                         ),
+                      //                         child: Container(
+                      //                           width: 30,
+                      //                           height: 30,
+                      //                           alignment: Alignment.center,
+                      //                           child: Stack(
+                      //                             children: [
+                      //                               Center(
+                      //                                 child: Icon(
+                      //                                   CupertinoIcons.arrow_left,
+                      //                                   color: Colors.white,
+                      //                                   size: 21,
+                      //                                 ),
+                      //                               ),
+                      //                             ],
+                      //                           ),
+                      //                         ),
+                      //                       )),
+                      //                 SizedBox(
+                      //                   width: 5,
+                      //                 ),
+                      //                 //fwd icon
+                      //                 InkWell(
+                      //                     onTap: (){
+                      //                       allBuyingRequirementList=[];
+                      //                       offset+=10;
+                      //                       _allBuyingRequirementBloc!.add(OnLoadingManageAllBuyingRequirementList(userid: Application.vendorLogin!.userId.toString(),));
+                      //                     },
+                      //                     child:Container(
+                      //                       width: 40,
+                      //                       height: 25,
+                      //                       decoration: BoxDecoration(
+                      //                         shape: BoxShape.rectangle,
+                      //                         borderRadius:  BorderRadius.circular(5.0),
+                      //                         //color: Color(0xffc32c37),
+                      //                         color: ThemeColors.buttonColor,
+                      //                         // border: Border.all(color: Colors.black, width: 1)
+                      //                       ),
+                      //                       child: Container(
+                      //                         width: 30,
+                      //                         height: 30,
+                      //                         alignment: Alignment.center,
+                      //                         child: Stack(
+                      //                           children: [
+                      //                             Center(
+                      //                               child: Icon(
+                      //                                 CupertinoIcons.arrow_right,
+                      //                                 color: Colors.white,
+                      //                                 size: 21,
+                      //                               ),
+                      //                             ),
+                      //                           ],
+                      //                         ),
+                      //                       ),
+                      //                     )),
+                      //               ],
+                      //             )
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     )),
                     ],
                   ),
                 ),

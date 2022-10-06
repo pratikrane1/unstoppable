@@ -29,7 +29,13 @@ class SaveBuyingRequiementForm extends ManageAllBuyingRequirementState {}
 
 
 class SaveBuyingRequiementFormSuccess extends ManageAllBuyingRequirementState {
-  SaveBuyingRequiementFormSuccess();
+  String message;
+  SaveBuyingRequiementFormSuccess({required this.message});
+}
+
+class SaveBuyingRequiementFormFailed extends ManageAllBuyingRequirementState {
+  String message;
+  SaveBuyingRequiementFormFailed({required this.message});
 }
 
 

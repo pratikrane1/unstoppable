@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -924,7 +925,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -985,7 +989,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1046,7 +1053,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1297,7 +1307,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1358,7 +1371,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1419,7 +1435,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.emailAddress,
+
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1476,7 +1493,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     .size
                                     .width,
                                 child: TextFormField(
-                                  controller: _emailController,
+                                  controller: _referBy,
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
@@ -1606,6 +1623,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: AppButton(
+                                loading: true,
                                 onPressed: () async {
                                   isconnectedToInternet =
                                   await ConnectivityCheck

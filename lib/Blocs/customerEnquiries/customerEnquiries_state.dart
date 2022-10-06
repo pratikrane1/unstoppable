@@ -24,7 +24,13 @@ class CustomerEnquiriesListSuccess extends CustomerEnquiriesState {
 class CustomerEnquiriesListLoadFail extends CustomerEnquiriesState {}
 
 class DeleteCustomerEnquiriesSuccess extends CustomerEnquiriesState {
- DeleteCustomerEnquiriesSuccess();
+ String message;
+ DeleteCustomerEnquiriesSuccess({required this.message});
+}
+
+class DeleteCustomerEnquiriesFailed extends CustomerEnquiriesState {
+ String message;
+ DeleteCustomerEnquiriesFailed({required this.message});
 }
 
 // abstract class ProductDetailState {}

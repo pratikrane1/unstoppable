@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:unstoppable/Screens/buying_req.dart';
 import 'package:unstoppable/Screens/dashboard.dart';
 import 'package:unstoppable/Screens/Products/unstoppableProducts.dart';
 import 'package:unstoppable/widgets/drawer.dart';
 
 import 'businessNetworking.dart';
-import 'buyingRequirmentSubmit.dart';
-import 'customerEnquiries.dart';
+import 'buyingRequirmentForm.dart';
+import 'Product Enquiry/customerEnquiries.dart';
 
 class BottomNavigation extends StatefulWidget {
   int index;

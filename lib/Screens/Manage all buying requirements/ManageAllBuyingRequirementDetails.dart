@@ -342,8 +342,9 @@ class _ManageAllBuyingRequirementDetailsState extends State<ManageAllBuyingRequi
                     SizedBox(height: 20,),
                     BlocBuilder<ManageAllBuyingRequirementBloc, ManageAllBuyingRequirementState>(builder: (context, state) {
                       if (state is DeleteAllBuyingRequirementSuccess) {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => ManageAllBuyingRequirement()));
+                        // Navigator.pushReplacement(context,
+                        //     MaterialPageRoute(builder: (context) => ManageAllBuyingRequirement()));
+                        Navigator.of(context).pop();
                         Fluttertoast.showToast(msg: "Product Deleted Successfully");
 
                       }

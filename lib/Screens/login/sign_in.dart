@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,8 +52,9 @@ class _SignInPageState extends State<SignInPage> {
           return BlocListener<LoginBloc,LoginState>(listener: (context,state){
             if(state is LoginSuccess)
               {
-
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavigation(index: 0,)));
+                CircularProgressIndicator();
+                Timer.periodic(const Duration(seconds: 15), (_) => BottomNavigation(index: 0));
+                // Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavigation(index: 0,)));
                 Fluttertoast.showToast(msg: state.message.toString());
 
               }
@@ -214,25 +217,25 @@ class _SignInPageState extends State<SignInPage> {
                 Padding(
                   padding: const EdgeInsets.all(35.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Row(
-                        children:  [
-                          // Icon(CupertinoIcons.circle),
-                          Radio(
-                              value: "remember",
-                              groupValue: _gender,
-                              onChanged: (value){
-                                setState(() {
-                                  _gender = value.toString();
-                                });
-                              }),
-                          // SizedBox(
-                          //   width: 5,
-                          // ),
-                          Text("Remember me"),
-                        ],
-                      ),
+                      // Row(
+                      //   children:  [
+                      //     // Icon(CupertinoIcons.circle),
+                      //     // Radio(
+                      //     //     value: "remember",
+                      //     //     groupValue: _gender,
+                      //     //     onChanged: (value){
+                      //     //       setState(() {
+                      //     //         _gender = value.toString();
+                      //     //       });
+                      //     //     }),
+                      //     // SizedBox(
+                      //     //   width: 5,
+                      //     // ),
+                      //     Text("Remember me"),
+                      //   ],
+                      // ),
                       InkWell(
                           onTap: () {},
                           child: Text(
@@ -267,8 +270,8 @@ class _SignInPageState extends State<SignInPage> {
                           borderRadius:
                           BorderRadius.all(Radius.circular(50))),
                       text: 'Login',
-                      loading: login is LoginLoading,
-                      // disableTouchWhenLoading: true,
+                      loading: true,
+
                     )
                     // ClipRRect(
                     //   borderRadius: BorderRadius.circular(0),
