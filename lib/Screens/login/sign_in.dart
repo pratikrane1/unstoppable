@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/login/login_bloc.dart';
@@ -52,10 +53,20 @@ class _SignInPageState extends State<SignInPage> {
           return BlocListener<LoginBloc,LoginState>(listener: (context,state){
             if(state is LoginSuccess)
               {
-                CircularProgressIndicator();
-                Timer.periodic(const Duration(seconds: 15), (_) => BottomNavigation(index: 0));
-                // Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavigation(index: 0,)));
-                Fluttertoast.showToast(msg: state.message.toString());
+                SchedulerBinding.instance.addPostFrameCallback((_) {
+
+                  // add your code here.
+
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => BottomNavigation(index: 0,)));
+                });
+                  Fluttertoast.showToast(msg: state.message.toString());
+
+                // Timer.periodic(const Duration(seconds: 10), (_) {
+                //   Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavigation(index: 0,)));
+                // });
 
               }
             if(state is LoginFail){

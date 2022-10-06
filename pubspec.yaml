@@ -36,6 +36,7 @@ dependencies:
   http_interceptor: any
   shared_preferences: 2.0.1
   cupertino_icons: ^1.0.2
+  gst_verification: ^2.0.2
   persistent_bottom_nav_bar: ^4.0.2
   image_picker: 0.8.2
   image_cropper: 1.4.1

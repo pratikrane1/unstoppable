@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Screens/Product%20Enquiry/customerEnquiries.dart';
@@ -10,6 +11,7 @@ import '../../Blocs/customerEnquiries/customerEnquiries_state.dart';
 import '../../Constant/theme_colors.dart';
 import '../../Models/customerEnquiries_model.dart';
 import '../../widgets/seeIcon.dart';
+import '../bottom_navbar.dart';
 
 class CustomerEnquiriesDetails  extends StatefulWidget{
    //String? userId='1';
@@ -54,7 +56,15 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
       body:BlocBuilder<CustomerEnquiriesBloc,CustomerEnquiriesState>(builder:(context,state) {
       if (state is DeleteCustomerEnquiriesSuccess) {
         // Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerEnquiries()));
-        Navigator.of(context).pop();
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+
+          // add your code here.
+
+          Navigator.pushReplacement(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => BottomNavigation(index: 4,)));
+        });
         Fluttertoast.showToast(msg: "Customer Inquiry deleted successfully");
 
       }

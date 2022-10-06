@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -466,8 +467,18 @@ class _MyUnstoppableOrdersDetailState extends State<MyUnstoppableOrdersDetail> {
                       ),
                       BlocBuilder<MytoolsBloc, MytoolsState>(builder: (context, state){
                         if(state is UpdateOrderDataSuccess){
-                          Navigator.of(context).pop();
+                          // Navigator.of(context).pop();
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+
+                            // add your code here.
+
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => UnstoppableOrders()));
+                          });
                           Fluttertoast.showToast(msg: "Save Successfully");
+
                           // Navigator.push(
                           //     context, MaterialPageRoute(builder: (context) => UnstoppableOrders()));
                         }

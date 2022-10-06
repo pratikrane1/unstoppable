@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unstoppable/Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_state.dart';
 import 'package:unstoppable/Models/manageAllBuyingRequirements_model.dart';
@@ -342,12 +343,25 @@ class _ManageAllBuyingRequirementDetailsState extends State<ManageAllBuyingRequi
                     SizedBox(height: 20,),
                     BlocBuilder<ManageAllBuyingRequirementBloc, ManageAllBuyingRequirementState>(builder: (context, state) {
                       if (state is DeleteAllBuyingRequirementSuccess) {
-                        // Navigator.pushReplacement(context,
-                        //     MaterialPageRoute(builder: (context) => ManageAllBuyingRequirement()));
-                        Navigator.of(context).pop();
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+
+                          // add your code here.
+
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => ManageAllBuyingRequirement()));
+
+                        });
                         Fluttertoast.showToast(msg: "Product Deleted Successfully");
 
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) => ManageAllBuyingRequirement()));
+                        // Navigator.of(context).pop();
+                        // Navigator.pop(context);
+
                       }
+
                       if(state is DeleteAllBuyingRequirementFail){
                         Fluttertoast.showToast(msg: "Couldn't Deleted Product");
 

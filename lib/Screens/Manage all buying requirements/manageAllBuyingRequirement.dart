@@ -223,9 +223,9 @@ class _ManageAllBuyingRequirementState extends State<ManageAllBuyingRequirement>
       AppBar(
         leading: GestureDetector(
           onTap: () {
-            // Navigator.pushReplacement(context,
-            //     MaterialPageRoute(builder: (context) => DrawerWidget()));
-            Navigator.of(context).pop();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => DrawerWidget()));
+            // Navigator.of(context).pop();
           },
           child: Icon(Icons.arrow_back_ios),
         ),
@@ -238,11 +238,15 @@ class _ManageAllBuyingRequirementState extends State<ManageAllBuyingRequirement>
       body:BlocBuilder<ManageAllBuyingRequirementBloc, ManageAllBuyingRequirementState>(builder: (context, state) {
         if (state is ManageAllBuyingRequirementListSuccess) {
           allBuyingRequirementList = state.manageAllBuyingList!;
+          //
           // pageCount = (productList.length / rowsPerPage).ceilToDouble();
           // _productBloc!.add(OnUpdatePageCnt(productList: productList, rowsPerPage: rowsPerPage));
         }
         if (state is ManageAllBuyingRequirementListLoading) {
           flagNoDataAvailable = false;
+          allBuyingRequirementList=[];
+
+          // _allBuyingRequirementBloc!.add(OnLoadingManageAllBuyingRequirementList(userid: Application.vendorLogin!.userId.toString()));
         }
 
         // if (state is ProductDetailLoadFail) {
