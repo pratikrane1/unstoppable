@@ -760,7 +760,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         obscureText: false,
                                                         //initialValue: widget.userdata['name'],
                                                         textAlign: TextAlign.start,
-                                                        keyboardType: TextInputType.text,
+                                                        keyboardType: TextInputType.number,
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontWeight: FontWeight.w600),
@@ -810,7 +810,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         obscureText: false,
                                                         //initialValue: widget.userdata['name'],
                                                         textAlign: TextAlign.start,
-                                                        keyboardType: TextInputType.text,
+                                                        keyboardType: TextInputType.number,
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontWeight: FontWeight.w600),
@@ -860,7 +860,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         obscureText: false,
                                                         //initialValue: widget.userdata['name'],
                                                         textAlign: TextAlign.start,
-                                                        keyboardType: TextInputType.text,
+                                                        keyboardType: TextInputType.number,
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontWeight: FontWeight.w600),
@@ -988,8 +988,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           hintText: "GST Number",
                                                         ),
                                                         validator: (value){
-                                                          if(value==null || value.isEmpty){
+                                                          Pattern pattern = r'^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$';
+                                                          RegExp regex = new RegExp(pattern.toString());
+                                                          if (value == null || value.isEmpty) {
                                                             return 'Please Enter GST Number';
+                                                          }else if(!regex.hasMatch(value)){
+                                                            return 'Please enter valid GST Number';
                                                           }
                                                           return null;
                                                         },
@@ -1074,7 +1078,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         obscureText: false,
                                                         //initialValue: widget.userdata['name'],
                                                         textAlign: TextAlign.start,
-                                                        keyboardType: TextInputType.text,
+                                                        keyboardType: TextInputType.number,
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontWeight: FontWeight.w600),
@@ -1124,7 +1128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         obscureText: false,
                                                         //initialValue: widget.userdata['name'],
                                                         textAlign: TextAlign.start,
-                                                        keyboardType: TextInputType.text,
+                                                        keyboardType: TextInputType.number,
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontWeight: FontWeight.w600),
@@ -1149,8 +1153,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           hintText: "Mobile No",
                                                         ),
                                                         validator: (value){
-                                                          if(value==null || value.isEmpty){
-                                                            return 'Please Enter Mobile No';
+                                                          String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+                                                          RegExp regExp = new RegExp(patttern);
+                                                          if (value?.length == 0) {
+                                                            return 'Please enter mobile number';
+                                                          }
+                                                          else if (!regExp.hasMatch(value!)) {
+                                                            return 'Please enter valid mobile number';
                                                           }
                                                           return null;
                                                         },
@@ -1174,7 +1183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         obscureText: false,
                                                         //initialValue: widget.userdata['name'],
                                                         textAlign: TextAlign.start,
-                                                        keyboardType: TextInputType.text,
+                                                        keyboardType: TextInputType.emailAddress,
                                                         style: TextStyle(
                                                             color: Colors.black,
                                                             fontWeight: FontWeight.w600),
@@ -1199,8 +1208,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           hintText: "Email",
                                                         ),
                                                         validator: (value){
+                                                          Pattern pattern =
+                                                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                                          RegExp regex =
+                                                          new RegExp(pattern.toString());
+
                                                           if(value==null || value.isEmpty){
-                                                            return 'Please Enter Email';
+                                                            return 'Please enter email';
+                                                          }else if(!regex.hasMatch(value)){
+                                                            return 'Please enter valid email';
                                                           }
                                                           return null;
                                                         },

@@ -95,6 +95,9 @@ class CompanyProfileBloc extends Bloc<CompanyProfileEvent, CompanyProfileState> 
         if (resp['result'] == 'Success') {
           yield UpdateCompanyProfileSuccess();
         }
+        else{
+          yield UpdateCompanyProfileFail();
+        }
       } catch (e) {
         print(e);
         rethrow;
