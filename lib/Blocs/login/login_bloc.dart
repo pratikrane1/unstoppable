@@ -47,9 +47,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
        VendorLogin user = new VendorLogin();
        user.result=result.data!.result.toString();
        user=result.data!;
+       AppBloc.authBloc.add(OnSaveUser(user));
         try {
           ///Begin start AuthBloc Event AuthenticationSave
-          AppBloc.authBloc.add(OnSaveUser(user));
+
           yield LoginSuccess(userModel: user, message: result.message.toString());
         } catch (error) {
           ///Notify loading to UI
