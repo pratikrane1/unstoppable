@@ -397,7 +397,7 @@ class _ProductImagesState extends State<ProductImages> {
                           shape: BoxShape.rectangle,
                           borderRadius:  BorderRadius.circular(5.0),
                           //color: Color(0xffc32c37),
-                          color: Colors.indigo,
+                          color: ThemeColors.buttonColor,
                           // border: Border.all(color: Colors.black, width: 1)
                         ),
                         child: Container(
@@ -433,21 +433,21 @@ class _ProductImagesState extends State<ProductImages> {
   Widget build(BuildContext context)
   {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 45.10,
-        bottomOpacity: 0.0,
-        elevation: 0.0,
-        backgroundColor: Colors.deepOrange[500],
-        leading:InkWell(
-          onTap: (){
-            Navigator.pop(context);
-          },
-            child:
-        Icon(CupertinoIcons.chevron_left,color: Colors.white,size: 18,)),
-        //leading: Center(child: Text("<",style: TextStyle(color: Colors.white,fontSize: 30),)),
-        title: Text("Images",style: TextStyle(fontSize: 15),),
-
-      ),
+        appBar: AppBar(
+          leading: GestureDetector(
+            onTap: () {
+             // Navigator.of(context).pop();
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (context) => BottomNavigation(index: 1,)));
+               Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back_ios),
+          ),
+          backgroundColor: ThemeColors.baseThemeColor,
+          elevation: 0.0,
+          centerTitle: true,
+          title: Text('Images'),
+        ),
       body:BlocBuilder<AddProductFormBloc,AddProductFormState>(builder:(context,state) {
       if (state is ProductImageListSuccess) {
         flagNoDatAvailable=false;

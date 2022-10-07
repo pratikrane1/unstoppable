@@ -46,8 +46,9 @@ class _UnstoppableProductsDetailsState
         appBar: AppBar(
           leading: GestureDetector(
             onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => BottomNavigation(index: 1,)));
+              Navigator.of(context).pop();
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (context) => BottomNavigation(index: 1,)));
               // Navigator.pop(context);
             },
             child: Icon(Icons.arrow_back_ios),
