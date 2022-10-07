@@ -19,7 +19,7 @@ import '../widgets/bell_icon.dart';
 import 'Leads/Leads.dart';
 import 'YourBNC/business_networking_lead.dart';
 import 'bottom_navbar.dart';
-import 'customerEnquiries.dart';
+import 'Product Enquiry/customerEnquiries.dart';
 
 
 class DashBoard extends StatefulWidget {
@@ -49,6 +49,7 @@ class _DashBoardState extends State<DashBoard> {
   String? txnToken;
   String? callbackUrl;
   String? result;
+  bool flag = false;
 
   Future<void> generateTxnToken(double amount) async {
 
@@ -134,54 +135,6 @@ class _DashBoardState extends State<DashBoard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Unstoppable Trade", style: TextStyle(color: ThemeColors.whiteTextColor),),
-                // DropdownButton<String>(
-                //   value: dropdownValue,
-                //   icon: const Icon(
-                //     Icons.keyboard_arrow_down_sharp,
-                //     color: Colors.white,
-                //     size: 30,
-                //   ),
-                //   elevation: 16,
-                //   style: const TextStyle(
-                //       color: ThemeColors.whiteTextColor,
-                //       fontSize: 20,
-                //       fontWeight: FontWeight.bold),
-                //   // underline: Container(
-                //   //   height: 2,
-                //   //   color: Colors.deepPurpleAccent,
-                //   // ),
-                //   onChanged: (String? newValue) {
-                //     setState(() {
-                //       dropdownValue = newValue!;
-                //     });
-                //   },
-                //   items: <String>['My Acc', 'Two', 'Free', 'Four']
-                //       .map<DropdownMenuItem<String>>((String value) {
-                //     return DropdownMenuItem<String>(
-                //       value: value,
-                //       child: Text(
-                //         value, style: TextStyle(color: ThemeColors.scaffoldBgColor),
-                //       ),
-                //     );
-                //   }).toList(),
-                // ),
-                // SizedBox(
-                //   width: 130,
-                // ),
-                // Expanded(
-                //   child: IconButton(
-                //     icon: Icon(
-                //       Icons.search,
-                //       size: 30,
-                //     ),
-                //     onPressed: () {
-                //       Navigator.pushReplacement(
-                //           context,
-                //           MaterialPageRoute(
-                //               builder: (context) => SearchPage()));
-                //     },
-                //   ),
-                // ),
                 myAppBarIcon(),
               ],
             ),
@@ -193,6 +146,7 @@ class _DashBoardState extends State<DashBoard> {
           body: BlocBuilder<HomeBloc,HomeState>(builder:(context,dashboard){
             return BlocListener<HomeBloc,HomeState>(listener: (context,state){
               if(state is HomeListSuccess){
+                flag = true;
                 totalProd=state.totalProd;
                 totalLeads=state.totalLeads;
                 totalInquiries=state.totalEnquiry;
@@ -256,7 +210,7 @@ class _DashBoardState extends State<DashBoard> {
 
                         InkWell(
                           onTap: (){
-                            if(totalProd != 0){
+                            if(totalProd != '0'){
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:unstoppable/constant/theme_colors.dart';
 
 Widget eyeIcon(){
   return Container(
@@ -9,7 +10,7 @@ Widget eyeIcon(){
       shape: BoxShape.rectangle,
       borderRadius:  BorderRadius.circular(5.0),
       //color: Color(0xffc32c37),
-      color: Colors.indigo,
+      color: ThemeColors.buttonColor,
       // border: Border.all(color: Colors.black, width: 1)
     ),
     child: Container(
@@ -39,7 +40,7 @@ Widget phoneIcon(){
       shape: BoxShape.rectangle,
       borderRadius:  BorderRadius.circular(5.0),
       //color: Color(0xffc32c37),
-      color: Colors.indigo,
+      color: ThemeColors.buttonColor,
       // border: Border.all(color: Colors.black, width: 1)
     ),
     child: Container(

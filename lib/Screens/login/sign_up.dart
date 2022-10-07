@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gst_verification/gst_verification.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
@@ -259,6 +262,35 @@ class _SignUpPageState extends State<SignUpPage> {
     _userLoginBloc = BlocProvider.of<LoginBloc>(context);
     imageFile = new ImageFile();
   }
+
+  String? gstNo, key_secret, response = '';
+
+  double valueOp = 0;
+
+  void verifyGSTNumber() {
+    print(gstNo! + " , " + key_secret!);
+
+    valueOp = 1;
+    setState(() {});
+
+    GstVerification.verifyGST(gstNo: gstNo!, key_secret: key_secret!)
+        .then((result) {
+      JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+      String prettyPrint = encoder.convert(result);
+
+      print(prettyPrint);
+
+      response = "JSON Response:\n\n" + prettyPrint;
+      print(response);
+      valueOp = 0;
+      setState(() {});
+    }).catchError((error) {
+      print(error);
+      valueOp = 0;
+      setState(() {});
+    });
+  }
+
 
 
   @override
@@ -924,7 +956,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -985,7 +1020,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1046,7 +1084,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1149,8 +1190,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                     hintText: "PAN Number",
                                   ),
                                   validator: (value) {
+                                    Pattern pattern = r'^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$';
+                                    RegExp regex = new RegExp(pattern.toString());
                                     if (value == null || value.isEmpty) {
                                       return 'Please Enter PAN Number';
+                                    }else if(!regex.hasMatch(value)){
+                                      return 'Please enter valid PAN Number';
                                     }
                                     return null;
                                   },
@@ -1198,8 +1243,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                     hintText: "GST Number",
                                   ),
                                   validator: (value) {
+                                    Pattern pattern = r'^([0][1-9]|[1-2][0-9]|[3][0-7])([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$';
+                                    RegExp regex = new RegExp(pattern.toString());
                                     if (value == null || value.isEmpty) {
                                       return 'Please Enter GST Number';
+                                    }else if(!regex.hasMatch(value)){
+                                      return 'Please enter valid GST Number';
                                     }
                                     return null;
                                   },
@@ -1297,7 +1346,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1358,7 +1410,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1390,14 +1445,22 @@ class _SignUpPageState extends State<SignUpPage> {
                                     hintText: "Mobile No",
                                   ),
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please Enter Mobile No';
+
+                                    String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+                                    RegExp regExp = new RegExp(patttern);
+                                    if (value?.length == 0) {
+                                      return 'Please enter mobile number';
+                                    }
+                                    else if (!regExp.hasMatch(value!)) {
+                                      return 'Please enter valid mobile number';
                                     }
                                     return null;
                                   },
                                   onChanged: (value) {
                                     setState(() {
-                                      if (_formKey.currentState!.validate()) {}
+                                      if (_formKey.currentState!.validate()) {
+
+                                      }
                                     });
                                   },
                                 ),
@@ -1419,7 +1482,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.emailAddress,
+
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600),
@@ -1451,10 +1515,18 @@ class _SignUpPageState extends State<SignUpPage> {
                                     hintText: "Email",
                                   ),
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please Enter Email';
-                                    }
-                                    return null;
+
+                                      Pattern pattern =
+                                          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                                      RegExp regex =
+                                      new RegExp(pattern.toString());
+
+                                      if(value==null || value.isEmpty){
+                                        return 'Please enter email';
+                                      }else if(!regex.hasMatch(value)){
+                                        return 'Please enter valid email';
+                                      }
+                                      return null;
                                   },
                                   onChanged: (value) {
                                     setState(() {
@@ -1476,7 +1548,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     .size
                                     .width,
                                 child: TextFormField(
-                                  controller: _emailController,
+                                  controller: _referBy,
                                   obscureText: false,
                                   //initialValue: widget.userdata['name'],
                                   textAlign: TextAlign.start,
@@ -1606,6 +1678,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: AppButton(
+                                loading: true,
                                 onPressed: () async {
                                   isconnectedToInternet =
                                   await ConnectivityCheck

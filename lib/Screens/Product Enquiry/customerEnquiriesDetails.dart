@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:unstoppable/Screens/customerEnquiries.dart';
+import 'package:unstoppable/Screens/Product%20Enquiry/customerEnquiries.dart';
 import 'package:unstoppable/Utils/application.dart';
-import '../Blocs/customerEnquiries/customerEnquiries_bloc.dart';
-import '../Blocs/customerEnquiries/customerEnquiries_event.dart';
-import '../Blocs/customerEnquiries/customerEnquiries_state.dart';
-import '../Models/customerEnquiries_model.dart';
-import '../widgets/seeIcon.dart';
+import '../../Blocs/customerEnquiries/customerEnquiries_bloc.dart';
+import '../../Blocs/customerEnquiries/customerEnquiries_event.dart';
+import '../../Blocs/customerEnquiries/customerEnquiries_state.dart';
+import '../../Constant/theme_colors.dart';
+import '../../Models/customerEnquiries_model.dart';
+import '../../widgets/seeIcon.dart';
+import '../bottom_navbar.dart';
 
 class CustomerEnquiriesDetails  extends StatefulWidget{
    //String? userId='1';
@@ -37,23 +40,33 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
   {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 45.10,
-        bottomOpacity: 0.0,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => DrawerWidget()));
+          },
+          child: Icon(Icons.arrow_back_ios),
+        ),
+        backgroundColor: ThemeColors.baseThemeColor,
         elevation: 0.0,
-        backgroundColor: Colors.deepOrange[500],
-        leading: InkWell(
-            onTap: (){
-              Navigator.pop(context);
-            },
-            child: Icon(CupertinoIcons.chevron_left,color: Colors.white,size: 18,)),
-        //leading: Center(child: Text("<",style: TextStyle(color: Colors.white,fontSize: 30),)),
-        title: Text("Product Enquiries Details",style: TextStyle(fontSize: 15),),
-
+        centerTitle: true,
+        title: Text('Product Enquiry Details'),
       ),
       body:BlocBuilder<CustomerEnquiriesBloc,CustomerEnquiriesState>(builder:(context,state) {
       if (state is DeleteCustomerEnquiriesSuccess) {
+        // Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerEnquiries()));
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+
+          // add your code here.
+
+          Navigator.pushReplacement(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => BottomNavigation(index: 4,)));
+        });
         Fluttertoast.showToast(msg: "Customer Inquiry deleted successfully");
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>CustomerEnquiries()));
+
       }
       return SafeArea(
         child: Container(
@@ -174,7 +187,6 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
                               Icon(Icons.account_balance_wallet_sharp,color: Colors.black54,size: 15,),
                               SizedBox(width: 7,),
                               Text(widget.customerEnquiriesdata.enquiryDate.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
-                              Text(widget.customerEnquiriesdata.enquiryDate.toString(),style: TextStyle(color: Colors.black54,fontSize:12),),
                             ],
                           ),
                         ],
@@ -217,7 +229,7 @@ class _CustomerEnquiriesDetailsState extends State<CustomerEnquiriesDetails> {
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       //color: Color(0xffc32c37),
-                      color: Colors.blue,
+                      color: ThemeColors.buttonColor,
                       border: Border.all(color: Colors.black, width: 1)),
                   child: Container(
                     width: 30,

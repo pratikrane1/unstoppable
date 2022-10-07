@@ -72,7 +72,10 @@ class CustomerEnquiriesBloc extends Bloc<CustomerEnquiriesEvent, CustomerEnquiri
       try {
         final resp = json.decode(response.body);
         if (resp['result'] == 'Success') {
-          yield DeleteCustomerEnquiriesSuccess();
+          yield DeleteCustomerEnquiriesSuccess(message: resp['msg']);
+        }
+        else{
+          yield DeleteCustomerEnquiriesFailed(message: resp['msg']);
         }
       } catch (e) {
         print(e);

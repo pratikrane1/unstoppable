@@ -252,7 +252,7 @@ class _BusinessNetworkingState extends State<BusinessNetworking> {
           border: Border.all(color: Colors.black, width: 1)),
       child: InkWell(
         onTap: (){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> NotificationPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> NotificationPage()));
 
         },
         child: Container(
@@ -337,7 +337,7 @@ class _BusinessNetworkingState extends State<BusinessNetworking> {
         },
         child:SafeArea(
           child: Container(
-            height: 650,
+            height: MediaQuery.of(context).size.height,
             decoration: new BoxDecoration(
               //borderRadius: new BorderRadius.circular(16.0),
               color: Colors.black12,
@@ -426,12 +426,12 @@ class _BusinessNetworkingState extends State<BusinessNetworking> {
                                 ?
                             buildBusinessNetworkingList(context, searchResult)
                                 :
-                            (businessNetworkingList.length != 0)
-                            ?
+                            // (businessNetworkingList.length != 0)
+                            // ?
                             buildBusinessNetworkingList(context, businessNetworkingList)
-                                :
-                                Center(child: Text("No Data Available",
-                                style: TextStyle(fontSize: 20),),)
+                                // :
+                                // Center(child: Text("No Data Available",
+                                // style: TextStyle(fontSize: 20),),)
 
                         ))
                             :
@@ -442,123 +442,6 @@ class _BusinessNetworkingState extends State<BusinessNetworking> {
                     )
                    ,
 
-            //for bottom pagination Ui
-            Positioned(
-                bottom: 15.0,
-                right: 5.0,
-                left: 5.0,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 8.0,
-                      right: 15,
-                      left: 15,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        // Column(
-                        //   children: [
-                        //     Text(
-                        //       "Items per page:",
-                        //       style: TextStyle(fontSize: 10, color: Colors.black),
-                        //     ),
-                        //     DropdownButtonWidget(),
-                        //   ],
-                        // ),
-                        Row(
-                          children: [
-                            //back icon
-                            if(offset!=0)
-                              InkWell(
-                                  onTap: (){
-
-                                    businessNetworkingList=[];
-                                    if(offset==0){
-                                      businessOpprtunityBloc!.add(
-                                          OnLoadingBusinesNetworkingList(userid: Application.vendorLogin!.userId.toString(), offset: offset.toString()));
-
-                                    }else {
-                                      offset -= 10;
-                                      businessOpprtunityBloc!.add(OnLoadingBusinesNetworkingList(
-                                          userid: Application.vendorLogin!
-                                              .userId.toString(),
-                                          offset: offset.toString()));
-                                    }
-                                  },
-                                  child:Container(
-                                    width: 40,
-                                    height: 25,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      borderRadius:  BorderRadius.circular(5.0),
-                                      //color: Color(0xffc32c37),
-                                      color: Colors.indigo,
-                                      // border: Border.all(color: Colors.black, width: 1)
-                                    ),
-                                    child: Container(
-                                      width: 30,
-                                      height: 30,
-                                      alignment: Alignment.center,
-                                      child: Stack(
-                                        children: [
-                                          Center(
-                                            child: Icon(
-                                              CupertinoIcons.arrow_left,
-                                              color: Colors.white,
-                                              size: 21,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            //fwd icon
-                            InkWell(
-                                onTap: (){
-                                  businessNetworkingList=[];
-                                  offset+=10;
-                                  businessOpprtunityBloc!.add(
-                                      OnLoadingBusinesNetworkingList(
-                                          userid: Application.vendorLogin!.userId.toString(), offset: offset.toString()));
-                                },
-                                child:Container(
-                                  width: 40,
-                                  height: 25,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.rectangle,
-                                    borderRadius:  BorderRadius.circular(5.0),
-                                    //color: Color(0xffc32c37),
-                                    color: Colors.indigo,
-                                    // border: Border.all(color: Colors.black, width: 1)
-                                  ),
-                                  child: Container(
-                                    width: 30,
-                                    height: 30,
-                                    alignment: Alignment.center,
-                                    child: Stack(
-                                      children: [
-                                        Center(
-                                          child: Icon(
-                                            CupertinoIcons.arrow_right,
-                                            color: Colors.white,
-                                            size: 21,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                )),
                   ],
                 ),
               ),

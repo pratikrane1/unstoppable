@@ -454,118 +454,118 @@ class _LeadsState extends State<Leads> {
                         ),
 
                         //for bottom pagination Ui
-                        Positioned(
-                            bottom: 15.0,
-                            right: 5.0,
-                            left: 5.0,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 8.0,
-                                  right: 15,
-                                  left: 15,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // Column(
-                                    //   children: [
-                                    //     Text(
-                                    //       "Items per page:",
-                                    //       style: TextStyle(fontSize: 10, color: Colors.black),
-                                    //     ),
-                                    //     DropdownButtonWidget(),
-                                    //   ],
-                                    // ),
-                                    Row(
-                                      children: [
-                                        //back icon
-                                        if(offset!=0)
-                                          InkWell(
-                                              onTap: (){
-                                                leadList=[];
-                                                if(offset==0){
-                                                  _leadsBloc!.add(OnLoadingLeadsList(userid: Application.vendorLogin!.userId.toString()));
-
-                                                }else {
-                                                  offset -= 10;
-                                                  _leadsBloc!.add(OnLoadingLeadsList(
-                                                      userid: Application.vendorLogin!
-                                                          .userId.toString()
-                                                  ));
-                                                }
-                                              },
-                                              child:Container(
-                                                width: 40,
-                                                height: 25,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.rectangle,
-                                                  borderRadius:  BorderRadius.circular(5.0),
-                                                  //color: Color(0xffc32c37),
-                                                  color: ThemeColors.buttonColor,
-                                                  // border: Border.all(color: Colors.black, width: 1)
-                                                ),
-                                                child: Container(
-                                                  width: 30,
-                                                  height: 30,
-                                                  alignment: Alignment.center,
-                                                  child: Stack(
-                                                    children: [
-                                                      Center(
-                                                        child: Icon(
-                                                          CupertinoIcons.arrow_left,
-                                                          color: Colors.white,
-                                                          size: 21,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        //fwd icon
-                                        InkWell(
-                                            onTap: (){
-                                              leadList=[];
-                                              offset+=10;
-                                              _leadsBloc!.add(OnLoadingLeadsList(userid: Application.vendorLogin!.userId.toString(),));
-                                            },
-                                            child:Container(
-                                              width: 40,
-                                              height: 25,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.rectangle,
-                                                borderRadius:  BorderRadius.circular(5.0),
-                                                //color: Color(0xffc32c37),
-                                                color: ThemeColors.buttonColor,
-                                                // border: Border.all(color: Colors.black, width: 1)
-                                              ),
-                                              child: Container(
-                                                width: 30,
-                                                height: 30,
-                                                alignment: Alignment.center,
-                                                child: Stack(
-                                                  children: [
-                                                    Center(
-                                                      child: Icon(
-                                                        CupertinoIcons.arrow_right,
-                                                        color: Colors.white,
-                                                        size: 21,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            )),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )),
+                        // Positioned(
+                        //     bottom: 15.0,
+                        //     right: 5.0,
+                        //     left: 5.0,
+                        //     child: Container(
+                        //       width: MediaQuery.of(context).size.width,
+                        //       child: Padding(
+                        //         padding: const EdgeInsets.only(
+                        //           top: 8.0,
+                        //           right: 15,
+                        //           left: 15,
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.end,
+                        //           children: [
+                        //             // Column(
+                        //             //   children: [
+                        //             //     Text(
+                        //             //       "Items per page:",
+                        //             //       style: TextStyle(fontSize: 10, color: Colors.black),
+                        //             //     ),
+                        //             //     DropdownButtonWidget(),
+                        //             //   ],
+                        //             // ),
+                        //             Row(
+                        //               children: [
+                        //                 //back icon
+                        //                 if(offset!=0)
+                        //                   InkWell(
+                        //                       onTap: (){
+                        //                         leadList=[];
+                        //                         if(offset==0){
+                        //                           _leadsBloc!.add(OnLoadingLeadsList(userid: Application.vendorLogin!.userId.toString()));
+                        //
+                        //                         }else {
+                        //                           offset -= 10;
+                        //                           _leadsBloc!.add(OnLoadingLeadsList(
+                        //                               userid: Application.vendorLogin!
+                        //                                   .userId.toString()
+                        //                           ));
+                        //                         }
+                        //                       },
+                        //                       child:Container(
+                        //                         width: 40,
+                        //                         height: 25,
+                        //                         decoration: BoxDecoration(
+                        //                           shape: BoxShape.rectangle,
+                        //                           borderRadius:  BorderRadius.circular(5.0),
+                        //                           //color: Color(0xffc32c37),
+                        //                           color: ThemeColors.buttonColor,
+                        //                           // border: Border.all(color: Colors.black, width: 1)
+                        //                         ),
+                        //                         child: Container(
+                        //                           width: 30,
+                        //                           height: 30,
+                        //                           alignment: Alignment.center,
+                        //                           child: Stack(
+                        //                             children: [
+                        //                               Center(
+                        //                                 child: Icon(
+                        //                                   CupertinoIcons.arrow_left,
+                        //                                   color: Colors.white,
+                        //                                   size: 21,
+                        //                                 ),
+                        //                               ),
+                        //                             ],
+                        //                           ),
+                        //                         ),
+                        //                       )),
+                        //                 SizedBox(
+                        //                   width: 5,
+                        //                 ),
+                        //                 //fwd icon
+                        //                 InkWell(
+                        //                     onTap: (){
+                        //                       leadList=[];
+                        //                       offset+=10;
+                        //                       _leadsBloc!.add(OnLoadingLeadsList(userid: Application.vendorLogin!.userId.toString(),));
+                        //                     },
+                        //                     child:Container(
+                        //                       width: 40,
+                        //                       height: 25,
+                        //                       decoration: BoxDecoration(
+                        //                         shape: BoxShape.rectangle,
+                        //                         borderRadius:  BorderRadius.circular(5.0),
+                        //                         //color: Color(0xffc32c37),
+                        //                         color: ThemeColors.buttonColor,
+                        //                         // border: Border.all(color: Colors.black, width: 1)
+                        //                       ),
+                        //                       child: Container(
+                        //                         width: 30,
+                        //                         height: 30,
+                        //                         alignment: Alignment.center,
+                        //                         child: Stack(
+                        //                           children: [
+                        //                             Center(
+                        //                               child: Icon(
+                        //                                 CupertinoIcons.arrow_right,
+                        //                                 color: Colors.white,
+                        //                                 size: 21,
+                        //                               ),
+                        //                             ),
+                        //                           ],
+                        //                         ),
+                        //                       ),
+                        //                     )),
+                        //               ],
+                        //             )
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     )),
                       ],
                     ),
                   ),

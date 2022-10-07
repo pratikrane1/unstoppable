@@ -67,8 +67,8 @@ class _UnstoppableProductsDetailsState
           }
           if(state is DeleteProductSuccess){
             Fluttertoast.showToast(msg: "Product deleted successfully");
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>UnstoppableProducts()));
-             Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigation(index: 1)));
+             // Navigator.pop(context);
           }
           return Container(
             decoration: new BoxDecoration(
@@ -118,7 +118,7 @@ class _UnstoppableProductsDetailsState
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(5.0),
                                   //color: Color(0xffc32c37),
-                                  color: Colors.indigo,
+                                  color: ThemeColors.buttonColor,
                                   // border: Border.all(color: Colors.black, width: 1)
                                 ),
                                 child: Container(
@@ -146,7 +146,41 @@ class _UnstoppableProductsDetailsState
                             // For Delete Icon
                             InkWell(
                                 onTap: (){
-                                _productBloc!.add(DeleteProduct(productid: productDetail!.productId.toString()));
+
+                                  // _showMyDialog(context);
+                                  showDialog<void>(
+                                    context: context,
+                                    barrierDismissible: false, // user must tap button!
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Delete Product'),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: const <Widget>[
+                                              Text('Are you sure you want to delete.'),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text('Cancel'),
+                                            onPressed: () {
+                                              // _productBloc!.add(DeleteProduct(productid: productDetail!.productId.toString()));
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: const Text('Delete'),
+                                            onPressed: () {
+                                              _productBloc!.add(DeleteProduct(productid: productDetail!.productId.toString()));
+                                              // Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
                                 },
                                 child:Container(
                                   width: 40,
@@ -155,7 +189,7 @@ class _UnstoppableProductsDetailsState
                                     shape: BoxShape.rectangle,
                                     borderRadius:  BorderRadius.circular(5.0),
                                     //color: Color(0xffc32c37),
-                                    color: Colors.indigo,
+                                    color: ThemeColors.buttonColor,
                                     // border: Border.all(color: Colors.black, width: 1)
                                   ),
                                   child: Container(
@@ -190,7 +224,7 @@ class _UnstoppableProductsDetailsState
                                     shape: BoxShape.rectangle,
                                     borderRadius:  BorderRadius.circular(5.0),
                                     //color: Color(0xffc32c37),
-                                    color: Colors.indigo,
+                                    color: ThemeColors.buttonColor,
                                     // border: Border.all(color: Colors.black, width: 1)
                                   ),
                                   child: Container(
@@ -228,24 +262,6 @@ class _UnstoppableProductsDetailsState
   }
 }
 
-// Widget Descriptions(){
-//   return ListTile(
-//
-//       title:Text("Descriptions",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize:14),),
-//       subtitle:SingleChildScrollView(
-//           scrollDirection: Axis.vertical,
-//           child: Container(
-//               height: 200,
-//               child:ListView(
-//                 children: [
-//                   Text("A computer is a machine that uses electronics to input, process, store, and output data. Data is information such as numbers, words, and lists. Input of data means to read information from a keyboard, a storage device like a hard drive, or a sensor. The computer processes or changes the data by following the instructions in software programs. A computer program is a list of instructions the computer has to perform. Programs usually perform mathematical calculations, modify data, or move it around. The data is then saved in a storage device, shown on a display, or sent to another computer. Computers can be connected together to form a network such as the internet, allowing the computers to communicate with each other."),
-//                 ],
-//               )
-//           )
-//       ),
-//
-//   );
-// }
 
 Future EditProduct(BuildContext context, ProductDetail productDetail) {
   return showModalBottomSheet(
@@ -257,7 +273,10 @@ Future EditProduct(BuildContext context, ProductDetail productDetail) {
               topRight: Radius.circular(35.0))),
       context: context,
       builder: (BuildContext context) {
-        return SingleChildScrollView(child: AddProductScreen(productDetail:productDetail));
+        return SingleChildScrollView(child: Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: AddProductScreen(productDetail:productDetail),
+        ));
       });
 }
 
@@ -451,7 +470,7 @@ Widget categoryName(BuildContext context,ProductDetail productDetail) {
               ),
             ],
           ),
-          nameIcon(),
+          // nameIcon(),
         ],
       ),
     ),

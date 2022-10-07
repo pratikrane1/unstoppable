@@ -433,21 +433,21 @@ class _ProductImagesState extends State<ProductImages> {
   Widget build(BuildContext context)
   {
     return Scaffold(
-        appBar: AppBar(
-          leading: GestureDetector(
-            onTap: () {
-             // Navigator.of(context).pop();
-              // Navigator.pushReplacement(context,
-              //     MaterialPageRoute(builder: (context) => BottomNavigation(index: 1,)));
-               Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back_ios),
-          ),
-          backgroundColor: ThemeColors.baseThemeColor,
-          elevation: 0.0,
-          centerTitle: true,
-          title: Text('Images'),
+      appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+            // Navigator.pushReplacement(context,
+            //     MaterialPageRoute(builder: (context) => BottomNavigation(index: 1,)));
+            // Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios),
         ),
+        backgroundColor: ThemeColors.baseThemeColor,
+        elevation: 0.0,
+        centerTitle: true,
+        title: Text('Images'),
+      ),
       body:BlocBuilder<AddProductFormBloc,AddProductFormState>(builder:(context,state) {
       if (state is ProductImageListSuccess) {
         flagNoDatAvailable=false;

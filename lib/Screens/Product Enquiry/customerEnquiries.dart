@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:unstoppable/Blocs/customerEnquiries/customerEnquiries_state.dart';
-import '../Blocs/customerEnquiries/customerEnquiries_bloc.dart';
-import '../Blocs/customerEnquiries/customerEnquiries_event.dart';
-import '../Models/customerEnquiries_model.dart';
-import '../Utils/application.dart';
-import '../constant/theme_colors.dart';
-import '../widgets/bell_icon.dart';
-import '../widgets/drawer.dart';
-import '../widgets/dropdown.dart';
-import '../widgets/icons_buttons.dart';
-import 'bottom_navbar.dart';
+import '../../Blocs/customerEnquiries/customerEnquiries_bloc.dart';
+import '../../Blocs/customerEnquiries/customerEnquiries_event.dart';
+import '../../Models/customerEnquiries_model.dart';
+import '../../Utils/application.dart';
+import '../../constant/theme_colors.dart';
+import '../../widgets/bell_icon.dart';
+import '../../widgets/drawer.dart';
+import '../../widgets/dropdown.dart';
+import '../../widgets/icons_buttons.dart';
+import '../bottom_navbar.dart';
 import 'customerEnquiriesDetails.dart';
 
 
@@ -340,12 +340,13 @@ class _CustomerEnquiriesState extends State<CustomerEnquiries> {
                                 ?
                             buildCustomerEnquiriesList(searchResult)
                                 :
-                                (customerEnquiriesList.length!=0)
-                            ?
+                            //     (customerEnquiriesList.length>0)
+                            // ?
               buildCustomerEnquiriesList(customerEnquiriesList)
-                        :
-                        Center(child: Text("No Data Available",
-                        style: TextStyle(fontSize: 20),),)),
+                        // :
+                        // Center(child: Text("No Data Available",
+                        // style: TextStyle(fontSize: 20),),)
+                        ),
                         )],),
 
                    // SizedBox(height: 5,),
@@ -376,9 +377,9 @@ Widget customerEnquiriesCard(BuildContext context,CustomerEnquiriesModel custome
   return InkWell(
 
     onTap: (){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CustomerEnquiriesDetails(customerEnquiriesdata: customerEnquiriesData)));
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> CustomerEnquiriesDetails(customerEnquiriesdata: customerEnquiriesData)));
 
-      // Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerEnquiriesDetails(userId:customerEnquiriesData.userId)));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>CustomerEnquiriesDetails(customerEnquiriesdata: customerEnquiriesData)));
     },
     child: Padding(
       padding: const EdgeInsets.all(8.0),
@@ -504,7 +505,7 @@ Widget customerEnquiriesCard(BuildContext context,CustomerEnquiriesModel custome
               ),
 
               //dense: true,
-              trailing:phoneIcon(),
+              trailing:eyeIcon(),
           ),
         ),
       ),

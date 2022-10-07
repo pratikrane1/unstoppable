@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/leads/leads_event.dart';
@@ -351,7 +353,10 @@ class _MyUnstoppableOrdersDetailState extends State<MyUnstoppableOrdersDetail> {
                                     obscureText: false,
                                     //initialValue: widget.userdata['name'],
                                     textAlign: TextAlign.start,
-                                    keyboardType: TextInputType.text,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                     style: TextStyle(
                                       fontSize: 18,
                                       height: 1.5,
@@ -411,7 +416,10 @@ class _MyUnstoppableOrdersDetailState extends State<MyUnstoppableOrdersDetail> {
                                     obscureText: false,
                                     //initialValue: widget.userdata['name'],
                                     textAlign: TextAlign.start,
-                                    keyboardType: TextInputType.text,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                     style: TextStyle(
                                       fontSize: 18,
                                       height: 1.5,
@@ -459,7 +467,18 @@ class _MyUnstoppableOrdersDetailState extends State<MyUnstoppableOrdersDetail> {
                       ),
                       BlocBuilder<MytoolsBloc, MytoolsState>(builder: (context, state){
                         if(state is UpdateOrderDataSuccess){
+                          // Navigator.of(context).pop();
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+
+                            // add your code here.
+
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => UnstoppableOrders()));
+                          });
                           Fluttertoast.showToast(msg: "Save Successfully");
+
                           // Navigator.push(
                           //     context, MaterialPageRoute(builder: (context) => UnstoppableOrders()));
                         }

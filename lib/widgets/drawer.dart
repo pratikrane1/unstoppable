@@ -9,7 +9,7 @@ import 'package:unstoppable/Screens/Change%20Password/change_password.dart';
 import 'package:unstoppable/Screens/dashboard.dart';
 import 'package:unstoppable/Screens/login/sign_in.dart';
 import 'package:unstoppable/Screens/Manage%20all%20buying%20requirements/manageAllBuyingRequirement.dart';
-import 'package:unstoppable/Screens/profile_screen.dart';
+import 'package:unstoppable/Screens/Profile%20Screen/profile_screen.dart';
 import 'package:unstoppable/Screens/reward.dart';
 import 'package:unstoppable/Screens/unstoppableOrders.dart';
 import 'package:unstoppable/Screens/My%20Unstoppable%20Orders/unstoppable_orders.dart';
@@ -300,7 +300,7 @@ Widget _LogOutButton(BuildContext context) {
                 },
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
                 text: 'Logout',
-                // loading: profile is LogoutLoading,
+                loading: true,
                 // disableTouchWhenLoading: true,
               )
           )

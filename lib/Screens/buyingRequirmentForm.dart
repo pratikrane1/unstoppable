@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Screens/search_page.dart';
 import '../Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_block.dart';
+import '../Blocs/manageAllBuyingRequirement/manageAllBuyingRequirement_state.dart';
 import '../Blocs/manageAllBuyingRequirement/manageAllBuyingRequirements_event.dart';
 import '../Models/category_model.dart';
 import '../Models/subCategory_model.dart';
@@ -15,6 +17,8 @@ import '../constant/theme_colors.dart';
 import '../widgets/bell_icon.dart';
 import '../widgets/drawer.dart';
 import 'package:group_radio_button/group_radio_button.dart';
+
+import 'bottom_navbar.dart';
 
 
 class BuyingRequirmentSubmit  extends StatefulWidget{
@@ -64,6 +68,7 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
     super.dispose();
     _ProdNameController.clear();
     _discription.clear();
+
   }
 
   @override
@@ -222,7 +227,7 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
                       padding: EdgeInsets.only(top: 8.0, bottom: 0.0),
                       //to hide underline
                       child: FutureBuilder<List<SubCategoryModel>>(
-                          future: fetchSubCategory(categoryModelselected!=null?categoryModelselected!.catId.toString():""),
+                          future: fetchSubCategory(categoryModelselected!=null?categoryModelselected!.catId.toString():"No Sub Category Available"),
                           builder: (BuildContext context,
                               AsyncSnapshot<List<SubCategoryModel>> snapshot) {
                             if (!snapshot.hasData) return Container();
@@ -1028,11 +1033,11 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
                                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                   borderSide:
                                   BorderSide(width: 1.2, color: ThemeColors.scaffoldBgColor)),
-                              hintText: "Discription",
+                              hintText: "Description",
                             ),
                             validator: (value) {
                               if(value==null || value.isEmpty){
-                                return 'Please enter Discription';
+                                return 'Please enter Description';
                               }
                               return null;
                             },
@@ -1053,52 +1058,95 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
                         ),
 
                         SizedBox(height: 5,),
-                        Center(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(0),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: 40,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: ThemeColors.drawerTextColor,
-                                ),
-                                onPressed: () {
-                                  if(_formKey.currentState!.validate()){
-                                    Fluttertoast.showToast(msg: "Save Successfully");
-                                    _allBuyingRequirementBloc!.add(SaveBuyingRequirementForm(
-                                        userid: Application.vendorLogin!.userId.toString(),
-                                      categoryId: categoryModelselected!.catName.toString(),
-                                      subCateId: subcategoryModelselected!.subCatName.toString(),
-                                      prodName: _ProdNameController.text,
-                                      type: radioBtnType,
-                                      use: useRadioBtn,
-                                      approx: approxValue,
-                                      unitType: typeValue,
-                                      quantity: quantityValue,
-                                      suppFrom: suppRadioBtn,
-                                      suppWill: SuppWillRadioBtn,
-                                      descrip: _discription.text, other: '', other1: '',
+                        Container(
+                          child: BlocBuilder<ManageAllBuyingRequirementBloc, ManageAllBuyingRequirementState>(builder: (context, state) {
+                            if (state is SaveBuyingRequiementFormSuccess) {
+                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                              // BottomNavigation(index: 0,)));
+                              // SchedulerBinding.instance.addPostFrameCallback((_) {
+                              //
+                              //   // add your code here.
+                              //
+                              //   // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>
+                              //   // BottomNavigation(index: 0,)));
+                              //
+                              // });
+                              Fluttertoast.showToast(msg:state.message);
+
+                            }
+
+                            if (state is SaveBuyingRequiementFormFailed) {
+                              Fluttertoast.showToast(msg:state.message);
+
+                            }
+
+
+                            return
+                              Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(0),
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 40,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: ThemeColors.drawerTextColor,
+                                      ),
+                                      onPressed: () {
+                                        if (_ProdNameController == null) {
+                                          Fluttertoast.showToast(
+                                              msg: "Please select Product Name");
+                                        }else
+                                        if (_discription == null) {
+                                          Fluttertoast.showToast(
+                                              msg: "Please select Description");
+                                        }else
+                                        if (categoryModelselected == null) {
+                                        Fluttertoast.showToast(
+                                        msg: "Please select category");
+                                        } else
+                                        if (subcategoryModelselected == null) {
+                                        Fluttertoast.showToast(
+                                        msg: "Please select sub category");
+                                        } else
+                                        if(_formKey.currentState!.validate()){
+                                          _allBuyingRequirementBloc!.add(SaveBuyingRequirementForm(
+                                            userid: Application.vendorLogin!.userId.toString(),
+                                            categoryId: categoryModelselected!.catId.toString(),
+                                            subCateId: subcategoryModelselected!.subcatId.toString(),
+                                            prodName: _ProdNameController.text,
+                                            type: radioBtnType,
+                                            use: useRadioBtn,
+                                            approx: approxValue,
+                                            unitType: typeValue,
+                                            quantity: quantityValue,
+                                            suppFrom: suppRadioBtn,
+                                            suppWill: SuppWillRadioBtn,
+                                            descrip: _discription.text, other: '', other1: '',
 
 
 
 
-                                    ));
-                                  }else {
-                                    Fluttertoast.showToast(msg: "Please fill the data");
-                                  }
-                                },
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
+                                          ));
+                                        }else {
+                                          Fluttertoast.showToast(msg: "Please fill the data");
+                                        }
+                                      },
+                                      child: Text(
+                                        'Submit',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
+                              );
+                          }
                           ),
-                        ),
+                        )
+
                       ],
                     ),
                   ),

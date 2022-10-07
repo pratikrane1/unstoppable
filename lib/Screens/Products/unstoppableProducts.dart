@@ -534,12 +534,12 @@ class _UnstoppableProductsState extends State<UnstoppableProducts> {
                                     ?
                                 buildProductList(context,searchResult)
                                     :
-                                (productList.length != 0)
-                                ?
+                                // (productList.length != 0)
+                                // ?
                                 buildProductList(context,productList)
-                            :
-                                    Center(child: Text("No Data Available",
-                                    style: TextStyle(fontSize: 20),),)
+                            // :
+                            //         Center(child: Text("No Data Available",
+                            //         style: TextStyle(fontSize: 20),),)
                             )
                             )
                                 :
@@ -933,20 +933,46 @@ Widget unstoppableProductCard(BuildContext context, ProductModel productData) {
 
                         Row(
                           children: [
-                            Icon(
-                              CupertinoIcons.check_mark_circled_solid,
-                              color: Colors.green,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
+                            // Icon(
+                            //   CupertinoIcons.check_mark_circled_solid,
+                            //   color: Colors.green,
+                            // ),
+                            // SizedBox(
+                            //   width: 5,
+                            // ),
+                            if(productData.statusName == 'Disable')...[
+                            Text(
+                              productData.statusName.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10.0,
+                                  color: Colors.red),
+                            )
+                            ] else if(productData.statusName == 'Pending')...[
+
                             Text(
                               productData.statusName.toString(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 10.0,
                                   color: Colors.orange),
-                            ),
+                            )
+                            ]else...[
+                              Text(
+                                productData.statusName.toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10.0,
+                                    color: Colors.green),
+                              )
+                            ]
+
+
+
+
+
+
+
                           ],
                         ),
                       ],
