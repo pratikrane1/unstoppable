@@ -283,12 +283,22 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
                                                     data: Theme.of(context).copyWith(
                                                         canvasColor: Colors.white),
                                                     child: DropdownButton(
-                                                        items: snapshot.data!
+                                                        items:
+                                                        snapshot.data!
                                                             .map((subcategory) =>
                                                             DropdownMenuItem<
                                                                 SubCategoryModel>(
                                                               value: subcategory,
-                                                              child: Text(
+                                                              child: subcategory.subCatName == "Select Category" ?
+                                                              Text(
+                                                                subcategory
+                                                                    .subCatName
+                                                                    .toString(),
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .red),
+                                                              ):
+                                                              Text(
                                                                 subcategory
                                                                     .subCatName
                                                                     .toString(),
@@ -1171,7 +1181,7 @@ class _BuyingRequirmentSubmitState extends State<BuyingRequirmentSubmit> {
 
                                   }
                                   if (state is SaveBuyingRequiementFormSuccess) {
-                                    Navigator.push(context, MaterialPageRoute(builder: (contex)=> BottomNavigation(index: 0,)));
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (contex)=> BottomNavigation(index: 0,)));
 
                                     Fluttertoast.showToast(msg: state.message);
                                   }

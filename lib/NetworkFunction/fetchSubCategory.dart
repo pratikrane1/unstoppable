@@ -30,7 +30,7 @@ Future<List<SubCategoryModel>> fetchSubCategory(String categoryId) async{
 
     }else{
       subcategory=SubCategoryModel();
-      subcategory.subCatName='';
+      subcategory.subCatName='Select Category';
       listOfsubCategory.add(subcategory);
     }
     return listOfsubCategory;

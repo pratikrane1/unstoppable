@@ -398,20 +398,14 @@ Widget customerEnquiriesCard(BuildContext context,CustomerEnquiriesModel custome
             leading: CachedNetworkImage(
               filterQuality: FilterQuality.medium,
               // imageUrl: Api.PHOTO_URL + widget.users.avatar,
-              // imageUrl:
-              // "https://picsum.photos/250?image=9",
-              imageUrl: customerEnquiriesData.productImage == ""
+              // imageUrl: "https://picsum.photos/250?image=9",
+              imageUrl: customerEnquiriesData.productImage == null
                   ? "https://picsum.photos/250?image=9"
                   : customerEnquiriesData.productImage.toString(),
               placeholder: (context, url) {
                 return Shimmer.fromColors(
-                  baseColor: Theme
-                      .of(context)
-                      .hoverColor,
-                  highlightColor:
-                  Theme
-                      .of(context)
-                      .highlightColor,
+                  baseColor: Theme.of(context).hoverColor,
+                  highlightColor: Theme.of(context).highlightColor,
                   enabled: true,
                   child: Container(
                     height: 80,
@@ -438,13 +432,8 @@ Widget customerEnquiriesCard(BuildContext context,CustomerEnquiriesModel custome
               },
               errorWidget: (context, url, error) {
                 return Shimmer.fromColors(
-                  baseColor: Theme
-                      .of(context)
-                      .hoverColor,
-                  highlightColor:
-                  Theme
-                      .of(context)
-                      .highlightColor,
+                  baseColor: Theme.of(context).hoverColor,
+                  highlightColor: Theme.of(context).highlightColor,
                   enabled: true,
                   child: Container(
                     height: 80,

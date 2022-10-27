@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:unstoppable/Blocs/leads/leads_event.dart';
@@ -621,7 +622,14 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       ),
                       BlocBuilder<LeadsBloc, LeadsState>(builder: (context, state) {
                         if (state is UpdateLeadSuccess) {
-                          Navigator.of(context).pop();
+                          // Navigator.of(context).pop();
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                          Navigator.pushReplacement(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => Leads()));
+                          });
+
                           Fluttertoast.showToast(msg: state.message.toString());
                         }
                         // if (state is LeadsListLoading) {

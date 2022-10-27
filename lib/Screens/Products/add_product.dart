@@ -435,7 +435,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                                         .map((subcategory) =>
                                                         DropdownMenuItem<SubCategoryModel>(
                                                           value: subcategory,
-                                                          child: Text(
+                                                          child: subcategory.subCatName =="Select Category" ?
+                                                          Text(
+                                                            subcategory.subCatName.toString(),
+                                                            style: TextStyle(
+                                                                color: Colors.red),
+                                                          ):
+                                                          Text(
                                                             subcategory.subCatName.toString(),
                                                             style: TextStyle(
                                                                 color: Colors.black),
@@ -499,7 +505,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                                         .map((subsubcategory) =>
                                                         DropdownMenuItem<SubSubCategoryModel>(
                                                           value: subsubcategory,
-                                                          child: Text(
+                                                          child: subsubcategory.ssCatName =="Select sub category"?
+                                                          Text(
+                                                            subsubcategory.ssCatName.toString(),
+                                                            style: TextStyle(
+                                                                color: Colors.red),
+                                                          ):
+                                                          Text(
                                                             subsubcategory.ssCatName.toString(),
                                                             style: TextStyle(
                                                                 color: Colors.black),

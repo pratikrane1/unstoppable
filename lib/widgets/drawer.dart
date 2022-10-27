@@ -183,7 +183,7 @@ class _DrawerWidgetState extends State<DrawerWidget>{
                       _MyTools(context),
                       _Settings(context, companyData![0], snapshot.data!),
                       _CSR(context),
-                      _ShareUrl(context),
+                      _ShareUrl(context ,snapshot.data!),
                       _LogOutButton(context)
                     ],
                   )
@@ -570,7 +570,7 @@ Future<void> shareReferralCode() async {
   );
 }
 
-Widget _ShareUrl(BuildContext context) {
+Widget _ShareUrl(BuildContext context,UserProfileModel data) {
   return InkWell(
     onTap:(){
 
@@ -592,12 +592,18 @@ Widget _ShareUrl(BuildContext context) {
               color: ThemeColors.drawerTextColor,
             ),
             title: const Text(
-              'Share Referal Code URL',
+              'Share Referal Code',
               style:
                   TextStyle(color: ThemeColors.drawerTextColor, fontSize: 16),
             ),
             onTap: () {
-              shareReferralCode();
+              // shareReferralCode();
+               FlutterShare.share(
+                title: 'Referal Code:',
+                text: '${data.referralCode}',
+                // linkUrl: '${data.referralCode}',
+                // chooserTitle: 'Example Chooser Title'
+              );
             },
           )
         ],
