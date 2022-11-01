@@ -33,7 +33,7 @@ Future<List<ProductNameModel>> fetchProductName(String subsubcatId) async{
 
     }else{
       productName=ProductNameModel();
-      productName.prodName='';
+      productName.prodName='Select sub sub category';
       listOfproductName.add(productName);
     }
     return listOfproductName;

@@ -224,7 +224,12 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                                       .map((subcategory) =>
                                                       DropdownMenuItem<SubCategoryModel>(
                                                         value: subcategory,
-                                                        child: Text(
+                                                        child: subcategory.subCatName == "Select Category" ?
+                                                        Text(
+                                                          subcategory.subCatName.toString(),
+                                                          style: TextStyle(
+                                                              color: Colors.red),
+                                                        ): Text(
                                                           subcategory.subCatName.toString(),
                                                           style: TextStyle(
                                                               color: Colors.black),
@@ -289,7 +294,12 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                                       .map((subsubcategory) =>
                                                       DropdownMenuItem<SubSubCategoryModel>(
                                                         value: subsubcategory,
-                                                        child: Text(
+                                                        child: subsubcategory.ssCatName == "Select sub category" ?
+                                                        Text(
+                                                          subsubcategory.ssCatName.toString(),
+                                                          style: TextStyle(
+                                                              color: Colors.red),
+                                                        ): Text(
                                                           subsubcategory.ssCatName.toString(),
                                                           style: TextStyle(
                                                               color: Colors.black),
@@ -353,7 +363,12 @@ class _BusinessNetworkingContactState extends State<BusinessNetworkingContact>{
                                                       .map((productName) =>
                                                       DropdownMenuItem<ProductNameModel>(
                                                         value: productName,
-                                                        child: Text(
+                                                        child: productName.prodName == "Select sub sub category" ?
+                                                        Text(
+                                                          productName.prodName.toString(),
+                                                          style: TextStyle(
+                                                              color: Colors.red),
+                                                        ):Text(
                                                           productName.prodName.toString(),
                                                           style: TextStyle(
                                                               color: Colors.black),

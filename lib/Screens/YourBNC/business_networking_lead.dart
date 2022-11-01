@@ -114,11 +114,11 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                               //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                               // leading: nameIcon(),
                               leading:  Text(
-                                "Lead 1",
+                                "Choose your business networking contact 1",
                                 overflow: TextOverflow.clip,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15.0,
+                                  fontSize: 14.0,
                                   //color: Theme.of(context).accentColor
                                 ),
                               ),
@@ -194,11 +194,11 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                   // leading: nameIcon(),
                                   leading:  Text(
-                                    "Lead 2",
+                                    "Choose your business networking contact 2",
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 15.0,
+                                      fontSize: 14.0,
                                       //color: Theme.of(context).accentColor
                                     ),
                                   ),
@@ -262,11 +262,11 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                   // leading: nameIcon(),
                                   leading:  Text(
-                                    "Lead 3",
+                                    "Choose your business networking contact 3",
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 15.0,
+                                      fontSize: 14.0,
                                       //color: Theme.of(context).accentColor
                                     ),
                                   ),
@@ -330,11 +330,11 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                   // leading: nameIcon(),
                                   leading:  Text(
-                                    "Lead 4",
+                                    "Choose your business networking contact 4",
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 15.0,
+                                      fontSize: 14.0,
                                       //color: Theme.of(context).accentColor
                                     ),
                                   ),
@@ -397,11 +397,11 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                   // leading: nameIcon(),
                                   leading:  Text(
-                                    "Lead 5",
+                                    "Choose your business networking contact 5",
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 15.0,
+                                      fontSize: 14.0,
                                       //color: Theme.of(context).accentColor
                                     ),
                                   ),
