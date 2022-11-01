@@ -340,12 +340,13 @@ class _CustomerEnquiriesState extends State<CustomerEnquiries> {
                                 ?
                             buildCustomerEnquiriesList(searchResult)
                                 :
-                            //     (customerEnquiriesList.length>0)
-                            // ?
-              buildCustomerEnquiriesList(customerEnquiriesList)
-                        // :
-                        // Center(child: Text("No Data Available",
-                        // style: TextStyle(fontSize: 20),),)
+                                (customerEnquiriesList.isEmpty)
+                            ?
+                                Center(child: Text("No Data Available",
+                                  style: TextStyle(fontSize: 20),),)
+                        :
+                                buildCustomerEnquiriesList(customerEnquiriesList)
+
                         ),
                         )],),
 

@@ -59,7 +59,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       bottomNavigationBar:
           // MyBottomNavigation(_onItemTapped, _selectedIndex)
           SizedBox(
-            height: 70,
+            height: MediaQuery.of(context).size.height/13,
             child: ClipRRect(
         borderRadius: const BorderRadius.only(
             topRight: Radius.circular(15),

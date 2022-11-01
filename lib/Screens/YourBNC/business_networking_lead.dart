@@ -114,7 +114,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                               //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                               // leading: nameIcon(),
                               leading:  Text(
-                                "Choose your business networking contact 1",
+                                "Choose your business networking\ncontact 1",
                                 overflow: TextOverflow.clip,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -194,7 +194,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                   // leading: nameIcon(),
                                   leading:  Text(
-                                    "Choose your business networking contact 2",
+                                    "Choose your business networking\ncontact 2",
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -262,7 +262,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                   // leading: nameIcon(),
                                   leading:  Text(
-                                    "Choose your business networking contact 3",
+                                    "Choose your business networking\ncontact 3",
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -330,7 +330,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                   // leading: nameIcon(),
                                   leading:  Text(
-                                    "Choose your business networking contact 4",
+                                    "Choose your business networking\ncontact 4",
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -397,7 +397,7 @@ class _BusinessNetworkingLeadState extends State<BusinessNetworkingLead>{
                                   //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                                   // leading: nameIcon(),
                                   leading:  Text(
-                                    "Choose your business networking contact 5",
+                                    "Choose your business networking\ncontact 5",
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
