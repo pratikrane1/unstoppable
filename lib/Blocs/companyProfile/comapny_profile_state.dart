@@ -25,7 +25,9 @@ class UpdateCompanyProfileSuccess extends CompanyProfileState {
 }
 
 
-
+class UpdateCompanyProfileFail extends CompanyProfileState {
+  UpdateCompanyProfileFail();
+}
 
 class CompanyProfileListLoadFail extends CompanyProfileState {}
 

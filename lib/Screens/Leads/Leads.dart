@@ -43,7 +43,6 @@ class _LeadsState extends State<Leads> {
     _leadsBloc = BlocProvider.of<LeadsBloc>(context);
     _leadsBloc!.add(OnLoadingLeadsList(userid: Application.vendorLogin!.userId.toString()));
     _isSearching = false;
-
   }
 
   void _handleSearchStart() {
@@ -673,58 +672,58 @@ Widget leadsCard(BuildContext context, LeadModel leadData){
           child: ListTile(
             contentPadding: EdgeInsets.zero,
             //visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-            leading: CachedNetworkImage(
-              filterQuality: FilterQuality.medium,
-              // imageUrl: Api.PHOTO_URL + widget.users.avatar,
-              imageUrl: "https://picsum.photos/250?image=9",
-              // imageUrl: model.cart[index].productImg == null
-              //     ? "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-              //     : model.cart[index].productImg,
-              placeholder: (context, url) {
-                return Shimmer.fromColors(
-                  baseColor: Theme.of(context).hoverColor,
-                  highlightColor: Theme.of(context).highlightColor,
-                  enabled: true,
-                  child: Container(
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                );
-              },
-              imageBuilder: (context, imageProvider) {
-                return Container(
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                );
-              },
-              errorWidget: (context, url, error) {
-                return Shimmer.fromColors(
-                  baseColor: Theme.of(context).hoverColor,
-                  highlightColor: Theme.of(context).highlightColor,
-                  enabled: true,
-                  child: Container(
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(Icons.error),
-                  ),
-                );
-              },
-            ),
+            // leading: CachedNetworkImage(
+            //   filterQuality: FilterQuality.medium,
+            //   // imageUrl: Api.PHOTO_URL + widget.users.avatar,
+            //   imageUrl: "https://picsum.photos/250?image=9",
+            //   // imageUrl: model.cart[index].productImg == null
+            //   //     ? "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+            //   //     : model.cart[index].productImg,
+            //   placeholder: (context, url) {
+            //     return Shimmer.fromColors(
+            //       baseColor: Theme.of(context).hoverColor,
+            //       highlightColor: Theme.of(context).highlightColor,
+            //       enabled: true,
+            //       child: Container(
+            //         height: 80,
+            //         width: 80,
+            //         decoration: BoxDecoration(
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.circular(8),
+            //         ),
+            //       ),
+            //     );
+            //   },
+            //   imageBuilder: (context, imageProvider) {
+            //     return Container(
+            //       height: 80,
+            //       width: 80,
+            //       decoration: BoxDecoration(
+            //         image: DecorationImage(
+            //           image: imageProvider,
+            //           fit: BoxFit.cover,
+            //         ),
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //     );
+            //   },
+            //   errorWidget: (context, url, error) {
+            //     return Shimmer.fromColors(
+            //       baseColor: Theme.of(context).hoverColor,
+            //       highlightColor: Theme.of(context).highlightColor,
+            //       enabled: true,
+            //       child: Container(
+            //         height: 80,
+            //         width: 80,
+            //         decoration: BoxDecoration(
+            //           color: Colors.white,
+            //           borderRadius: BorderRadius.circular(8),
+            //         ),
+            //         child: Icon(Icons.error),
+            //       ),
+            //     );
+            //   },
+            // ),
             title: Column(
               children: [
                 Align(
@@ -761,7 +760,7 @@ Widget leadsCard(BuildContext context, LeadModel leadData){
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 10.0,
-                          color: Colors.yellow),
+                          color: ThemeColors.baseThemeColor),
                     ),
                   ],
                 ),

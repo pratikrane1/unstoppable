@@ -33,14 +33,24 @@ class _SignInPageState extends State<SignInPage> {
   final _textEmailController = TextEditingController();
   final _textPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool loading = true;
 
-
+  final timer =
+  Timer(const Duration(seconds: 5), () => print('Timer finished'));
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    loading;
     _userLoginBloc = BlocProvider.of<LoginBloc>(context);
+
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
 
   }
 
@@ -53,16 +63,17 @@ class _SignInPageState extends State<SignInPage> {
           return BlocListener<LoginBloc,LoginState>(listener: (context,state){
             if(state is LoginSuccess)
               {
+                loading = false;
                 SchedulerBinding.instance.addPostFrameCallback((_) {
 
                   // add your code here.
 
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => BottomNavigation(index: 0,)));
+                  Timer.periodic(const Duration(seconds: 10), (timer) {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavigation(index: 0,)));
+                    Fluttertoast.showToast(msg: state.message.toString());
+                    timer.cancel();
+                  });
                 });
-                  Fluttertoast.showToast(msg: state.message.toString());
 
                 // Timer.periodic(const Duration(seconds: 10), (_) {
                 //   Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNavigation(index: 0,)));
@@ -264,10 +275,14 @@ class _SignInPageState extends State<SignInPage> {
                     child:
                     AppButton(
                       onPressed: () async {
+
                         isconnectedToInternet = await ConnectivityCheck
                             .checkInternetConnectivity();
                         if (isconnectedToInternet == true) {
     if (_formKey.currentState!.validate()) {
+      // setState(() {
+      //   loading=true;
+      // });
       _userLoginBloc!.add(OnLogin(email: _textEmailController.text,password: _textPasswordController.text));
     }
                         } else {
@@ -281,45 +296,11 @@ class _SignInPageState extends State<SignInPage> {
                           borderRadius:
                           BorderRadius.all(Radius.circular(50))),
                       text: 'Login',
-                      loading: true,
+                      loading: loading,
+
 
                     )
-                    // ClipRRect(
-                    //   borderRadius: BorderRadius.circular(0),
-                    //   child: SizedBox(
-                    //     width: MediaQuery.of(context).size.width,
-                    //     height: 40,
-                    //     child: ElevatedButton(
-                    //       style: ElevatedButton.styleFrom(
-                    //         primary: ThemeColors.drawerTextColor,
-                    //       ),
-                    //       onPressed: () async {
-                    //         // _userLoginBloc!.add(OnLogin(email: ));
-                    //         isconnectedToInternet = await ConnectivityCheck
-                    //                                 .checkInternetConnectivity();
-                    //                             if (isconnectedToInternet == true) {
-                    //         if (_formKey.currentState!.validate()) {
-                    //           _userLoginBloc!.add(OnLogin(email: _textEmailController.text,password: _textPasswordController.text));
-                    //         }
-                    //                             } else {
-                    //                               Fluttertoast.showToast(msg: "Login Failed");
-                    //
-                    //                               CustomDialogs.showDialogCustom(
-                    //                                   "Internet",
-                    //                                   "Please check your Internet Connection!",
-                    //                                   context);
-                    //                              }
-                    //       },
-                    //       child: const Text(
-                    //         'Login',
-                    //         style: TextStyle(
-                    //           fontSize: 18,
-                    //           fontWeight: FontWeight.w400,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+
                   ),
                 ),
                 Row(
